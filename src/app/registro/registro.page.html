@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="home"></ion-icon>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+  <nav>
+    <ion-row>
+      <ion-col>ARTES GRÁFICAS</ion-col>
+      <ion-col>HIGIENE</ion-col>
+      <ion-col>DEPORTE</ion-col>
+      <ion-col>+</ion-col>
+    </ion-row>
+  </nav>
+</ion-header>
+
+<ion-content>
+
+	<p class="resena">Crear una cuenta</p>
+
+	<ion-item lines="none" class="datos">
+		<ion-label position="stacked" class="flabel">Nombre <p style="color: red; padding: 0 0 0 10px;">*</p></ion-label>
+		<ion-input [(ngModel)]="nombre" name="nombre"></ion-input>
+	</ion-item>
+	<ion-item lines="none" class="datos">
+		<ion-label position="stacked" class="flabel">Apellidos <p style="color: red; padding: 0 0 0 10px;">*</p></ion-label>
+		<ion-input [(ngModel)]="apellido" name="apellido"></ion-input>
+	</ion-item>
+	<ion-item lines="none" class="datos">
+		<ion-label position="stacked" class="flabel">Dirección de correo electrónico <p style="color: red; padding: 0 0 0 10px;">*</p></ion-label>
+		<ion-input [(ngModel)]="correo" name="correo"></ion-input>
+	</ion-item>
+	<ion-item lines="none" class="datos">
+		<ion-label position="stacked" class="flabel">Fecha de nacimiento <p style="color: red; padding: 0 0 0 10px;">*</p></ion-label>
+		<ion-datetime displayFormat="DD/MM/YYYY" placeholder="DD/MM/YYYY" [(ngModel)]="fecha" name="fecha"></ion-datetime>
+	</ion-item>
+	<ion-item lines="none" class="datos">
+		<ion-label position="stacked" class="flabel">Contraseña <p style="color: red; padding: 0 0 0 10px;">*</p></ion-label>
+		<ion-input type="password" [(ngModel)]="password" name="password"></ion-input>
+	</ion-item>
+	
+	<!--<ion-icon name="eye-outline" (click)="cambio()"></ion-icon>-->
+
+	<ion-item lines="none">
+		<ion-button (click)="registro()" size="large" class="sesion">GUARDAR</ion-button>
+	</ion-item>
+	
+	<div class="separador">
+		<ion-row>
+			<p class="conectar">Conectar con tu perfil de redes sociales</p>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<ion-icon name="logo-facebook"></ion-icon>
+			</ion-col>
+			<ion-col>
+				<ion-icon name="logo-twitter"></ion-icon>
+			</ion-col>
+			<ion-col>
+				<ion-icon name="logo-instagram"></ion-icon>
+			</ion-col>
+			<ion-col>
+				<ion-icon name="logo-pinterest"></ion-icon>
+			</ion-col>
+		</ion-row>
+	</div>
+
+</ion-content>

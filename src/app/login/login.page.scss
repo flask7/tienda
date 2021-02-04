@@ -1,0 +1,98 @@
+ion-title{
+	float: left;
+}
+ion-searchbar{
+	width: 80%;
+	float: right;
+	--border-radius: 25px;
+	box-shadow: none;
+	//border: 1px solid green;
+}
+ion-col{
+	text-align: right;
+	font-size: 15px;
+	font-weight: bold;
+	min-inline-size: fit-content;
+}
+ion-content{
+	--background: #90B953;
+}
+h1{
+	margin-top: 15%;
+	font-family: arial;
+	text-align: center;
+	color: white;
+	font-weight: bold;
+	font-size: 60px;
+}
+.clientes{
+	text-align: center;
+	font-weight: 100;
+	font-size: 24px;
+}
+ion-input{
+	border-radius: 25px;
+	--background: white;
+	height: 50px;
+	width: 80%;
+	margin: auto;
+}
+ion-input:nth-child(4){
+	margin-top: 20px;
+}
+a{
+	position: relative;
+	left: 45%;
+	top: 0%;
+	font-weight: bold;
+	font-size: 12px;
+	color: black;
+	text-decoration: none;
+}
+.sesion, .cuenta{
+	margin: auto;
+	--background: black;
+	--color: white;
+	font-weight: bold;
+}
+.sesion{
+	position: relative;
+    top: 10%;
+    right: 17.5%;
+}
+.cuenta{
+	margin-bottom: 20%;
+}
+.conectar{
+	color: white;
+}
+ion-icon{
+	font-size: 40px;
+	margin: auto;
+}
+.separador{
+	margin-top: 25%;
+	background: #849B62;
+	width: 100%;
+	height: 15%;
+
+	ion-row:nth-child(1){
+		height: 35%;
+	}
+	p{
+		text-align: center;
+		width: 100%;
+	}
+	ion-col{
+		height: 50%;
+		width: 25%;
+		display: flex;
+	}
+}
+.pregunta{
+	width: 100%;
+	text-align: center;
+}
+ion-item{
+	--background: transparent;
+}

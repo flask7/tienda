@@ -1,0 +1,119 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-icon name="home"></ion-icon>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+  <nav>
+    <ion-row>
+      <ion-col>ARTES GRÁFICAS</ion-col>
+      <ion-col>HIGIENE</ion-col>
+      <ion-col>DEPORTE</ion-col>
+      <ion-col>+</ion-col>
+    </ion-row>
+  </nav>
+</ion-header>
+
+<ion-content>
+  <p class="titulo">TÍTULO DEL PRODUCTO</p>
+	<img src="{{ imagen }}" class="productox">
+  <ion-select value="Variantes" okText="OK" cancelText="Cancelar" class="catlist">
+    <ion-select-option value="Variantes">Opción 1</ion-select-option>
+    <ion-select-option value="Variantes 2">Opción 2</ion-select-option>
+  </ion-select>
+  <ion-item class="cat" lines="none">Variante</ion-item>
+
+	<ion-row class="opciones1">
+   <ion-col class="celda">
+
+     <ion-item class="ccompra">
+       <ion-label>Opciones de financiación</ion-label>
+       <ion-select value="" okText="OK" cancelText="Cancelar">
+        <ion-select-option value="1">Pay7in</ion-select-option>
+        <ion-select-option value="2">Celetem</ion-select-option>
+       </ion-select>
+     </ion-item>
+     
+     <ion-item class="ccompra">
+       <ion-label>Cuotas</ion-label>
+       <ion-select value="" okText="OK" cancelText="Cancelar">
+        <ion-select-option value="1">2 meses</ion-select-option>
+        <ion-select-option value="2">4 meses</ion-select-option>
+       </ion-select>
+     </ion-item>
+     
+   </ion-col>
+   <ion-col class="celda">
+
+     <p class="cantidadl">Cantidad</p>
+     <ion-item class="ccompra" lines="none">
+       
+       <div class="contador">
+         <ion-button (click)="this.cantidad = cantidad - 1" [disabled]="this.cantidad <= 0" class="c3">-</ion-button>
+         <div class="c2">
+          <h2>{{ cantidad }}</h2>
+         </div>
+         <ion-button (click)="this.cantidad = cantidad + 1" class="c1">+</ion-button>
+       </div>
+     </ion-item>
+
+   </ion-col> 
+  </ion-row>
+  <ion-row>
+    <ion-col>
+      <p class="montosc">33,75 € /mes en 8 cuotas</p>
+    </ion-col>
+    <ion-col>
+      <h1 class="preciox">33.5 €</h1>
+      <p class="impuestos">(impuestos incluidos)</p>
+    </ion-col>
+  </ion-row>
+
+  <ion-button size="large" expand="full" class="bcarrito">
+    <ion-icon name="cart-outline"></ion-icon>
+    Añadir al carrito
+  </ion-button>
+
+  <div class="datos">
+    <b><p>Referencia: 1111111</p>
+    <p>¡Un mecrófono de lo más moderno y cómodo!</p>
+    <p>Descripción:</p>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
+    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
+    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
+    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
+    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p *ngIf="ocultar">Detalles del producto:</p>
+    <p *ngIf="ocultar">Micrófono cómodo y confortable, adecuado para cantantes de diferentes escalas</p>
+    <p id="desplegar" (click)="this.ocultar = true; revision()">ver más</p>
+    <p id="ocultar" (click)="this.ocultar = false; revision()">ocultar</p></b>
+  </div>
+
+  <ion-row class="valores">
+    <ion-col>
+      <ion-item lines="none" class="grid">
+        <ion-icon name="heart-outline"></ion-icon>
+        <p>Añadir a la lista de deseos</p>        
+      </ion-item>
+    </ion-col>
+    <ion-col>
+      <ion-item lines="none" class="grid2">
+        <ion-icon name="star-outline"></ion-icon>
+        <p>Valorar producto</p>
+      </ion-item>
+    </ion-col>
+  </ion-row>
+
+  <h1 class="relatedp">Productos relacionados</h1>
+
+  <div class="products">
+    <div class="producto" *ngFor="let p of _productos" [routerLink]="'/producto/'+p.id">
+        <img src="{{ p.imagen }}" class="imgp">
+        <p class="nombre">{{ p.nombre }} <b>{{ p.precio }}€</b></p>
+        <ion-button class="comprar">¡LO QUIERO!</ion-button>
+    </div>
+  </div>
+
+  <h1></h1>
+
+</ion-content>

@@ -1,0 +1,77 @@
+<ion-header [translucent]="false">
+  <ion-toolbar>
+    <ion-icon name="home"></ion-icon>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+  <nav>
+    <ion-row>
+      <ion-col>ARTES GRÁFICAS</ion-col>
+      <ion-col>HIGIENE</ion-col>
+      <ion-col>DEPORTE</ion-col>
+      <ion-col>+</ion-col>
+    </ion-row>
+  </nav>
+</ion-header>
+
+<ion-content >
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">Tab 1</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <div id="carrusel">
+    
+  </div>
+
+  <h3 class="related">Productos relacionados</h3>
+
+  <div class="products">
+
+    <div class="producto" *ngFor="let p of _productos" [routerLink]="'/producto/'+p.id">
+      <img src="{{ p.imagen }}" class="imgp">
+      <ion-row>
+        <ion-col>
+          <p class="nombre">{{ p.nombre }}</p>
+        </ion-col>
+        <ion-col>
+          <h2 class="precio">{{ p.precio }}€</h2>
+        </ion-col>
+        <ion-button class="comprar">¡LO QUIERO!</ion-button>
+      </ion-row>
+    </div>
+    
+  </div>
+
+  <p class="ver">ver más</p>
+  
+  <h3 class="related">Más Vendidas</h3>
+
+  <ion-row class="fila">
+    <ion-col>
+      <img src="{{ mas_vendidas[0] }}" class="mvendidas">
+    </ion-col>
+    <ion-col>
+      <img src="{{ mas_vendidas[1] }}" class="mvendidas">
+    </ion-col>
+  </ion-row>
+  <ion-row class="fila">
+    <ion-col>
+      <img src="{{ mas_vendidas[2] }}" class="mvendidas">
+    </ion-col>
+    <ion-col>
+      <img src="{{ mas_vendidas[3] }}" class="mvendidas">
+    </ion-col>
+  </ion-row>
+  <ion-row class="fila">
+    <ion-col>
+      <img src="{{ mas_vendidas[4] }}" class="mvendidas2">
+    </ion-col>
+  </ion-row>
+  <ion-row class="fila">
+    <ion-col>
+      <img src="{{ mas_vendidas[5] }}" class="mvendidas2">
+    </ion-col>
+  </ion-row>
+  <!--<app-explore-container name="Tab 1 page"></app-explore-container>-->
+</ion-content>
