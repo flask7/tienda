@@ -56,9 +56,9 @@ a{
 	font-weight: bold;
 }
 .sesion{
-	position: relative;
+	/*position: relative;
     top: 10%;
-    right: 17.5%;
+    right: 17.5%;*/
 }
 .cuenta{
 	margin-bottom: 20%;
@@ -95,4 +95,7 @@ ion-icon{
 }
 ion-item{
 	--background: transparent;
+}
+.separar{
+	margin-top: 20px;
 }

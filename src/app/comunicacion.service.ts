@@ -16,7 +16,7 @@ export class ComunicacionService {
 
     }
 
-  	return this.http.post('http://localhost:5000/login', json, { headers })
+  	return this.http.post('http://localhost:8000/api/login', json, { headers })
   	
   }
 
@@ -28,7 +28,7 @@ export class ComunicacionService {
 
     }
 
-    return this.http.post('http://localhost:5000/registro', json, { headers });
+    return this.http.post('http://localhost:8000/api/registro', JSON.stringify(json), { headers });
 
   }
 
