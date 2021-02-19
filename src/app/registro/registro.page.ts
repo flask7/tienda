@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-registro',
@@ -15,14 +16,25 @@ export class RegistroPage implements OnInit {
 	fecha: any;
 	apellido: string;
 
-  constructor(private comunicacion: ComunicacionService, private router: Router) { }
+  constructor(private comunicacion: ComunicacionService, private router: Router, private alerta: AlertController) { }
 
   ngOnInit() {
   }
 
-  registro(){
+  async error_autenticacion(mensaje) {
 
-  	console.log(this.fecha);
+    const alert = await this.alerta.create({
+      cssClass: 'my-custom-class',
+      header: 'Alerta',
+      subHeader: 'Detalle:',
+      message: mensaje,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+  }
+
+  registro(){
 
   	const json = {
 
@@ -36,13 +48,23 @@ export class RegistroPage implements OnInit {
 
   	this.comunicacion.registro(json).subscribe((data:any) => {
 
-  		if (data.length > 0) {
+  		if (data != 'Usuario registrado') {
 
+        localStorage.setItem('sesion', 'activa');
+        localStorage.setItem('usuario', data);
+
+        this.comunicacion.usuario = data;
   			this.router.navigateByUrl('/');
 
-  		}
+  		}else{
+
+        this.error_autenticacion('Usuario registrado');
+
+      }
 
   	}, Error => {
+
+      this.error_autenticacion(Error.message);
 
   		console.log(Error);
 

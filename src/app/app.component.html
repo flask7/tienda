@@ -2,11 +2,32 @@
 	<ion-menu side="end" content-id="main">
 	  <ion-header></ion-header>
 	  <ion-content>
+	  	<ion-item>
+	  		<ion-row>
+	  			<ion-col></ion-col>
+	  			<ion-col>
+	  				<ion-row>
+	  					<ion-col>{{ usuario }}</ion-col>
+	  				</ion-row>
+	  				<ion-row>
+	  					<ion-col *ngIf="usuario != 'Iniciar sesión'">
+	  						<a routerLink="/perfil">ver perfil</a>
+	  					</ion-col>
+	  				</ion-row>
+	  			</ion-col>
+	  		</ion-row>
+	  	</ion-item>
+	  	<h3>CATÁLOGO PRODUCTOS</h3>
 	    <ion-list>
 	      <ion-menu-toggle auto-hide="true">
-	        <ion-item>{{ items }}</ion-item>
+	        <ion-item *ngFor="let item of items">
+	        	<a routerLink="/categories/{{ item.id }}" class="items">{{ item.nombre }}</a>
+	    	</ion-item>
 	      </ion-menu-toggle>
 	    </ion-list>
+	    <a routerLink="/" class="links">Terminos y condiciones</a><br>
+		<a routerLink="/" class="links">Política de privacidad</a><br>
+		<a routerLink="/" class="links">Política de Cookies</a>
 	  </ion-content>
 	</ion-menu>
   <ion-router-outlet id="main"></ion-router-outlet>

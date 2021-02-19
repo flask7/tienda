@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ComunicacionService {
 
+  usuario: string = localStorage.getItem('usuario');
+
   constructor(private http: HttpClient) { }
 
   login(json){
@@ -16,7 +18,7 @@ export class ComunicacionService {
 
     }
 
-  	return this.http.post('http://localhost:8000/api/login', json, { headers })
+  	return this.http.post('http://localhost:8000/api/login', JSON.stringify(json), { headers })
   	
   }
 
@@ -32,11 +34,31 @@ export class ComunicacionService {
 
   }
 
-  imagenes(){
+  recuperar(json){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('http://localhost:8000/api/recuperar', JSON.stringify(json), { headers });
 
   }
 
-  productos(){
+  productos_data(){
+
+  }
+
+  productos(json){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('http://localhost:8000/api/productos', JSON.stringify(json), { headers });
 
   }
 

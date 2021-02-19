@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-icon name="home"></ion-icon>
+    <ion-searchbar></ion-searchbar>
+  </ion-toolbar>
+  <nav>
+    <ion-row>
+      <ion-col>ARTES GRÁFICAS</ion-col>
+      <ion-col>HIGIENE</ion-col>
+      <ion-col>DEPORTE</ion-col>
+      <ion-col>+</ion-col>
+    </ion-row>
+  </nav>
+</ion-header>
+
+<ion-content>
+	<p class="resena">Cambio de contraseña</p>
+	<ion-item lines="none" class="forms">
+		<ion-input placeholder="Tu correo" class="inputs" [(ngModel)]="correo" name="correo"></ion-input>
+	</ion-item>
+	<ion-item lines="none" class="forms">
+		<ion-input placeholder="Tu contraseña" class="inputs" [(ngModel)]="password" name="password" type="password"></ion-input>
+	</ion-item>
+	<ion-item lines="none" class="forms">
+		<ion-label position="floating">Tu nueva contraseña</ion-label>
+		<ion-input placeholder="Tu nueva contraseña" class="inputs" [(ngModel)]="npassword" name="npassword" type="password"></ion-input>
+	</ion-item>
+	<ion-item lines="none" class="forms">
+		<ion-label position="floating">Repetir contraseña</ion-label>
+		<ion-input placeholder="Tu nueva contraseña" class="inputs" [(ngModel)]="confirmar" name="confirmar" type="password"></ion-input>
+	</ion-item>
+	<ion-item lines="none" class="cambio">
+		<ion-button (click)="recuperar()">CAMBIAR</ion-button>
+	</ion-item>
+</ion-content>
