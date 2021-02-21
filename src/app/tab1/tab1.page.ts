@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Slides } from '@ionic/angular';
+//import { Slides } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
