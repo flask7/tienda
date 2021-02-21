@@ -8,6 +8,23 @@ export class ComunicacionService {
 
   usuario: string = localStorage.getItem('usuario');
 
+  items: any = [
+  {'nombre': 'Alimentacion y Bebida', 'id':'14043'}, 
+  {'nombre': 'Artes gráficas', 'id': '45'}, 
+  {'nombre': 'Material escolar', 'id': '7415'}, 
+  {'nombre':'Industria', 'id': '28'},
+  {'nombre': 'Deporte', 'id': '29'},
+  {'nombre': 'Movilidad', 'id': '0'}, 
+  {'nombre': 'Hogar', 'id': '26'}, 
+  {'nombre': 'Jardín', 'id': '0'}, 
+  {'nombre': 'Bricolage y herramientas', 'id': '0'}, 
+  {'nombre': 'Electrónica', 'id': '0'}, 
+  {'nombre':'Juguetes y Ocio', 'id': '677'},
+  {'nombre': 'Mascotas', 'id': '0'}, 
+  {'nombre': 'Salud y Belleza', 'id': '203'},
+  {'nombre': 'Moda', 'id': '12976'}, 
+  {'nombre':'Disfraces', 'id': '0'}];
+
   constructor(private http: HttpClient) { }
 
   login(json){
@@ -46,7 +63,15 @@ export class ComunicacionService {
 
   }
 
-  productos_data(){
+  productos_data(json){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('http://localhost:8000/api/productos_data', JSON.stringify(json), { headers });
 
   }
 

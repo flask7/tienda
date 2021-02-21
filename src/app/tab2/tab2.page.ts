@@ -8,6 +8,18 @@ import { Router } from  '@angular/router';
 })
 export class Tab2Page implements OnInit {
 
+  nombre: string = localStorage.getItem('usuario');
+  items: any = [{'nombre': 'Información', 'id':'1'}, 
+  {'nombre': 'Mis direcciónes de envío', 'id': '2'}, 
+  {'nombre': 'Mis pedidos', 'id': '3'}, 
+  {'nombre':'Lista de deseos', 'id': '4'},
+  {'nombre': 'Facturas', 'id': '5'},
+  {'nombre': 'Cupones', 'id': '6'}, 
+  {'nombre': 'Recompensas', 'id': '7'}, 
+  {'nombre': 'Trae un amigo (patrocinador)', 'id': '8'}, 
+  {'nombre': 'Mis opiniones', 'id': '9'}, 
+  {'nombre': 'Salir', 'id': '10'}]
+
   constructor(private router: Router) {}
 
   ngOnInit(){

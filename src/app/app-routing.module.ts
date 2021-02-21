@@ -33,6 +33,14 @@ const routes: Routes = [
   {
     path: 'categories/:id',
     loadChildren: () => import('./categories/categories.module').then( m => m.CategoriesPageModule)
+  },
+  {
+    path: 'cliente/:id',
+    loadChildren: () => import('./cliente/cliente.module').then( m => m.ClientePageModule)
+  },
+  {
+    path: 'despliegue',
+    loadChildren: () => import('./despliegue/despliegue.module').then( m => m.DesplieguePageModule)
   }
 ];
 @NgModule({

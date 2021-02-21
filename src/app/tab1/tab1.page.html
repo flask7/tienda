@@ -21,7 +21,17 @@
   </ion-header>
 
   <div id="carrusel">
-    
+    <ion-slides pager="true" [options]="slideOpts" startAutoplay>
+      <ion-slide>
+        <img src="../assets/slide1.jpeg" class="cimagenes">
+      </ion-slide>
+      <ion-slide>
+        <img src="../assets/slide2.jpg" class="cimagenes">
+      </ion-slide>
+      <ion-slide>
+        <img src="../assets/slide3.jpg" class="cimagenes">
+      </ion-slide>
+    </ion-slides>
   </div>
 
   <h3 class="related">Productos relacionados</h3>

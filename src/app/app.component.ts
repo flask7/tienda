@@ -15,22 +15,7 @@ import { ComunicacionService } from './comunicacion.service';
 })
 export class AppComponent implements OnInit {
 
-  items: any = [
-  {'nombre': 'Alimentacion y Bebida', 'id':'14043'}, 
-  {'nombre': 'Artes gráficas', 'id': '45'}, 
-  {'nombre': 'Material escolar', 'id': '7415'}, 
-  {'nombre':'Industria', 'id': '28'},
-  {'nombre': 'Deporte', 'id': '29'},
-  {'nombre': 'Movilidad', 'id': '0'}, 
-  {'nombre': 'Hogar', 'id': '26'}, 
-  {'nombre': 'Jardín', 'id': '0'}, 
-  {'nombre': 'Bricolage y herramientas', 'id': '0'}, 
-  {'nombre': 'Electrónica', 'id': '0'}, 
-  {'nombre':'Juguetes y Ocio', 'id': '677'},
-  {'nombre': 'Mascotas', 'id': '0'}, 
-  {'nombre': 'Salud y Belleza', 'id': '203'},
-  {'nombre': 'Moda', 'id': '12976'}, 
-  {'nombre':'Disfraces', 'id': '0'}];
+  items: any = this.comunicacion.items;
   usuario: string = this.comunicacion.usuario;
 
   constructor(

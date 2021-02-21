@@ -13,3 +13,65 @@ ion-col{
 	font-weight: bold;
 	min-inline-size: fit-content;
 }
+.imgp{
+	height: 100%; 
+	width: 100%;
+}
+.nombre{
+	font-weight: bold;
+	font-size: 12px;
+	b{
+		color: #a0bb30;
+		padding: 0 0 0 3px;
+		font-size: 18px;
+	}
+	display: flex;
+}
+.comprar{
+	//margin: auto;
+	font-weight: bold;
+	--background: #90B953;
+	--background-hover: #171717;
+	--color: black;
+	width: 80px;
+    height: 30px;
+    font-size: 10px;
+    position: absolute;
+    bottom: 0px;
+    left: 15px;
+}
+.comprar:hover{
+	--background: #212121;
+	--color: white;
+}
+.products{
+	margin: auto;
+}
+.producto{
+	width: 85px;
+	margin-left: 40px;
+	height: 250px;
+	margin: auto;
+}
+.category{
+	font-size: 20px;
+	text-align: center;
+	font-weight: bold;
+}
+.sub_categoria{
+	padding: 2.5%;
+    font-size: 20px;
+  	position: absolute;
+    left: 0%;
+    margin: auto;
+    width: 100%;
+    top: 0%;
+}
+.grilla{
+	margin: auto;
+	margin-top: 30px;
+	margin-bottom: 20px;
+	display: grid;
+    grid-template-columns: 110px 110px 110px;
+    grid-gap: 20px;
+}

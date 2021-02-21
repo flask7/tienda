@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { Slides } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab1',
@@ -24,6 +25,12 @@ export class Tab1Page implements OnInit{
 	mas_vendidas: any = [
 	'../assets/img1.jpg', '../assets/img2.jpg', '../assets/img1.jpg',
 	 '../assets/img2.jpg', '../assets/img1.jpg', '../assets/img2.jpg']
+
+	slideOpts = {
+    	initialSlide: 1,
+    	speed: 400,
+    	autoplay: true
+  	};
 
   constructor() {}
 

@@ -54,7 +54,7 @@ export class RegistroPage implements OnInit {
         localStorage.setItem('usuario', data);
 
         this.comunicacion.usuario = data;
-  			this.router.navigateByUrl('/');
+  			this.router.navigateByUrl('/tabs/tab2');
 
   		}else{
 
