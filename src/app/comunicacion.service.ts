@@ -35,7 +35,7 @@ export class ComunicacionService {
 
     }
 
-  	return this.http.post('http://localhost:8000/api/login', JSON.stringify(json), { headers })
+  	return this.http.post('https://tuwordpress.online/prestashop/public/api/login', JSON.stringify(json), { headers })
   	
   }
 
@@ -47,7 +47,7 @@ export class ComunicacionService {
 
     // }
 
-    return this.http.post('http://localhost:8000/api/registro', JSON.stringify(json)/*, { headers }*/);
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json)/*, { headers }*/);
 
   }
 
@@ -59,7 +59,7 @@ export class ComunicacionService {
 
     }
 
-    return this.http.post('http://localhost:8000/api/recuperar', JSON.stringify(json), { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/recuperar', JSON.stringify(json), { headers });
 
   }
 
@@ -71,7 +71,7 @@ export class ComunicacionService {
 
     }
 
-    return this.http.post('http://localhost:8000/api/productos_data', JSON.stringify(json), { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/productos_data', JSON.stringify(json), { headers });
 
   }
 
@@ -83,7 +83,7 @@ export class ComunicacionService {
 
     }
 
-    return this.http.post('http://localhost:8000/api/productos', JSON.stringify(json), { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/productos', JSON.stringify(json), { headers });
 
   }
 
@@ -95,7 +95,7 @@ export class ComunicacionService {
 
     }
 
-    return this.http.post('http://localhost:8000/api/productos_info', JSON.stringify(json), { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/productos_info', JSON.stringify(json), { headers });
 
   }
 
@@ -111,7 +111,7 @@ export class ComunicacionService {
       producto: id
     }
 
-    return this.http.post('http://localhost:8000/api/imagenes_data', json, { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/imagenes_data', json, { headers });
 
   }
 
