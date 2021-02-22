@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Form } from '@angular/forms';
 import { ComunicacionService } from '../comunicacion.service';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-producto',
@@ -9,35 +10,48 @@ import { ComunicacionService } from '../comunicacion.service';
 })
 export class ProductoPage implements OnInit {
 
-	cantidad: number = 0
-	ocultar: boolean = false
-	imagen: string
-	/*productos: any = {
-		"nombre": ['Producto 1', 'Producto 2', 'Producto 3'],
-		"precio": ['35', '20', '10'],
-		"imagen": ['../assets/img1.jpg', '../assets/img2.jpg', '../assets/img1.jpg']
-	}*/
-
+  id: string;
+  nombre: string;
+	cantidad: number = 0;
+  existencia: number;
+	ocultar: boolean = false;
+	imagen: string;
+  precio: string;
+  descripcion: string;
+  referencia: string;
 	_productos: any = [
 		{id: 1, nombre:"Producto 1", precio: "35", imagen: '../assets/img1.jpg'},
 		{id: 2, nombre:"Producto 2", precio: "20", imagen: '../assets/img2.jpg'},
 		{id: 3, nombre:"Producto 3", precio: "10", imagen: '../assets/img1.jpg'}
 	];
 
-  constructor(private comunicacion: ComunicacionService) { }
+  constructor(private comunicacion: ComunicacionService, private activate: ActivatedRoute) { }
 
   ngOnInit() {
 
-  	/*this.comunicacion.imagenes().subscribe((data)=>{
+    let parametro = this.activate.snapshot.paramMap.get('id');
+    let json = {id: parametro};
+    this.id = parametro;
 
-  		this.imagen = data.toString();
+  	this.comunicacion.productos_info(json).subscribe((data: any)=>{
+
+  		let conversion = parseFloat(data[0].products[0].price);
+      let monto = conversion.toFixed(2);
+      
+      this.precio = monto.toString();
+      this.descripcion = data[0].products[0].description;
+      this.nombre = data[0].products[0].name;
+      this.referencia = data[0].products[0].reference;
+      this.existencia = parseInt(data[0].products[0].quantity);
+      this.imagen = data[1][""][1].id;
+
   		console.log(data);
 
   	}, Error => {
 
   		console.log(Error);
 
-  	});*/
+  	});
 
   }
 

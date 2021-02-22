@@ -14,8 +14,8 @@
 </ion-header>
 
 <ion-content>
-  <p class="titulo">TÍTULO DEL PRODUCTO</p>
-	<img src="{{ imagen }}" class="productox">
+  <p class="titulo">{{ nombre }}</p>
+	<img src="https://@test3.wonduu.com/api/images/products/{{ id }}/{{ imagen }}" class="productox">
   <ion-select value="Variantes" okText="OK" cancelText="Cancelar" class="catlist">
     <ion-select-option value="Variantes">Opción 1</ion-select-option>
     <ion-select-option value="Variantes 2">Opción 2</ion-select-option>
@@ -52,7 +52,7 @@
          <div class="c2">
           <h2>{{ cantidad }}</h2>
          </div>
-         <ion-button (click)="this.cantidad = cantidad + 1" class="c1">+</ion-button>
+         <ion-button (click)="this.cantidad = cantidad + 1 " [disabled]="this.cantidad >= this.existencia" class="c1">+</ion-button>
        </div>
      </ion-item>
 
@@ -60,10 +60,10 @@
   </ion-row>
   <ion-row>
     <ion-col>
-      <p class="montosc">33,75 € /mes en 8 cuotas</p>
+      <p class="montosc">{{ precio }} € /mes en 8 cuotas</p>
     </ion-col>
     <ion-col>
-      <h1 class="preciox">33.5 €</h1>
+      <h1 class="preciox">{{ precio }} €</h1>
       <p class="impuestos">(impuestos incluidos)</p>
     </ion-col>
   </ion-row>
@@ -74,17 +74,12 @@
   </ion-button>
 
   <div class="datos">
-    <b><p>Referencia: 1111111</p>
-    <p>¡Un mecrófono de lo más moderno y cómodo!</p>
+    <b><p>Referencia: {{ referencia }}</p>
+    <p>{{ nombre }}</p>
     <p>Descripción:</p>
-    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+    <p>{{ descripcion_corta }}</p>
     <p *ngIf="ocultar">Detalles del producto:</p>
-    <p *ngIf="ocultar">Micrófono cómodo y confortable, adecuado para cantantes de diferentes escalas</p>
+    <p *ngIf="ocultar">{{ descripcion }}</p>
     <p id="desplegar" (click)="this.ocultar = true; revision()">ver más</p>
     <p id="ocultar" (click)="this.ocultar = false; revision()">ocultar</p></b>
   </div>

@@ -21,7 +21,7 @@
       <ng-container *ngFor="let x of productos[0].categoria; let y = index">
         <ion-col size="4" class="producto" *ngIf="categorias[i] == productos[0].categoria[y]" [routerLink]="'/producto/'+productos[0].imagen[0].id[y]">
           <div class="products">
-            <img src="https://@test3.wonduu.com/api/images/products/{{productos[0].imagen[0].imagen[y]}}" class="imgp">
+            <img src="https://test3.wonduu.com/api/images/products/{{productos[0].imagen[0].imagen[y]}}" class="imgp">
             <p class="nombre">{{ productos[0].nombre[y] }} <b>{{  productos[0].precio[y] }}€</b></p>
             <ion-button class="comprar">¡LO QUIERO!</ion-button>            
           </div>

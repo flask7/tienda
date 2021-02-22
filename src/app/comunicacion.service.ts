@@ -87,5 +87,17 @@ export class ComunicacionService {
 
   }
 
+  productos_info(json){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('http://localhost:8000/api/productos_info', JSON.stringify(json), { headers });
+
+  }
+
 
 }

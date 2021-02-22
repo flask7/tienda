@@ -84,7 +84,7 @@ export class CategoriesPage implements OnInit {
       let json2 = {
 
         "sub_categorias": resultado,
-        "productos": resultado2
+        "limite": 3
 
       }
 
