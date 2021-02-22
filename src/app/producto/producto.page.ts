@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Form } from '@angular/forms';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-producto',
@@ -15,7 +16,7 @@ export class ProductoPage implements OnInit {
 	cantidad: number = 0;
   existencia: number;
 	ocultar: boolean = false;
-	imagen: string;
+	imagen: any;
   precio: string;
   descripcion: string;
   referencia: string;
@@ -25,7 +26,7 @@ export class ProductoPage implements OnInit {
 		{id: 3, nombre:"Producto 3", precio: "10", imagen: '../assets/img1.jpg'}
 	];
 
-  constructor(private comunicacion: ComunicacionService, private activate: ActivatedRoute) { }
+  constructor(private sanitizer: DomSanitizer, private comunicacion: ComunicacionService, private activate: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -37,15 +38,14 @@ export class ProductoPage implements OnInit {
 
   		let conversion = parseFloat(data[0].products[0].price);
       let monto = conversion.toFixed(2);
+      let info = 'data:image/jpeg;base64, ' + data[1].toString();
       
       this.precio = monto.toString();
       this.descripcion = data[0].products[0].description;
       this.nombre = data[0].products[0].name;
       this.referencia = data[0].products[0].reference;
       this.existencia = parseInt(data[0].products[0].quantity);
-      this.imagen = data[1][""][1].id;
-
-  		console.log(data);
+      this.imagen = this.sanitizer.bypassSecurityTrustUrl(info);
 
   	}, Error => {
 

@@ -103,8 +103,7 @@ export class ComunicacionService {
 
     const headers = {
 
-      'Content-type': 'application/json',
-      'responseType': 'blob'
+      'Content-type': 'application/json'
 
     }
 

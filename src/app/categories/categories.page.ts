@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComunicacionService } from '../comunicacion.service';
 import { LoadingController, AlertController } from '@ionic/angular';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-categories',
@@ -13,9 +14,9 @@ export class CategoriesPage implements OnInit {
 	productos: any = [{categoria: [], nombre: [], precio: [], imagen: []}];
   nombre: string;
   categorias: any;
-  imagenes: any;
+  imagenes: any = [];
 
-  constructor(private activate: ActivatedRoute, private alerta: AlertController, private comunicacion: ComunicacionService, private cargando: LoadingController) { }
+  constructor(private sanitizer: DomSanitizer, private activate: ActivatedRoute, private alerta: AlertController, private comunicacion: ComunicacionService, private cargando: LoadingController) { }
 
    ngOnInit(){
 
@@ -113,7 +114,8 @@ export class CategoriesPage implements OnInit {
           }*/]
 
     }else if(parametro == '29'){
-        this.categorias = [{
+
+        this.categorias = [/*{
                  "id": 33,
                  "name": "Vales de regalo",
                  "products": []
@@ -122,7 +124,7 @@ export class CategoriesPage implements OnInit {
                  "id": 37,
                  "name": "Liquidación",
                  "products": []
-             },
+             },*/
              {
                  "id": 128,
                  "name": "Equipaciones",
@@ -144,16 +146,21 @@ export class CategoriesPage implements OnInit {
                     }]
             }]
 
-           /*this.comunicacion.imagenes('578').subscribe((data:any) => {
-             
-             this.imagenes = data;
+            for (let i = 0; i < this.categorias[0].products.length; i++) {
 
-             console.log(data);
+              await this.comunicacion.imagenes(this.categorias[0].products[i].id).subscribe((data:any) => {
+                 
+                 let info = 'data:image/jpeg;base64, ' + data[0].toString();
 
-           }, Error => {
-             console.log(Error)
-           });*/
+                 //console.log(this.categorias[0].products[i].id, info);
 
+                 this.imagenes.push(this.sanitizer.bypassSecurityTrustUrl(info));
+
+               }, Error => {
+                 console.log(Error)
+               });
+
+            }
            
            /*((data:any) => {
           
@@ -163,7 +170,7 @@ export class CategoriesPage implements OnInit {
 
     }
 
-    console.log(this.categorias);
+    //console.log(this.categorias);
 
     /* this.cargando.create().then(async l => {
 
