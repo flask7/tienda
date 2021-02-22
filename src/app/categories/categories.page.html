@@ -14,15 +14,20 @@
 </ion-header>
 
 <ion-content>
+  <img src="{{ imagenes }}">
   <p class="category">{{ nombre }}</p>
   <ion-item *ngFor="let cat of categorias; let i = index">
-    <p class="sub_categoria">{{ cat }}</p>
+    <p class="sub_categoria">{{ categorias[i].name }}</p>
     <ion-row class="grilla">
-      <ng-container *ngFor="let x of productos[0].categoria; let y = index">
-        <ion-col size="4" class="producto" *ngIf="categorias[i] == productos[0].categoria[y]" [routerLink]="'/producto/'+productos[0].imagen[0].id[y]">
-          <div class="products">
-            <img src="https://test3.wonduu.com/api/images/products/{{productos[0].imagen[0].imagen[y]}}" class="imgp">
-            <p class="nombre">{{ productos[0].nombre[y] }} <b>{{  productos[0].precio[y] }}€</b></p>
+      <ng-container *ngFor="let x of categorias[i].products; let y = index">
+        <!--<ion-col size="4" class="producto" *ngIf="categorias[i] == productos[0].categoria[y]" [routerLink]="
+        '/producto/'+productos[0].imagen[0].id[y]">
+        <ion-col size="4" class="producto" [routerLink]="'/producto/'+productos[0].imagen[0].id[y]">-->
+        <ion-col size="4" class="producto" [routerLink]="'/producto/'+x.id"> 
+          <div class="products" style="width: 100%;">
+            <!--<img src="https://test3.wonduu.com/api/images/products/{{categorias[i].products[y].image}}" class="imgp">-->
+            <img style="background: lightgray; height: 80px; width: 100px;" class="imgp">
+            <p class="nombre">{{ categorias[i].products[y].name }} <b>{{  categorias[i].products[y].price }}€</b></p>
             <ion-button class="comprar">¡LO QUIERO!</ion-button>            
           </div>
         </ion-col>

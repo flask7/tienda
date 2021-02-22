@@ -13,6 +13,7 @@ export class CategoriesPage implements OnInit {
 	productos: any = [{categoria: [], nombre: [], precio: [], imagen: []}];
   nombre: string;
   categorias: any;
+  imagenes: any;
 
   constructor(private activate: ActivatedRoute, private alerta: AlertController, private comunicacion: ComunicacionService, private cargando: LoadingController) { }
 
@@ -60,11 +61,115 @@ export class CategoriesPage implements OnInit {
     let resultado = [];
     let resultado2 = [];
 
-    this.cargando.create().then(async l => {
+    console.log(parametro);
+
+    if (parametro === '203') {
+
+          this.categorias = [{
+              "id": 615,
+              "name": "Masaje y Relajación",
+              "products": [
+                {
+                  "id": 21992,
+                  "price": "19.83",
+                  "name": "Soporte antifatiga con imanes"
+                },
+                {
+                  "id": 33224,
+                  "price": "5.46",
+                  "name": "Saco térmico de huesos de cereza"
+                },
+                {
+                  "id": 88690,
+                  "price": "1.62",
+                  "name": "Parches de calor megaplast 13 cm x 10 cm"
+                }
+            ]
+          },
+          {
+              "id": 616,
+              "name": "Belleza",
+              "products": [
+                {
+                  "id": 12345,
+                  "price": "4.95",
+                  "name": "Alzas para zapatos goma eva"
+                },
+                {
+                  "id": 20531,
+                  "price": "26.44",
+                  "name": "Bronceador solac bronze air perfection"
+                },
+                {
+                  "id": 20789,
+                  "price": "18.18",
+                  "name": "Báscula de bolsillo"
+            }]
+          },
+          /*{
+              "id": 1406,
+              "name": "Bebé",
+              "products": []
+          }*/]
+
+    }else if(parametro == '29'){
+        this.categorias = [{
+                 "id": 33,
+                 "name": "Vales de regalo",
+                 "products": []
+             },
+             {
+                 "id": 37,
+                 "name": "Liquidación",
+                 "products": []
+             },
+             {
+                 "id": 128,
+                 "name": "Equipaciones",
+                 "products": [
+                    {
+                        "id": 574,
+                        "price": "10.72",
+                        "name": "Equipación deportiva riscko eqr-003"
+                    },
+                    {
+                        "id": 576,
+                        "price": "10.72",
+                        "name": "Equipación deportiva riscko eqr-010"
+                    },
+                    {
+                        "id": 578,
+                        "price": "26.85",
+                        "name": "Equipación portero riscko eqr-005"
+                    }]
+            }]
+
+           /*this.comunicacion.imagenes('578').subscribe((data:any) => {
+             
+             this.imagenes = data;
+
+             console.log(data);
+
+           }, Error => {
+             console.log(Error)
+           });*/
+
+           
+           /*((data:any) => {
+          
+              console.log(data);
+
+            }, Error => { console.log(Error) });*/
+
+    }
+
+    console.log(this.categorias);
+
+    /* this.cargando.create().then(async l => {
 
       l.present();
 
-      await this.comunicacion.productos(json).subscribe((data: any) => {
+     await this.comunicacion.productos(json).subscribe((data: any) => {
 
       sub_categorias = data.categories[0].associations.categories;
       productos = data.categories[0].associations.products;
@@ -123,7 +228,7 @@ export class CategoriesPage implements OnInit {
 
         l.dismiss();
 
-      }, Error => {
+     }, Error => {
 
         console.log(Error.message);
 
@@ -147,7 +252,7 @@ export class CategoriesPage implements OnInit {
 
       this.error('Error al obtener los datos: ' + Error.message);
 
-    }); 
+    }); */
 
   }
 

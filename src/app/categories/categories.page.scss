@@ -25,7 +25,7 @@ ion-col{
 		padding: 0 0 0 3px;
 		font-size: 18px;
 	}
-	display: flex;
+	display: inline-flex;
 }
 .comprar{
 	//margin: auto;
@@ -37,7 +37,7 @@ ion-col{
     height: 30px;
     font-size: 10px;
     position: absolute;
-    bottom: 0px;
+    bottom: 15px;
     left: 15px;
 }
 .comprar:hover{
@@ -46,6 +46,7 @@ ion-col{
 }
 .products{
 	margin: auto;
+	display: grid;
 }
 .producto{
 	width: 85px;

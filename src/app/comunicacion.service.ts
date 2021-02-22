@@ -41,13 +41,13 @@ export class ComunicacionService {
 
   registro(json){
 
-    const headers = {
+    // const headers = {
 
-      'Content-type': 'application/json'
+    //   'Content-type': 'application/json'
 
-    }
+    // }
 
-    return this.http.post('http://localhost:8000/api/registro', JSON.stringify(json), { headers });
+    return this.http.post('http://localhost:8000/api/registro', JSON.stringify(json)/*, { headers }*/);
 
   }
 
@@ -96,6 +96,23 @@ export class ComunicacionService {
     }
 
     return this.http.post('http://localhost:8000/api/productos_info', JSON.stringify(json), { headers });
+
+  }
+
+  imagenes(id){
+
+    const headers = {
+
+      'Content-type': 'application/json',
+      'responseType': 'blob'
+
+    }
+
+    const json = {
+      producto: id
+    }
+
+    return this.http.post('http://localhost:8000/api/imagenes_data', json, { headers });
 
   }
 
