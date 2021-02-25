@@ -1,3 +1,25 @@
+.titulo{
+	float: left;
+}
+.logo{
+	height: 45px;
+	width: 45px;
+}
+.barra_busqueda{
+	float: right;
+	--border-radius: 25px;
+}
+ion-searchbar div input{
+	box-shadow: none;
+	border: 1px solid green;
+
+}
+.headers{
+	text-align: right;
+	font-size: 15px;
+	font-weight: bold;
+	min-inline-size: fit-content;
+}
 h3{
 	color: #90B953;
 	font-weight: bold;

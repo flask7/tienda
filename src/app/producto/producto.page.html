@@ -1,16 +1,5 @@
-<ion-header [translucent]="false">
-  <ion-toolbar>
-    <ion-icon name="home"></ion-icon>
-    <ion-searchbar></ion-searchbar>
-  </ion-toolbar>
-  <nav>
-    <ion-row>
-      <ion-col>ARTES GRÁFICAS</ion-col>
-      <ion-col>HIGIENE</ion-col>
-      <ion-col>DEPORTE</ion-col>
-      <ion-col>+</ion-col>
-    </ion-row>
-  </nav>
+<ion-header>
+  <ion-toolbar></ion-toolbar>
 </ion-header>
 
 <ion-content>
@@ -22,51 +11,53 @@
   </ion-select>
   <ion-item class="cat" lines="none">Variante</ion-item>
 
-	<ion-row class="opciones1">
-   <ion-col class="celda">
+  <ion-grid fixed>
+  	<ion-row class="opciones1">
+     <ion-col class="celda" size="6">
 
-     <ion-item class="ccompra">
-       <ion-label>Opciones de financiación</ion-label>
-       <ion-select value="" okText="OK" cancelText="Cancelar">
-        <ion-select-option value="1">Pay7in</ion-select-option>
-        <ion-select-option value="2">Celetem</ion-select-option>
-       </ion-select>
-     </ion-item>
-     
-     <ion-item class="ccompra">
-       <ion-label>Cuotas</ion-label>
-       <ion-select value="" okText="OK" cancelText="Cancelar">
-        <ion-select-option value="1">2 meses</ion-select-option>
-        <ion-select-option value="2">4 meses</ion-select-option>
-       </ion-select>
-     </ion-item>
-     
-   </ion-col>
-   <ion-col class="celda">
-
-     <p class="cantidadl">Cantidad</p>
-     <ion-item class="ccompra" lines="none">
+       <ion-item class="ccompra">
+         <ion-label>Opciones de financiación</ion-label>
+         <ion-select value="" okText="OK" cancelText="Cancelar">
+          <ion-select-option value="1">Pay7in</ion-select-option>
+          <ion-select-option value="2">Celetem</ion-select-option>
+         </ion-select>
+       </ion-item>
        
-       <div class="contador">
-         <ion-button (click)="this.cantidad = cantidad - 1" [disabled]="this.cantidad <= 0" class="c3">-</ion-button>
-         <div class="c2">
-          <h2>{{ cantidad }}</h2>
-         </div>
-         <ion-button (click)="this.cantidad = cantidad + 1 " [disabled]="this.cantidad >= this.existencia" class="c1">+</ion-button>
-       </div>
-     </ion-item>
+       <ion-item class="ccompra">
+         <ion-label>Cuotas</ion-label>
+         <ion-select value="" okText="OK" cancelText="Cancelar">
+          <ion-select-option value="1">2 meses</ion-select-option>
+          <ion-select-option value="2">4 meses</ion-select-option>
+         </ion-select>
+       </ion-item>
+       
+     </ion-col>
+     <ion-col class="celda" size="6">
 
-   </ion-col> 
-  </ion-row>
-  <ion-row>
-    <ion-col>
-      <p class="montosc">{{ precio }} € /mes en 8 cuotas</p>
-    </ion-col>
-    <ion-col>
-      <h1 class="preciox">{{ precio }} €</h1>
-      <p class="impuestos">(impuestos incluidos)</p>
-    </ion-col>
-  </ion-row>
+       <p class="cantidadl">Cantidad</p>
+       <ion-item class="ccompra" lines="none">
+         
+         <div class="contador">
+           <ion-button (click)="this.cantidad = cantidad - 1" [disabled]="this.cantidad <= 0" class="c3">-</ion-button>
+           <div class="c2">
+            <h2>{{ cantidad }}</h2>
+           </div>
+           <ion-button (click)="this.cantidad = cantidad + 1 " [disabled]="this.cantidad >= this.existencia" class="c1">+</ion-button>
+         </div>
+       </ion-item>
+
+     </ion-col> 
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="montosc">{{ precio }} € /mes en 8 cuotas</p>
+      </ion-col>
+      <ion-col>
+        <h1 class="preciox">{{ precio }} €</h1>
+        <p class="impuestos">(impuestos incluidos)</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
   <ion-button size="large" expand="full" class="bcarrito">
     <ion-icon name="cart-outline"></ion-icon>
@@ -86,13 +77,13 @@
 
   <ion-grid>
     <ion-row class="valores">
-      <ion-col size="3">
+      <ion-col size="6">
         <ion-item lines="none" class="grid">
           <ion-icon name="heart-outline"></ion-icon>
           <p>Añadir a la lista de deseos</p>        
         </ion-item>
       </ion-col>
-      <ion-col size="3">
+      <ion-col size="6">
         <ion-item lines="none" class="grid2">
           <ion-icon name="star-outline"></ion-icon>
           <p>Valorar producto</p>
@@ -103,14 +94,37 @@
 
   <h1 class="relatedp">Productos relacionados</h1>
 
-  <div class="products">
+  <ion-grid fixed>
+    <ion-row>
+      <ion-col size="4" *ngFor="let p of _productos" [routerLink]="'/producto/'+p.id">
+        <ion-row>
+          <ion-col>
+            <img src="{{ p.imagen }}" class="imgp" style="height: 100px;">    
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p class="nombre">{{ p.nombre }}</p>
+          </ion-col>
+          <ion-col style="display: flex;">
+            <b class="precio_color">{{ p.precio }}€</b>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col style="display: flex;">
+            <ion-button class="comprar" style="margin: auto;">¡LO QUIERO!</ion-button>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <!--<div class="products">
     <div class="producto" *ngFor="let p of _productos" [routerLink]="'/producto/'+p.id">
         <img src="{{ p.imagen }}" class="imgp">
         <p class="nombre">{{ p.nombre }} <b>{{ p.precio }}€</b></p>
         <ion-button class="comprar">¡LO QUIERO!</ion-button>
     </div>
-  </div>
-
-  <h1></h1>
+  </div>-->
 
 </ion-content>

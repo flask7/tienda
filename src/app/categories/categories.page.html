@@ -1,30 +1,57 @@
 <ion-header>
-  <ion-toolbar>
-    <ion-icon name="home"></ion-icon>
-    <ion-searchbar></ion-searchbar>
-  </ion-toolbar>
-  <nav>
-    <ion-row>
-      <ion-col>ARTES GRÁFICAS</ion-col>
-      <ion-col>HIGIENE</ion-col>
-      <ion-col>DEPORTE</ion-col>
-      <ion-col>+</ion-col>
-    </ion-row>
-  </nav>
+  <ion-toolbar></ion-toolbar>
 </ion-header>
 
 <ion-content>
   <p class="category">{{ nombre }}</p>
   <ion-item *ngFor="let cat of categorias; let i = index">
-    <p class="sub_categoria">{{ categorias[i].name }}</p>
-    <ion-row class="grilla">
+    
+    <ion-label>
+    
+        {{ categorias[i].name }}
+      
+    </ion-label>
+    <ion-row>
+      <ion-col>
+        
+          
+  
+      <ion-grid>
+        <ion-row>
+          
+        <ng-container *ngFor="let x of categorias[i].products; let y = index">
+          <ion-col size="4" class="" [routerLink]="'/producto/'+x.id"> 
+            <ion-row>
+              <ion-col>
+                <img style="background: lightgray; height: 80px; width: 100px;" class="" [src]="imagenes[y]">
+              </ion-col>
+            </ion-row>
+              <ion-row>
+                <ion-col size="6">
+                  <p style="font-size: 12px; font-weight: bold;">{{ categorias[i].products[y].name }}</p>
+                </ion-col>
+                <ion-col size="6">
+                  <b class="price">{{  categorias[i].products[y].price }}€</b>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <ion-button class="comprar">¡LO QUIERO!</ion-button>
+                </ion-col>
+              </ion-row>
+          </ion-col>
+        </ng-container>
+        </ion-row>
+      </ion-grid>
+      </ion-col>
+    </ion-row>
+    
+        
+
+<!--    <ion-row class="grilla">
       <ng-container *ngFor="let x of categorias[i].products; let y = index">
-        <!--<ion-col size="4" class="producto" *ngIf="categorias[i] == productos[0].categoria[y]" [routerLink]="
-        '/producto/'+productos[0].imagen[0].id[y]">
-        <ion-col size="4" class="producto" [routerLink]="'/producto/'+productos[0].imagen[0].id[y]">-->
         <ion-col size="4" class="producto" [routerLink]="'/producto/'+x.id"> 
           <div class="products" style="width: 100%;">
-            <!--<img src="https://test3.wonduu.com/api/images/products/{{categorias[i].products[y].image}}" class="imgp">-->
             <img style="background: lightgray; height: 80px; width: 100px;" class="imgp" [src]="imagenes[y]">
             <p class="nombre">{{ categorias[i].products[y].name }} <b>{{  categorias[i].products[y].price }}€</b></p>
             <ion-button class="comprar">¡LO QUIERO!</ion-button>            
@@ -32,5 +59,8 @@
         </ion-col>
       </ng-container>
     </ion-row>
+-->
+
+
   </ion-item>
 </ion-content>
