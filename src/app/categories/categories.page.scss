@@ -2,18 +2,14 @@
 	height: 100%; 
 	width: 100%;
 }
-.nombre{
-	font-weight: bold;
-	font-size: 12px;
-	display: inline-flex;
-}
 .price{
 	color: #a0bb30;
 	padding: 0 0 0 3px;
-	font-size: 18px;
+	font-size: 14px;
+	margin: auto;
 }
 .comprar{
-	//margin: auto;
+	margin: auto;
 	font-weight: bold;
 	--background: #90B953;
 	--background-hover: #171717;
@@ -21,9 +17,6 @@
 	width: 80px;
     height: 30px;
     font-size: 10px;
-    position: absolute;
-    bottom: 15px;
-    left: 15px;
 }
 .comprar:hover{
 	--background: #212121;
@@ -43,7 +36,7 @@
 	font-size: 20px;
 	text-align: center;
 	font-weight: bold;
-	margin-top: 50px;
+	margin-top: 60px;
 }
 .sub_categoria{
 	padding: 2.5%;
@@ -54,11 +47,21 @@
     width: 100%;
     top: 0%;
 }
-/*.grilla{
-	margin: auto;
-	margin-top: 30px;
-	margin-bottom: 20px;
-	display: grid;
-    grid-template-columns: 110px 110px 110px;
-    grid-gap: 20px;
-}*/
+.nombre{
+	font-size: 12px; 
+	font-weight: bold; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+}
+.nombre:click{
+	white-space: normal;
+	text-overflow: initial;
+	overflow: visible;
+}
+.cambio{
+	text-decoration: none;
+    color: black;
+    font-weight: bold;
+    font-size: 14px;
+}

@@ -3,53 +3,86 @@
 	  <ion-toolbar>
 	  	<ion-grid>
 	  		<ion-row>
-		  		<ion-col size="3">
+		  		<ion-col size="2">
 		  			<ion-img src="../assets/Logo.png" class="logo"></ion-img>
 		  		</ion-col>
-		  		<ion-col size="9">
-		  			<ion-searchbar class="barra_busqueda"></ion-searchbar>
+		  		<ion-col size="10">
+		  			<ion-searchbar placeholder="¿Qué necesitas?" class="barra_busqueda"></ion-searchbar>
 		  		</ion-col>
 		  	</ion-row>
 	  	</ion-grid>
 	  	<nav>
 	    <ion-row>
-	      <ion-col class="headers">ARTES GRÁFICAS</ion-col>
-	      <ion-col class="headers">HIGIENE</ion-col>
-	      <ion-col class="headers">DEPORTE</ion-col>
-	      <ion-col class="headers">+</ion-col>
+	      <ion-col class="headers" size="5">
+	      	<p routerLink="/categories/45">ARTES GRÁFICAS</p>
+	      </ion-col>
+	      <ion-col class="headers" size="3">
+	      	<p routerLink="/categories/203">HIGIENE</p>
+	      </ion-col>
+	      <ion-col class="headers" size="3">
+	      	<p routerLink="/categories/29">DEPORTE</p>
+	      </ion-col>
+	      <ion-col class="headers" size="1">
+	      	<ion-menu-button>+</ion-menu-button>
+	      </ion-col>
 	    </ion-row>
 	  </nav>
 	  </ion-toolbar>
 	</ion-header>
 	<ion-menu side="end" content-id="main">
-	  <ion-header></ion-header>
+
 	  <ion-content>
-	  	<ion-item>
+	  	
+  		<ion-grid class="usuario">
 	  		<ion-row>
-	  			<ion-col></ion-col>
-	  			<ion-col>
+	  			<ion-col size="4" style="display: flex;">
+	  				<ion-icon name="person-add-outline" class="iconos" *ngIf="usuario == 'Iniciar sesión'"></ion-icon>
+	  				<ion-icon name="person-outline" class="iconos" *ngIf="usuario != 'Iniciar sesión'"></ion-icon>
+	  			</ion-col>
+	  			<ion-col size="8">
 	  				<ion-row>
-	  					<ion-col>{{ usuario }}</ion-col>
+	  					<ion-col *ngIf="usuario != 'Iniciar sesión'">{{ usuario }}</ion-col>
 	  				</ion-row>
 	  				<ion-row>
 	  					<ion-col *ngIf="usuario != 'Iniciar sesión'">
-	  						<a routerLink="/perfil">ver perfil</a>
+	  						<a routerLink="/perfil">Ver perfil</a>
+	  					</ion-col>
+	  					<ion-col *ngIf="usuario == 'Iniciar sesión'">
+	  						<a routerLink="/tabs/login" style="color: black;">Iniciar sesión</a>
 	  					</ion-col>
 	  				</ion-row>
 	  			</ion-col>
 	  		</ion-row>
-	  	</ion-item>
+  		</ion-grid>
+	  	
 	  	<h3>CATÁLOGO PRODUCTOS</h3>
 	    <ion-list>
 	      <ion-menu-toggle auto-hide="true">
 	        <ion-item *ngFor="let item of items">
 	        	<a routerLink="/categories/{{ item.id }}" class="items">{{ item.nombre }}</a>
 	    	</ion-item>
+	    	<ion-item>
+	    		<p (click)="cerrar()" class="items">Salir</p>
+	    	</ion-item>
 	      </ion-menu-toggle>
 	    </ion-list>
-	    <a routerLink="/" class="links">Terminos y condiciones</a><br>
-		<a routerLink="/" class="links">Política de privacidad</a><br>
-		<a routerLink="/" class="links">Política de Cookies</a>
+
+	    <ion-row>
+	    	<ion-col>
+	    		<a routerLink="/" class="links">Terminos y condiciones</a>
+	    	</ion-col>
+	    </ion-row>
+	    <ion-row>
+	    	<ion-col>
+	    		<a routerLink="/" class="links">Política de privacidad</a>
+	    	</ion-col>
+	    </ion-row>
+	    <ion-row>
+	    	<ion-col>
+	    		<a routerLink="/" class="links">Política de Cookies</a>
+	    	</ion-col>
+	    </ion-row>
+
 	  </ion-content>
 	</ion-menu>
   <ion-router-outlet id="main"></ion-router-outlet>

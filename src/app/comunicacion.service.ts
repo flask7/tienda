@@ -18,7 +18,7 @@ export class ComunicacionService {
   {'nombre': 'Hogar', 'id': '26'}, 
   {'nombre': 'Jardín', 'id': '0'}, 
   {'nombre': 'Bricolage y herramientas', 'id': '0'}, 
-  {'nombre': 'Electrónica', 'id': '0'}, 
+  {'nombre': 'Electrónica', 'id': '216'}, 
   {'nombre':'Juguetes y Ocio', 'id': '677'},
   {'nombre': 'Mascotas', 'id': '0'}, 
   {'nombre': 'Salud y Belleza', 'id': '203'},
@@ -41,13 +41,13 @@ export class ComunicacionService {
 
   registro(json){
 
-    // const headers = {
+     const headers = {
 
-    //   'Content-type': 'application/json'
+       'Content-type': 'application/json'
 
-    // }
+    }
 
-    return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json)/*, { headers }*/);
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json), { headers });
 
   }
 
@@ -112,6 +112,48 @@ export class ComunicacionService {
     }
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/imagenes_data', json, { headers });
+
+  }
+
+  sub_productos(id: string){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    const json = {
+
+      categoria: id
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/sub_pruductos', json, { headers });
+    
+  }
+
+  obtener_imagenes(json){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/imagenes', JSON.stringify(json), { headers });
+
+  }
+
+  home(json){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/imagenes_categorias', JSON.stringify(json), { headers });
 
   }
 

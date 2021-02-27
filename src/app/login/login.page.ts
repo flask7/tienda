@@ -51,8 +51,6 @@ export class LoginPage implements OnInit {
 
         this.error_autenticacion('Usuario no registrado');
 
-        console.log('usuario no registrado');
-
       }else{
 
         if (data != 'Error de autenticación') {
@@ -68,8 +66,6 @@ export class LoginPage implements OnInit {
         }else{
 
           this.error_autenticacion('Error de autenticación');
-
-          console.log('Error de autenticación');
 
         }
 

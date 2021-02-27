@@ -8,6 +8,8 @@ import { MenuController } from '@ionic/angular';
 
 import { ComunicacionService } from './comunicacion.service';
 
+import { Router } from  '@angular/router';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -23,7 +25,8 @@ export class AppComponent implements OnInit {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar, 
     private menu: MenuController,
-    private comunicacion: ComunicacionService
+    private comunicacion: ComunicacionService,
+    private router: Router
   ) {
     this.initializeApp();
   }
@@ -41,6 +44,17 @@ export class AppComponent implements OnInit {
 
     }
     
+  }
+
+  cerrar(){
+
+    localStorage.removeItem('sesion');
+    localStorage.removeItem('usuario');
+    
+    this.comunicacion.usuario = 'Iniciar sesión';
+
+    this.router.navigateByUrl('/tabs/login');
+
   }
 
   initializeApp() {

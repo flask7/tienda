@@ -8,6 +8,7 @@ import { Component, OnInit } from '@angular/core';
 export class TabsPage implements OnInit {
 
   constructor() {}
+  sesion: string = localStorage.getItem('sesion');
 
   ngOnInit(){
 

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
 import { AlertController } from '@ionic/angular';
-import { Form } from '@angular/Forms';
+import { Form } from '@angular/forms';
 
 @Component({
   selector: 'app-recuperar',

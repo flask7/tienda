@@ -1,101 +1,13 @@
-ion-title{
-	float: left;
+.carrusel{
+	width: 100%;
 }
-ion-searchbar{
-	width: 80%;
-	float: right;
-	--border-radius: 25px;
-	box-shadow: none;
-	//border: 1px solid green;
-}
-ion-col{
-	text-align: right;
-	font-size: 15px;
-	font-weight: bold;
-	min-inline-size: fit-content;
-}
-#carrusel{
-	height: 35%;
-	width: 90%;
-	margin: auto;
-	margin-top: 5%;
-	border-bottom: 1px solid gray;
+ion-slides{
+	ion-slide{
+		height: 100%;
+		width: 100%;	
+	}
+
 }
 .related{
 	text-align: center;
-	margin: auto;
-	margin-top: 15px;
-	margin-bottom: 15px;
-	font-weight: 100; 
-}
-.producto{
-	//border: 1px solid black;
-	height: 150px;
-	width: 150px;
-	margin-left: 40px;
-}
-.products{
-	margin: auto;
-	display: grid;
-	grid-template-columns: 175px 175px;
-	grid-row-gap: 8em;
-}
-.imgp{
-	height: 100%; 
-	width: 100%;
-}
-.nombre{
-	font-weight: bold;
-	font-size: 14px;
-}
-.precio{
-	color: #9CC958;
-}
-.comprar{
-	margin: auto;
-	font-weight: bold;
-	--background: #90B953;
-	--background-hover: #171717;
-	--color: black;
-}
-.comprar:hover{
-	--background: #212121;
-	--color: white;
-}
-.ver{
-	text-align: center;
-	position: relative;
-	top: 110px;
-	left: 10%;
-	width: 80%;
-	font-weight: bold;
-	margin-top: 10px;
-	font-size: 12px;
-	border-bottom: 1px solid lightgray;
-	margin-bottom: 130px;
-}
-.mvendidas{
-	height: 100px;
-	width: 170px;
-	margin: auto;
-	display: flex;
-}
-.mvendidas2{
-	height: 100px;
-	width: 90%;
-	margin: auto;
-	display: flex;
-}
-.fila{
-	display: flex;
-}
-#contenedor{
-	display: flex;
-	margin: auto;
-}
-.cimagenes{
-	height: 100%;
-}
-ion-slides{
-	height: 95%;
 }

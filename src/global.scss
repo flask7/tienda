@@ -28,4 +28,17 @@
 ion-searchbar ion-icon {
   right: 16px !important;
   left: auto !important;
+  color: #8ac306 !important;
+}
+
+.searchbar-input.sc-ion-searchbar-md {
+  border-radius: 25px;
+  height: auto;
+  --placeholder-color: #8ac306;
+  padding-left: 15px;
+  border: 1px solid #b4f61c;
+  font-size: 1.1rem;
+  font-weight: 400;
+  background-color: white;
+  box-shadow: none !important;
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit  } from '@angular/core';
 import { Router } from  '@angular/router';
 
 @Component({
@@ -6,9 +6,9 @@ import { Router } from  '@angular/router';
   templateUrl: 'tab2.page.html',
   styleUrls: ['tab2.page.scss']
 })
-export class Tab2Page implements OnInit {
+export class Tab2Page implements OnInit  {
 
-  nombre: string = localStorage.getItem('usuario');
+  nombre: string;
   items: any = [{'nombre': 'Información', 'id':'1'}, 
   {'nombre': 'Mis direcciónes de envío', 'id': '2'}, 
   {'nombre': 'Mis pedidos', 'id': '3'}, 
@@ -23,12 +23,21 @@ export class Tab2Page implements OnInit {
   constructor(private router: Router) {}
 
   ngOnInit(){
-  	if (localStorage.getItem('sesion') != 'activa') {
-  		
-		this.router.navigateByUrl('/tabs/login');
 
-  	}
+    this.nombre = localStorage.getItem('usuario');
+    
+    this.redireccion();
 
+  }
+
+  redireccion(){
+
+    if (localStorage.getItem('sesion') != 'activa') {
+      
+      this.router.navigateByUrl('/tabs/login');
+
+    }
+    
   }
 
 }

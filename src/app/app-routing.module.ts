@@ -39,7 +39,7 @@ const routes: Routes = [
     loadChildren: () => import('./cliente/cliente.module').then( m => m.ClientePageModule)
   },
   {
-    path: 'despliegue',
+    path: 'despliegue/:id',
     loadChildren: () => import('./despliegue/despliegue.module').then( m => m.DesplieguePageModule)
   }
 ];

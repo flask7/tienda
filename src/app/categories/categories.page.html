@@ -4,63 +4,49 @@
 
 <ion-content>
   <p class="category">{{ nombre }}</p>
-  <ion-item *ngFor="let cat of categorias; let i = index">
-    
-    <ion-label>
-    
-        {{ categorias[i].name }}
-      
-    </ion-label>
-    <ion-row>
-      <ion-col>
-        
-          
-  
-      <ion-grid>
-        <ion-row>
-          
-        <ng-container *ngFor="let x of categorias[i].products; let y = index">
-          <ion-col size="4" class="" [routerLink]="'/producto/'+x.id"> 
-            <ion-row>
-              <ion-col>
-                <img style="background: lightgray; height: 80px; width: 100px;" class="" [src]="imagenes[y]">
-              </ion-col>
-            </ion-row>
-              <ion-row>
-                <ion-col size="6">
-                  <p style="font-size: 12px; font-weight: bold;">{{ categorias[i].products[y].name }}</p>
-                </ion-col>
-                <ion-col size="6">
-                  <b class="price">{{  categorias[i].products[y].price }}€</b>
-                </ion-col>
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <ion-button class="comprar">¡LO QUIERO!</ion-button>
-                </ion-col>
-              </ion-row>
-          </ion-col>
-        </ng-container>
-        </ion-row>
-      </ion-grid>
-      </ion-col>
-    </ion-row>
-    
-        
-
-<!--    <ion-row class="grilla">
-      <ng-container *ngFor="let x of categorias[i].products; let y = index">
-        <ion-col size="4" class="producto" [routerLink]="'/producto/'+x.id"> 
-          <div class="products" style="width: 100%;">
-            <img style="background: lightgray; height: 80px; width: 100px;" class="imgp" [src]="imagenes[y]">
-            <p class="nombre">{{ categorias[i].products[y].name }} <b>{{  categorias[i].products[y].price }}€</b></p>
-            <ion-button class="comprar">¡LO QUIERO!</ion-button>            
-          </div>
+  <ion-item *ngFor="let cat of categorias[0].name; let i = index">
+    <ion-grid>
+      <ion-row>
+        <ion-col>
+          <p class="">  
+            {{ cat }}
+          </p>
         </ion-col>
-      </ng-container>
-    </ion-row>
--->
-
-
+      </ion-row>
+      
+      <ion-row>
+        <ion-col>
+          <ion-row>
+            <ng-container *ngFor="let x of categorias[0].products; let y = index">
+              <ion-col size="4" class="" *ngIf="x.id_category_default == categorias[0].id[i]"> 
+                <ion-row>
+                  <ion-col style="display: flex;">
+                    <div [style.background-image]="imagenes[y]" style="background: lightgray; margin: auto; height: 80px; width: 80px; background-size: cover;"></div>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col size="7">
+                    <p class="nombre">{{ x.name }}</p>
+                  </ion-col>
+                  <ion-col size="5" style="display: flex;">
+                    <b class="price">{{ x.price }}€</b>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col style="display: flex;">
+                    <ion-button class="comprar" [routerLink]="'/producto/'+x.id">¡LO QUIERO!</ion-button>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ng-container>
+          </ion-row>
+        </ion-col>
+      </ion-row>
+      <ion-row style="text-align: right;">
+        <ion-col size="12">
+          <a routerLink="/despliegue/{{ categorias[0].id[i] }}" class="cambio">ver más</a>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
   </ion-item>
 </ion-content>

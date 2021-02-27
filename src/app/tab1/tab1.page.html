@@ -3,13 +3,8 @@
 </ion-header>
 
 <ion-content>
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Tab 1</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="carrusel">
+  
+  <div class="carrusel">
     <ion-slides pager="true" [options]="slideOpts" startAutoplay>
       <ion-slide>
         <img src="../assets/slide1.jpeg" class="cimagenes">
@@ -20,57 +15,33 @@
       <ion-slide>
         <img src="../assets/slide3.jpg" class="cimagenes">
       </ion-slide>
-    </ion-slides>
+    </ion-slides>    
   </div>
 
-  <h3 class="related">Productos relacionados</h3>
+  <h3 class="related">Más vendidas</h3>
 
-  <div class="products">
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngFor="let item of categorias[0].id; let i = index" size="6">
+        <div [style.background-image]="categorias[0].imagen[i]" style="background-size: cover; width: 100%; height: 50px;"></div>  
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <ion-item style="--background: #90B953" lines="none">
+          <ion-row>
+            <ion-col>
+              <ion-label position="floating">Ingresa tú correo</ion-label>
+              <ion-input placeholder="Correo"></ion-input>
+            </ion-col>
+            <ion-col style="display: flex;">
+              <ion-button size="small" style="--background: #171717; --color: white; margin: auto;">ENVIAR</ion-button>
+            </ion-col>
+          </ion-row>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
 
-    <div class="producto" *ngFor="let p of _productos" [routerLink]="'/producto/'+p.id">
-      <img src="{{ p.imagen }}" class="imgp">
-      <ion-row>
-        <ion-col>
-          <p class="nombre">{{ p.nombre }}</p>
-        </ion-col>
-        <ion-col>
-          <h2 class="precio">{{ p.precio }}€</h2>
-        </ion-col>
-        <ion-button class="comprar">¡LO QUIERO!</ion-button>
-      </ion-row>
-    </div>
-    
-  </div>
-
-  <p class="ver">ver más</p>
-  
-  <h3 class="related">Más Vendidas</h3>
-
-  <ion-row class="fila">
-    <ion-col>
-      <img src="{{ mas_vendidas[0] }}" class="mvendidas">
-    </ion-col>
-    <ion-col>
-      <img src="{{ mas_vendidas[1] }}" class="mvendidas">
-    </ion-col>
-  </ion-row>
-  <ion-row class="fila">
-    <ion-col>
-      <img src="{{ mas_vendidas[2] }}" class="mvendidas">
-    </ion-col>
-    <ion-col>
-      <img src="{{ mas_vendidas[3] }}" class="mvendidas">
-    </ion-col>
-  </ion-row>
-  <ion-row class="fila">
-    <ion-col>
-      <img src="{{ mas_vendidas[4] }}" class="mvendidas2">
-    </ion-col>
-  </ion-row>
-  <ion-row class="fila">
-    <ion-col>
-      <img src="{{ mas_vendidas[5] }}" class="mvendidas2">
-    </ion-col>
-  </ion-row>
   <!--<app-explore-container name="Tab 1 page"></app-explore-container>-->
 </ion-content>

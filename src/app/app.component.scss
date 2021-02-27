@@ -16,9 +16,13 @@ ion-searchbar div input{
 }
 .headers{
 	text-align: right;
-	font-size: 15px;
 	font-weight: bold;
-	min-inline-size: fit-content;
+	text-align: center;
+	p, ion-menu-button{
+		margin: 0px;
+		font-size: 12px;
+		font-weight: 800;
+	}
 }
 h3{
 	color: #90B953;
@@ -29,13 +33,20 @@ h3{
 a{
 	text-decoration: none;
 }
-ion-item{
-	margin-left: 15%;
-	a{
+.usuario, ion-item{
+	a, p{
 		color: #90B953;
 	}
+}
+ion-item{
+	margin-left: 15%;
 }
 .links{
 	color: gray;
 	margin-left: 10%;
+}
+.iconos{
+	margin: auto;
+	height: 100%;
+	width: 40%;
 }
