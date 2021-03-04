@@ -7,7 +7,7 @@ const routes: Routes = [
     loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
-    path: 'producto/:id',
+    path: 'producto/:categoria/:id',
     loadChildren: () => import('./producto/producto.module').then( m => m.ProductoPageModule)
   }/*,
   {
@@ -41,11 +41,15 @@ const routes: Routes = [
   {
     path: 'despliegue/:id',
     loadChildren: () => import('./despliegue/despliegue.module').then( m => m.DesplieguePageModule)
+  },
+  {
+    path: 'geolocalizacion',
+    loadChildren: () => import('./geolocalizacion/geolocalizacion.module').then( m => m.GeolocalizacionPageModule)
   }
 ];
 @NgModule({
   imports: [
-    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules })
+    RouterModule.forRoot(routes, { preloadingStrategy: PreloadAllModules, relativeLinkResolution: 'legacy' })
   ],
   exports: [RouterModule]
 })

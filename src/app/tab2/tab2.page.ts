@@ -36,6 +36,10 @@ export class Tab2Page implements OnInit  {
       
       this.router.navigateByUrl('/tabs/login');
 
+    }else{
+
+      document.getElementById('geo').style.display = 'block';
+      
     }
     
   }

@@ -31,8 +31,6 @@ export class Tab1Page implements OnInit{
 
     this.comunicacion.home(json).subscribe((data: any) => {
 
-      console.log(data);
-
       for (let i = 0; i < data.length; i++) {
 
         let imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${data[i]})`);
@@ -40,8 +38,7 @@ export class Tab1Page implements OnInit{
         this.categorias[0].imagen.push(imagen);
 
       }
-
-      console.log(this.categorias);
+      
 
     }, Error => {
 

@@ -18,8 +18,10 @@ export class LoginPage implements OnInit {
   constructor(private comunicacion: ComunicacionService, private router: Router, private alerta: AlertController) { }
 
   ngOnInit() {
-  }
 
+ 
+
+  }
 
   async error_autenticacion(mensaje) {
 

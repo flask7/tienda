@@ -23,12 +23,23 @@ export class CategoriesPage implements OnInit {
     products: []
   }];
   imagenes: any = [];
+  id: string;
 
   constructor(private sanitizer: DomSanitizer, private activate: ActivatedRoute, private alerta: AlertController, private comunicacion: ComunicacionService, private cargando: LoadingController) { }
 
    ngOnInit(){
 
      this.datos();
+
+     for (let i = 0; i < this.comunicacion.items.length; i++) {
+
+       if (this.id == this.comunicacion.items[i].id) {
+
+         this.nombre = this.comunicacion.items[i].nombre;
+
+       }
+
+     }
 
    }
 
@@ -52,6 +63,8 @@ export class CategoriesPage implements OnInit {
     const json = {
       categoria: parametro
     }
+
+    this.id = parametro;
 
     this.comunicacion.productos_data(json).subscribe((data: any) => {
 

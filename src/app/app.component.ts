@@ -19,6 +19,7 @@ export class AppComponent implements OnInit {
 
   items: any = this.comunicacion.items;
   usuario: string = this.comunicacion.usuario;
+  resultados: any = [];
 
   constructor(
     private platform: Platform,
@@ -37,13 +38,41 @@ export class AppComponent implements OnInit {
 
       this.usuario = this.comunicacion.usuario;
 
+      document.getElementById('geo').style.display = 'block';
+
     }else{
 
       this.usuario = 'Iniciar sesión';
       this.comunicacion.usuario = 'Iniciar sesión';
 
+      document.getElementById('geo').style.display = 'none';
+
     }
     
+  }
+
+  buscar(event){
+
+    let busqueda = event.target.value;
+
+    if (busqueda === '') {
+
+      this.resultados = [];
+
+    }else{
+
+      this.comunicacion.buscador(busqueda).subscribe((data: any) => {
+
+        this.resultados = data[0].products.product;
+
+      }, Error => {
+
+        console.log(Error)
+
+      });
+      
+    }
+
   }
 
   cerrar(){

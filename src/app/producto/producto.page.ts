@@ -20,21 +20,19 @@ export class ProductoPage implements OnInit {
   precio: string;
   descripcion: string;
   referencia: string;
-	_productos: any = [
-		{id: 1, nombre:"Producto 1", precio: "35", imagen: '../assets/img1.jpg'},
-		{id: 2, nombre:"Producto 2", precio: "20", imagen: '../assets/img2.jpg'},
-		{id: 3, nombre:"Producto 3", precio: "10", imagen: '../assets/img1.jpg'}
-	];
+	_productos: any = [];
+  categoria: string;
 
   constructor(private sanitizer: DomSanitizer, private comunicacion: ComunicacionService, private activate: ActivatedRoute) { }
 
   ngOnInit() {
 
+    this.categoria = this.activate.snapshot.paramMap.get('categoria');
     let parametro = this.activate.snapshot.paramMap.get('id');
-    let json = {id: parametro};
     this.id = parametro;
+    let json = {id: parametro, categoria: this.categoria};
 
-  	this.comunicacion.productos_info(json).subscribe((data: any)=>{
+  	this.comunicacion.productos_info(json).subscribe((data: any) => {
 
   		let conversion = parseFloat(data[0].products[0].price);
       let monto = conversion.toFixed(2);
@@ -52,6 +50,28 @@ export class ProductoPage implements OnInit {
   		console.log(Error);
 
   	});
+
+    this.comunicacion.relacionados(json).subscribe((data: any) => {
+
+      for (let i = 0; i < data.length; i++) {
+
+        let conversion = parseFloat(data[i].precio);
+        let monto = conversion.toFixed(2);
+        let info = 'data:image/jpeg;base64, ' + data[i].imagen.toString();
+
+        data[i].precio = monto.toString();
+        data[i].imagen = this.sanitizer.bypassSecurityTrustUrl(info);
+
+      }
+
+      this._productos = data;
+
+    }, Error => {
+
+      console.log(Error);
+
+    });
+
 
   }
 

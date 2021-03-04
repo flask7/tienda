@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,13 @@ export class ComunicacionService {
   {'nombre':'Disfraces', 'id': '0'}];
 
   constructor(private http: HttpClient) { }
+
+  private data = new BehaviorSubject('');
+  data$ = this.data.asObservable();
+
+  control_usuario(data: string) {
+    this.data.next(JSON.parse(data));
+  }
 
   login(json){
 
@@ -154,6 +162,34 @@ export class ComunicacionService {
     }
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/imagenes_categorias', JSON.stringify(json), { headers });
+
+  }
+
+  relacionados(json){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/relacionados', JSON.stringify(json), { headers });
+
+  }
+
+  buscador(busqueda: string){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    const json = {
+      busqueda: busqueda
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/buscador', json, { headers });
 
   }
 

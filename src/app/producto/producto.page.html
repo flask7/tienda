@@ -94,37 +94,31 @@
 
   <h1 class="relatedp">Productos relacionados</h1>
 
-  <ion-grid fixed>
+  <ion-grid fixed="true">
     <ion-row>
-      <ion-col size="4" *ngFor="let p of _productos" [routerLink]="'/producto/'+p.id">
-        <ion-row>
-          <ion-col>
-            <img src="{{ p.imagen }}" class="imgp" style="height: 100px;">    
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col>
-            <p class="nombre">{{ p.nombre }}</p>
-          </ion-col>
-          <ion-col style="display: flex;">
-            <b class="precio_color">{{ p.precio }}€</b>
-          </ion-col>
-        </ion-row>
-        <ion-row>
-          <ion-col style="display: flex;">
-            <ion-button class="comprar" style="margin: auto;">¡LO QUIERO!</ion-button>
-          </ion-col>
-        </ion-row>
+      <ion-col size="4" *ngFor="let p of _productos; let i = index" [routerLink]="'/producto/'+categoria+'/'+p.id">
+        <ng-container *ngIf="i < 3">
+          <ion-row>
+            <ion-col>
+              <img [src]="p.imagen" class="imgp">    
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="7">
+              <p class="nombre">{{ p.nombre }}</p>
+            </ion-col>
+            <ion-col style="display: flex;" size="5">
+              <b class="precio_color">{{ p.precio }}€</b>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="display: flex;">
+              <ion-button class="comprar" style="margin: auto;">¡LO QUIERO!</ion-button>
+            </ion-col>
+          </ion-row>
+        </ng-container>
       </ion-col>
     </ion-row>
   </ion-grid>
-
-  <!--<div class="products">
-    <div class="producto" *ngFor="let p of _productos" [routerLink]="'/producto/'+p.id">
-        <img src="{{ p.imagen }}" class="imgp">
-        <p class="nombre">{{ p.nombre }} <b>{{ p.precio }}€</b></p>
-        <ion-button class="comprar">¡LO QUIERO!</ion-button>
-    </div>
-  </div>-->
 
 </ion-content>

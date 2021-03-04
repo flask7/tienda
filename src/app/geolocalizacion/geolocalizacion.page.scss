@@ -1,0 +1,41 @@
+.misd{
+	margin-top: 100px;
+	font-weight: 100;
+	font-size: 18px;
+	text-align: center;
+}
+.alias{
+	font-weight: 100;
+	font-size: 14px;
+	text-align: center;
+}
+.divisores{
+	margin: auto;
+	ion-label{
+		font-weight: 100;
+		b{
+			color: red;
+		}
+	}
+}
+.etiqueta{
+	text-align: center;
+	background: transparent;
+}
+.add{
+	height: 80px;
+	width: 80px;
+	margin: auto;
+	color: #e0f7ac;
+	background: transparent;
+}
+ion-card{
+	background: #8ac306;
+	ion-item{
+		--background: transparent;
+		display: flex;
+	}
+}
+.separador{
+	display: flex;
+}
