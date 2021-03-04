@@ -42,7 +42,7 @@
 			<ion-col size="11" class="divisores">
 				<ion-item>
 					<ion-label position="floating">Dirección <b>*</b></ion-label>
-					<ion-input value="{{ ubicacion.countryName }} {{ ubicacion.administrativeArea }} {{ ubicacion.subLocality }}" required></ion-input>
+					<ion-input value="{{ resultado }}" required></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
@@ -58,7 +58,7 @@
 			<ion-col size="11" class="divisores">
 				<ion-item>
 					<ion-label position="floating">Ciudad <b>*</b></ion-label>
-					<ion-input value="{{ ubicacion.subAdministrativeArea }}" required></ion-input>
+					<ion-input value="{{ ubicacion.locality }}" required></ion-input>
 				</ion-item>
 			</ion-col>
 		</ion-row>
