@@ -25,8 +25,6 @@ export class GeolocalizacionPage implements OnInit {
   		latitud = posicion.coords.latitude;
   		longitud = posicion.coords.longitude;
 
-      console.log(latitud, longitud);
-
   		this.geocodigo(latitud, longitud);
 
   	}, Error => {
@@ -39,8 +37,6 @@ export class GeolocalizacionPage implements OnInit {
   }
 
   geocodigo(lat, lon){
-
-    console.log(lat, lon);
 
   	let opciones: NativeGeocoderOptions = {
 	    useLocale: true,

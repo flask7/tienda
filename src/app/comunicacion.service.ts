@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
 
 @Injectable({
   providedIn: 'root'
@@ -28,11 +29,29 @@ export class ComunicacionService {
 
   constructor(private http: HttpClient) { }
 
-  private data = new BehaviorSubject('');
-  data$ = this.data.asObservable();
+  private carrito = new BehaviorSubject('');
 
-  control_usuario(data: string) {
-    this.data.next(JSON.parse(data));
+  obtener_productos(): Observable<any> {
+
+   return this.carrito.asObservable();
+
+  }
+
+  add_producto(id, precio, nombre, cantidad){
+
+    const json = {
+
+      id: id,
+      nombre: nombre,
+      precio: precio,
+      cantidad: cantidad
+
+    };
+
+    this.carrito.next(JSON.stringify(json));
+
+    return 'producto añadido exitosamente';
+
   }
 
   login(json){

@@ -3,6 +3,7 @@ import { Form } from '@angular/forms';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-producto',
@@ -22,8 +23,9 @@ export class ProductoPage implements OnInit {
   referencia: string;
 	_productos: any = [];
   categoria: string;
+  activo: number = 0;
 
-  constructor(private sanitizer: DomSanitizer, private comunicacion: ComunicacionService, private activate: ActivatedRoute) { }
+  constructor(private alertController: AlertController, private sanitizer: DomSanitizer, private comunicacion: ComunicacionService, private activate: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -65,6 +67,7 @@ export class ProductoPage implements OnInit {
       }
 
       this._productos = data;
+      this.activo = 1;
 
     }, Error => {
 
@@ -73,6 +76,19 @@ export class ProductoPage implements OnInit {
     });
 
 
+  }
+
+  async mensaje(mensaje) {
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Producto',
+      subHeader: 'Info:',
+      message: mensaje,
+      buttons: ['OK']
+    });
+
+    await alert.present();
   }
 
   revision(){
@@ -91,6 +107,14 @@ export class ProductoPage implements OnInit {
   		mostrar.style.display = 'block'
 
   	}
+
+  }
+
+  add(id = this.id, precio = this.precio, nombre = this.nombre, cantidad = this.cantidad){
+
+    let resultado = this.comunicacion.add_producto(id, precio, nombre, cantidad);
+
+    this.mensaje(resultado);
 
   }
 
