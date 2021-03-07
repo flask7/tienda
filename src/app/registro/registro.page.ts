@@ -53,7 +53,7 @@ export class RegistroPage implements OnInit {
         localStorage.setItem('sesion', 'activa');
         localStorage.setItem('usuario', data);
 
-        this.comunicacion.usuario = data;
+        this.comunicacion.cambiar_estado_usuario(data);
   			this.router.navigateByUrl('/tabs/tab2');
 
   		}else{

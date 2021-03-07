@@ -9,15 +9,7 @@ const routes: Routes = [
   {
     path: 'producto/:categoria/:id',
     loadChildren: () => import('./producto/producto.module').then( m => m.ProductoPageModule)
-  }/*,
-  {
-    path: 'login',
-    loadChildren: () => import('./login/login.module').then( m => m.LoginPageModule)
   },
-  {
-    path: 'registro',
-    loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
-  }*/,
   {
     path: 'registro',
     loadChildren: () => import('./registro/registro.module').then( m => m.RegistroPageModule)
@@ -45,6 +37,10 @@ const routes: Routes = [
   {
     path: 'geolocalizacion',
     loadChildren: () => import('./geolocalizacion/geolocalizacion.module').then( m => m.GeolocalizacionPageModule)
+  },
+  {
+    path: 'facturacion/:id/:nombre/:precio/:cantidad',
+    loadChildren: () => import('./facturacion/facturacion.module').then( m => m.FacturacionPageModule)
   }
 ];
 @NgModule({

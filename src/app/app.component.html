@@ -38,7 +38,7 @@
 		      	<ion-menu-button>+</ion-menu-button>
 		      </ion-col>
 		    </ion-row>
-		    <ion-row id="geo">
+		    <ion-row id="geo" *ngIf="this.mostrar == 'S'">
 		    	<ion-col size="12" style="display: contents;">
 		    		<div routerLink="/geolocalizacion" style="height: 100%; width: 100%;">
 		    			<ion-row style="background: #c7e39d;">
@@ -63,18 +63,18 @@
   		<ion-grid class="usuario">
 	  		<ion-row>
 	  			<ion-col size="4" style="display: flex;">
-	  				<ion-icon name="person-add-outline" class="iconos" *ngIf="usuario == 'Iniciar sesión'"></ion-icon>
-	  				<ion-icon name="person-outline" class="iconos" *ngIf="usuario != 'Iniciar sesión'"></ion-icon>
+	  				<ion-icon name="person-add-outline" class="iconos" *ngIf="(this.usuario | async) == 'Iniciar sesión'"></ion-icon>
+	  				<ion-icon name="person-outline" class="iconos" *ngIf="(this.usuario | async) != 'Iniciar sesión'"></ion-icon>
 	  			</ion-col>
 	  			<ion-col size="8">
 	  				<ion-row>
-	  					<ion-col *ngIf="usuario != 'Iniciar sesión'">{{ usuario }}</ion-col>
+	  					<ion-col *ngIf="this.mostrar == 'S'">{{ usuario | async }}</ion-col>
 	  				</ion-row>
 	  				<ion-row>
-	  					<ion-col *ngIf="usuario != 'Iniciar sesión'">
+	  					<ion-col *ngIf="this.mostrar == 'S'">
 	  						<a routerLink="/perfil">Ver perfil</a>
 	  					</ion-col>
-	  					<ion-col *ngIf="usuario == 'Iniciar sesión'">
+	  					<ion-col *ngIf="this.mostrar == 'N'">
 	  						<a routerLink="/tabs/login" style="color: black;">Iniciar sesión</a>
 	  					</ion-col>
 	  				</ion-row>

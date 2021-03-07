@@ -4,7 +4,7 @@
 
 <ion-content [fullscreen]="true">
 
-  <p>¡<b>Hola</b>, {{ nombre }}!</p>
+  <p>¡<b>Hola</b>, {{ this.nombre | async }}!</p>
   <div>
     <ion-item *ngFor="let item of items" lines="full">
       <a routerLink="/cliente/{{ item.id }}" class="items">{{ item.nombre }}</a>

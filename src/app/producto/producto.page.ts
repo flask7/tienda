@@ -67,7 +67,13 @@ export class ProductoPage implements OnInit {
       }
 
       this._productos = data;
-      this.activo = 1;
+
+      if (this.existencia > 0) {
+
+        this.activo = 1;      
+
+      }
+  
 
     }, Error => {
 

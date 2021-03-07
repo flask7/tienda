@@ -1,5 +1,7 @@
 import { Component, OnInit  } from '@angular/core';
 import { Router } from  '@angular/router';
+import { ComunicacionService } from '../comunicacion.service';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-tab2',
@@ -8,7 +10,7 @@ import { Router } from  '@angular/router';
 })
 export class Tab2Page implements OnInit  {
 
-  nombre: string;
+  nombre: Observable<string>;
   items: any = [{'nombre': 'Información', 'id':'1'}, 
   {'nombre': 'Mis direcciónes de envío', 'id': '2'}, 
   {'nombre': 'Mis pedidos', 'id': '3'}, 
@@ -20,27 +22,33 @@ export class Tab2Page implements OnInit  {
   {'nombre': 'Mis opiniones', 'id': '9'}, 
   {'nombre': 'Salir', 'id': '10'}]
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private comunicacion: ComunicacionService) {}
 
   ngOnInit(){
 
-    this.nombre = localStorage.getItem('usuario');
-    
-    this.redireccion();
+    this.comunicacion.estado_usuario().subscribe((data) => {
+
+      if (data === 'Iniciar sesión' || data == null) {
+
+        this.redireccion();
+        
+      }else{
+
+        this.nombre = Observable.of(data);
+
+      }
+
+    }, Error => {
+
+      console.log(Error);
+
+    });
 
   }
 
   redireccion(){
-
-    if (localStorage.getItem('sesion') != 'activa') {
       
-      this.router.navigateByUrl('/tabs/login');
-
-    }else{
-
-      document.getElementById('geo').style.display = 'block';
-      
-    }
+    this.router.navigateByUrl('/tabs/login');
     
   }
 

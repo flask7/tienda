@@ -17,32 +17,48 @@ export class Tab3Page implements OnInit {
 
   ngOnInit(){
 
-  	this.comunicacion.obtener_productos().subscribe((data:any) => {
+    this.validacion();
 
-  		this.products$ = data;
+  }
 
-  		if (data != '') {
-  			
-        this.info.push(JSON.parse(data));
+  validacion(){
 
-  			this.productos = Observable.of(this.info);
+    this.comunicacion.obtener_productos().subscribe((data:any) => {
 
-  		}else{
+      this.products$ = data;
+
+      if (data != '') {
+       
+        if (JSON.parse(data).length == 0) {
+
+          this.info = [];
+
+        }else{
+
+          this.info = JSON.parse(data);
+
+        }
+
+        this.productos = Observable.of(this.info);
+
+      }else{
 
         this.productos = Observable.of([]);
 
       }
 
 
-  	}, Error => {
+    }, Error => {
 
-  		console.log(Error.message);
+      console.log(Error.message);
 
-  	});
+    });
 
   }
 
   eliminar_producto(id){
+
+    this.comunicacion.eliminar_producto(id);
 
   }
 

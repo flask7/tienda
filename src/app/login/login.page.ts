@@ -4,6 +4,7 @@ import { ComunicacionService } from '../comunicacion.service';
 import { Router } from  '@angular/router';
 import { TabsPage } from '../tabs/tabs.page';
 import { AlertController } from '@ionic/angular';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-login',
@@ -14,12 +15,25 @@ export class LoginPage implements OnInit {
 
 	correo: string;
 	password: string;
+  usuario: Observable<string>;
 
   constructor(private comunicacion: ComunicacionService, private router: Router, private alerta: AlertController) { }
 
   ngOnInit() {
 
- 
+    this.comunicacion.estado_usuario().subscribe((data) => {
+
+      if (data != 'Iniciar sesión' || data != null) {
+
+        this.redirect();
+        
+      }
+
+    }, Error => {
+
+      console.log(Error);
+
+    });
 
   }
 
@@ -62,8 +76,8 @@ export class LoginPage implements OnInit {
           localStorage.setItem('sesion', 'activa');
           localStorage.setItem('usuario', data);
 
-          this.comunicacion.usuario = data;
-          this.router.navigateByUrl('/tabs/tab2');
+          this.comunicacion.cambiar_estado_usuario(data);
+          this.redirect();
           
         }else{
 
@@ -80,6 +94,12 @@ export class LoginPage implements OnInit {
   		console.log(Error.message);
 
   	});
+
+  }
+
+  redirect(){
+
+    this.router.navigateByUrl('/tabs/tab2');
 
   }
 

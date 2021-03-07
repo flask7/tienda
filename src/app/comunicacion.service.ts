@@ -8,8 +8,6 @@ import { Observable } from 'rxjs/Observable';
 })
 export class ComunicacionService {
 
-  usuario: string = localStorage.getItem('usuario');
-
   items: any = [
   {'nombre': 'Alimentacion y Bebida', 'id':'14043'}, 
   {'nombre': 'Artes gráficas', 'id': '45'}, 
@@ -26,10 +24,11 @@ export class ComunicacionService {
   {'nombre': 'Salud y Belleza', 'id': '203'},
   {'nombre': 'Moda', 'id': '12976'}, 
   {'nombre':'Disfraces', 'id': '0'}];
+  productos_almacenados: any = [];
+  private carrito = new BehaviorSubject('');
+  private usuario = new BehaviorSubject('Iniciar sesión');
 
   constructor(private http: HttpClient) { }
-
-  private carrito = new BehaviorSubject('');
 
   obtener_productos(): Observable<any> {
 
@@ -37,20 +36,92 @@ export class ComunicacionService {
 
   }
 
+  estado_usuario(): Observable<string> {
+
+   return this.usuario.asObservable();
+
+  }
+
+  cambiar_estado_usuario(usuario){
+
+    this.usuario.next(usuario);
+
+  }
+
   add_producto(id, precio, nombre, cantidad){
 
+    let mensaje;
+    let info;
     const json = {
 
       id: id,
       nombre: nombre,
-      precio: precio,
+      precio: ((parseFloat(precio) * parseInt(cantidad)).toFixed(2)).toString(),
       cantidad: cantidad
 
     };
 
-    this.carrito.next(JSON.stringify(json));
+    this.obtener_productos().subscribe((data) => {
 
-    return 'producto añadido exitosamente';
+      info = data;
+
+    }, Error => {
+
+      console.log(Error.message);
+
+    });
+
+    if (info.length > 0) {
+       
+      let datos = JSON.parse(info);
+
+      for (let i = 0; i < datos.length; i++) {
+     
+        if (datos[i].id === id) {
+
+          return 'Ya ha seleccionado este producto';
+
+        }
+
+      }
+
+      this.productos_almacenados.push(json);
+      this.carrito.next(JSON.stringify(this.productos_almacenados));
+
+      return 'producto añadido exitosamente';
+
+    }else{
+
+      this.productos_almacenados.push(json);
+      this.carrito.next(JSON.stringify(this.productos_almacenados));
+
+      return 'producto añadido exitosamente';
+
+    }
+
+  }
+
+  eliminar_producto(id) {
+
+    for (let i = 0; i < this.productos_almacenados.length; i++) {
+
+      if (id === this.productos_almacenados[i].id) {
+
+        if (this.productos_almacenados.length == 1) {
+
+          this.productos_almacenados = [];
+
+        }else{
+
+          this.productos_almacenados.splice(i, 1);
+
+        }
+
+      }
+     
+    }
+
+    this.carrito.next(JSON.stringify(this.productos_almacenados));
 
   }
 

@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<ion-grid style="margin-top: 80px;">
+		<ion-row>
+			<ion-col size="12">
+				<ion-item>
+					<ion-label>
+						<ion-text>
+							Nombre de producto:
+						</ion-text>  
+						<p>{{ nombre }}</p>
+					</ion-label>
+				</ion-item>
+			</ion-col>
+			<ion-col size="12">
+				<ion-item>
+					<ion-label>
+						<ion-text>
+							Precio unitario:		
+						</ion-text>
+						<p>{{ precio }} €</p>
+					</ion-label>
+				</ion-item>
+			</ion-col>
+			<ion-col size="12">
+				<ion-item>
+					<ion-label>
+						<ion-text>
+							Cantidad:
+						</ion-text>
+						<p>{{ cantidad }}</p>
+					</ion-label>
+				</ion-item>
+			</ion-col>
+			<ion-col size="12">
+				<ion-item>
+					<ion-label>
+						<ion-text>Total:</ion-text>
+						<p>{{ total }} €</p>
+					</ion-label>
+				</ion-item>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ng-container *ngIf="direcciones.length > 0">
+				<ng-container *ngFor="let direccion of direcciones; let i = index">
+					<ion-col *ngIf="i < limite" size="4">
+						<ion-card class="tarjeta" (click)="seleccionar(i+1)">
+						  <ion-card-header>
+						    <ion-card-subtitle>Dirección</ion-card-subtitle>
+						    <ion-card-title>Detalle:</ion-card-title>
+						  </ion-card-header>
+
+						  <ion-card-content>
+						    {{ direccion }}
+						  </ion-card-content>
+						</ion-card>
+					</ion-col>
+				</ng-container>
+			</ng-container>
+			<ion-col size="12" *ngIf="direcciones?.length <= 0" routerLink="/geolocalizacion">
+				<ion-card>
+					<ion-card-content>
+						    No tiene registrada ninguna dirección de envío toque aquí para crear una nueva
+					</ion-card-content>
+				</ion-card>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
+				<p class="mostrar" (click)="mostrar()">{{ texto_dir }}</p>
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col class="colbuy">
+				<ion-button [disabled]="direccion == 0" class="comprar" (click)="comprar(direccion)">Comprar</ion-button>
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+</ion-content>

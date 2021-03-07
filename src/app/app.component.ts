@@ -9,6 +9,7 @@ import { MenuController } from '@ionic/angular';
 import { ComunicacionService } from './comunicacion.service';
 
 import { Router } from  '@angular/router';
+import { Observable } from 'rxjs/Rx';
 
 @Component({
   selector: 'app-root',
@@ -18,8 +19,9 @@ import { Router } from  '@angular/router';
 export class AppComponent implements OnInit {
 
   items: any = this.comunicacion.items;
-  usuario: string = this.comunicacion.usuario;
+  usuario: Observable<string>;
   resultados: any = [];
+  mostrar: string;
 
   constructor(
     private platform: Platform,
@@ -34,21 +36,31 @@ export class AppComponent implements OnInit {
 
   ngOnInit(){
 
-    if (this.comunicacion.usuario != undefined) {
+    if (!localStorage.getItem('usuario')) {
 
-      this.usuario = this.comunicacion.usuario;
-
-      document.getElementById('geo').style.display = 'block';
-
+      localStorage.setItem('usuario', 'Iniciar sesión');
+      
     }else{
 
-      this.usuario = 'Iniciar sesión';
-      this.comunicacion.usuario = 'Iniciar sesión';
-
-      document.getElementById('geo').style.display = 'none';
+      this.comunicacion.cambiar_estado_usuario(localStorage.getItem('usuario'));
 
     }
-    
+
+    this.comunicacion.estado_usuario().subscribe((data) => {
+
+      if (data == 'Iniciar sesión' || data == null) {
+
+        this.mostrar = 'N';
+        
+      }else{
+
+        this.mostrar = 'S';
+        this.usuario = Observable.of(data);
+
+      }
+
+    }, Error => console.log(Error));
+
   }
 
   buscar(event){
@@ -78,10 +90,11 @@ export class AppComponent implements OnInit {
   cerrar(){
 
     localStorage.removeItem('sesion');
-    localStorage.removeItem('usuario');
+    localStorage.setItem('usuario', 'Iniciar sesión');
     
-    this.comunicacion.usuario = 'Iniciar sesión';
-
+    this.mostrar = 'N';
+    this.comunicacion.cambiar_estado_usuario('Iniciar sesión');
+    this.usuario = Observable.of('Iniciar sesión');
     this.router.navigateByUrl('/tabs/login');
 
   }
