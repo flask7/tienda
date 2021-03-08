@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
+import { Form } from '@angular/forms';
+import { Observable } from 'rxjs/Rx';
+import { ComunicacionService } from '../comunicacion.service';
 
 @Component({
   selector: 'app-geolocalizacion',
@@ -12,27 +15,50 @@ export class GeolocalizacionPage implements OnInit {
 
 	ubicacion: any = [];
   resultado: string;
+  nombre: string;
+  apellidos: string;
+  empresa: string;
+  cif: string;
+  direccion: string;
+  cp: string;
+  ciudad: string;
+  telefono: string;
+  telefono2: string;
+  direcciones: any = [];
 
-  constructor(public geolocalizacion: Geolocation, public code: NativeGeocoder) { }
+  constructor(public geolocalizacion: Geolocation, public code: NativeGeocoder, private comunicacion: ComunicacionService) { }
 
   ngOnInit() {
 
-  	let latitud;
-  	let longitud;
+  	this.geolocation();
 
-  	this.geolocalizacion.getCurrentPosition().then((posicion) => {
+    if (localStorage.getItem('direcciones')) {
 
-  		latitud = posicion.coords.latitude;
-  		longitud = posicion.coords.longitude;
+      this.direcciones = JSON.parse(localStorage.getItem('direcciones'));
+      
+      this.comunicacion.actualizar_direcciones(this.direcciones);
 
-  		this.geocodigo(latitud, longitud);
+    }
 
-  	}, Error => {
+  }
 
-  		console.log(Error);
-  		
-  	});
+  geolocation(){
 
+    let latitud;
+    let longitud;
+
+    this.geolocalizacion.getCurrentPosition().then((posicion) => {
+
+      latitud = posicion.coords.latitude;
+      longitud = posicion.coords.longitude;
+
+      this.geocodigo(latitud, longitud);
+
+    }, Error => {
+
+      console.log(Error);
+      
+    });
 
   }
 
@@ -54,5 +80,44 @@ export class GeolocalizacionPage implements OnInit {
     }).catch((error: any) => console.log(error));
 
   }
+
+  add_location(){
+
+    const json = {
+
+      ubicacion: this.ubicacion,
+      resultado: this.resultado,
+      nombre: this.nombre,
+      apellidos: this.apellidos,
+      empresa: this.empresa,
+      cif: this.cif,
+      direccion: this.direccion,
+      cp: this.cp,
+      ciudad: this.ciudad,
+      telefono: this.telefono,
+      telefono2: this.telefono2
+
+    };
+
+    this.comunicacion.add_direccion(json);
+    this.comunicacion.obtener_direcciones().subscribe((data:any) => {
+
+      console.log(data);
+
+      this.direcciones = data;
+
+    }, Error => {
+
+      console.log(Error);
+
+    });
+
+
+  }
+
+  borrar(id){
+
+  }
+
 
 }

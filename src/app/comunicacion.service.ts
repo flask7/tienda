@@ -25,7 +25,9 @@ export class ComunicacionService {
   {'nombre': 'Moda', 'id': '12976'}, 
   {'nombre':'Disfraces', 'id': '0'}];
   productos_almacenados: any = [];
+  direcciones_registradas: any = [];
   private carrito = new BehaviorSubject('');
+  private direcciones = new BehaviorSubject('');
   private usuario = new BehaviorSubject('Iniciar sesión');
 
   constructor(private http: HttpClient) { }
@@ -33,6 +35,12 @@ export class ComunicacionService {
   obtener_productos(): Observable<any> {
 
    return this.carrito.asObservable();
+
+  }
+
+  obtener_direcciones(): Observable<any> {
+
+   return this.direcciones.asObservable();
 
   }
 
@@ -45,6 +53,32 @@ export class ComunicacionService {
   cambiar_estado_usuario(usuario){
 
     this.usuario.next(usuario);
+
+  }
+
+  actualizar_productos(array){
+
+    this.productos_almacenados = array;
+    
+    this.carrito.next(JSON.stringify(this.productos_almacenados));
+
+  }
+
+  actualizar_direcciones(array){
+
+    this.direcciones_registradas = array;
+    
+    this.direcciones.next(JSON.stringify(this.direcciones));
+
+  }
+
+  add_direccion(json:any){
+
+    let dir = json.direccion;
+
+    this.direcciones_registradas.push(dir);
+    this.direcciones.next(this.direcciones_registradas);
+    localStorage.setItem('direcciones', JSON.stringify(this.direcciones_registradas));
 
   }
 
@@ -87,6 +121,7 @@ export class ComunicacionService {
 
       this.productos_almacenados.push(json);
       this.carrito.next(JSON.stringify(this.productos_almacenados));
+      localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
 
       return 'producto añadido exitosamente';
 
@@ -94,6 +129,7 @@ export class ComunicacionService {
 
       this.productos_almacenados.push(json);
       this.carrito.next(JSON.stringify(this.productos_almacenados));
+      localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
 
       return 'producto añadido exitosamente';
 
@@ -121,6 +157,7 @@ export class ComunicacionService {
      
     }
 
+    localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
     this.carrito.next(JSON.stringify(this.productos_almacenados));
 
   }

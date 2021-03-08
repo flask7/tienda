@@ -29,13 +29,17 @@
 	color: #e0f7ac;
 	background: transparent;
 }
-ion-card{
-	background: #8ac306;
-	ion-item{
-		--background: transparent;
+.add:hover{
+	color: white;
+}
+.carta{
+	--background: #8ac306;
+	margin: auto;
+	border-radius: 7.5px;
+	.separador{
 		display: flex;
 	}
 }
-.separador{
-	display: flex;
+.boton{
+	margin-top: 30px;
 }

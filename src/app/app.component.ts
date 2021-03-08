@@ -90,8 +90,10 @@ export class AppComponent implements OnInit {
   cerrar(){
 
     localStorage.removeItem('sesion');
+    localStorage.removeItem('productos');
+    localStorage.removeItem('direcciones');
     localStorage.setItem('usuario', 'Iniciar sesión');
-    
+
     this.mostrar = 'N';
     this.comunicacion.cambiar_estado_usuario('Iniciar sesión');
     this.usuario = Observable.of('Iniciar sesión');

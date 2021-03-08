@@ -13,7 +13,7 @@ export class FacturacionPage implements OnInit {
 	precio = this.activate.snapshot.paramMap.get('precio');
 	cantidad = this.activate.snapshot.paramMap.get('cantidad');
 	total: string;
-	direcciones: any = [];
+	direcciones: any = JSON.parse(localStorage.getItem('direcciones'));
 	direccion: number = 0;
 	limite: number = 3;
 	texto_dir: string = 'Mostrar todas las direcciones';
@@ -51,7 +51,7 @@ export class FacturacionPage implements OnInit {
   }
 
   comprar(dir){
-
+  	
   }
 
 }

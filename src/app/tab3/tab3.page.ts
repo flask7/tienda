@@ -17,7 +17,19 @@ export class Tab3Page implements OnInit {
 
   ngOnInit(){
 
-    this.validacion();
+    if (!localStorage.getItem('productos')) {
+      
+      this.validacion();
+
+    }else{
+
+      this.info = JSON.parse(localStorage.getItem('productos'));
+      
+      this.comunicacion.actualizar_productos(this.info);
+      this.validacion();
+
+    }
+
 
   }
 
@@ -47,12 +59,12 @@ export class Tab3Page implements OnInit {
 
       }
 
-
     }, Error => {
 
       console.log(Error.message);
 
     });
+
 
   }
 
