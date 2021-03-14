@@ -10,7 +10,7 @@ import { Observable } from 'rxjs/Rx';
 })
 export class Tab2Page implements OnInit  {
 
-  nombre: Observable<string>;
+  nombre: Observable<any>;
   items: any = [{'nombre': 'Información', 'id':'1'}, 
   {'nombre': 'Mis direcciónes de envío', 'id': '2'}, 
   {'nombre': 'Mis pedidos', 'id': '3'}, 
@@ -26,9 +26,9 @@ export class Tab2Page implements OnInit  {
 
   ngOnInit(){
 
-    this.comunicacion.estado_usuario().subscribe((data) => {
+    this.comunicacion.estado_usuario().subscribe((data:any) => {
 
-      if (data === 'Iniciar sesión' || data == null) {
+      if (data.toString() == 'Iniciar sesión' || data == null) {
 
         this.redireccion();
         

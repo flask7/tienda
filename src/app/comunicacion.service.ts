@@ -38,9 +38,23 @@ export class ComunicacionService {
 
   }
 
-  obtener_direcciones(): Observable<any> {
+  obtener_direcciones(json): Observable<any> {
 
-   return this.direcciones.asObservable();
+    const headers = {
+
+      'Content-type': 'application/json'
+      
+    }
+
+    let _json = {
+
+      id: json
+
+    };
+
+   return this.http.post('https://tuwordpress.online/prestashop/public/api/get_direcciones', JSON.stringify(_json), { headers });
+  
+   //return this.direcciones.asObservable();
 
   }
 
@@ -50,10 +64,10 @@ export class ComunicacionService {
 
   }
 
-  cambiar_estado_usuario(usuario){
+  cambiar_estado_usuario(usuario: any){
 
     this.usuario.next(usuario);
-
+    
   }
 
   actualizar_productos(array){
@@ -75,10 +89,19 @@ export class ComunicacionService {
   add_direccion(json:any){
 
     let dir = json.direccion;
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
 
     this.direcciones_registradas.push(dir);
     this.direcciones.next(this.direcciones_registradas);
+
     localStorage.setItem('direcciones', JSON.stringify(this.direcciones_registradas));
+
+    
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/direcciones', JSON.stringify(json), { headers })
 
   }
 
@@ -170,7 +193,8 @@ export class ComunicacionService {
 
     }
 
-  	return this.http.post('https://tuwordpress.online/prestashop/public/api/login', JSON.stringify(json), { headers })
+  	//return this.http.post('https://tuwordpress.online/prestashop/public/api/login', JSON.stringify(json), { headers })
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/login', JSON.stringify(json), { headers })
   	
   }
 
@@ -182,7 +206,8 @@ export class ComunicacionService {
 
     }
 
-    return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json), { headers });
+    //return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json), { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json), { headers })
 
   }
 
@@ -320,5 +345,64 @@ export class ComunicacionService {
 
   }
 
+  buscador_estados(/*busqueda: string*/){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    /*const json = {
+      busqueda: busqueda
+    }*/
+
+    return this.http.get('https://tuwordpress.online/prestashop/public/api/buscador_estados'/*, json*/, { headers });
+
+  }
+
+   buscador_estado(busqueda: string){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    const json = {
+      id: busqueda
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/buscador_estado', json, { headers });
+
+  }
+
+  actualizar_direccion(json: any){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_direcciones', json, { headers });
+
+  }
+
+  eliminar_direccion(id: string){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    const json = {
+      id: id
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/eliminar_direcciones', json, { headers });
+
+  }
 
 }

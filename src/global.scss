@@ -42,3 +42,24 @@ ion-searchbar ion-icon {
   background-color: white;
   box-shadow: none !important;
 }
+
+.barra_estados{
+  background-color: white;
+  --border: none;
+  border-radius: 0px;
+
+  .searchbar-input.sc-ion-searchbar-md{
+
+    border-radius: 0px;
+    border: none;
+    --placeholder-color: black;
+    
+  }
+
+  ion-searchbar ion-icon{
+
+    display: none;
+
+  }
+
+}

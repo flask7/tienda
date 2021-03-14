@@ -30,7 +30,6 @@ export class Tab3Page implements OnInit {
 
     }
 
-
   }
 
   validacion(){
@@ -64,7 +63,6 @@ export class Tab3Page implements OnInit {
       console.log(Error.message);
 
     });
-
 
   }
 

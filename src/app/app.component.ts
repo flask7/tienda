@@ -21,7 +21,7 @@ export class AppComponent implements OnInit {
   items: any = this.comunicacion.items;
   usuario: Observable<string>;
   resultados: any = [];
-  mostrar: string;
+  mostrar: string = 'N';
 
   constructor(
     private platform: Platform,
@@ -48,7 +48,7 @@ export class AppComponent implements OnInit {
 
     this.comunicacion.estado_usuario().subscribe((data) => {
 
-      if (data == 'Iniciar sesión' || data == null) {
+      if (data === 'Iniciar sesión' || data == null) {
 
         this.mostrar = 'N';
         
@@ -89,9 +89,7 @@ export class AppComponent implements OnInit {
 
   cerrar(){
 
-    localStorage.removeItem('sesion');
-    localStorage.removeItem('productos');
-    localStorage.removeItem('direcciones');
+    localStorage.clear();
     localStorage.setItem('usuario', 'Iniciar sesión');
 
     this.mostrar = 'N';

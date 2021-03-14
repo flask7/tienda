@@ -21,9 +21,11 @@ export class LoginPage implements OnInit {
 
   ngOnInit() {
 
-    this.comunicacion.estado_usuario().subscribe((data) => {
+    this.comunicacion.estado_usuario().subscribe((data: any) => {
 
-      if (data != 'Iniciar sesión' || data != null) {
+      console.log(data);
+
+      if (data !== 'Iniciar sesión' || data == null) {
 
         this.redirect();
         
@@ -74,9 +76,10 @@ export class LoginPage implements OnInit {
           console.log('usuario en linea');
 
           localStorage.setItem('sesion', 'activa');
-          localStorage.setItem('usuario', data);
+          localStorage.setItem('usuario', data[0]);
+          localStorage.setItem('cliente_id', data[1]); 
 
-          this.comunicacion.cambiar_estado_usuario(data);
+          this.comunicacion.cambiar_estado_usuario(data[0]);
           this.redirect();
           
         }else{

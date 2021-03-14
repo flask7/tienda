@@ -10,10 +10,10 @@ import { ComunicacionService } from '../comunicacion.service';
 export class FacturacionPage implements OnInit {
 
 	nombre = this.activate.snapshot.paramMap.get('nombre');
-	precio = this.activate.snapshot.paramMap.get('precio');
+	total = this.activate.snapshot.paramMap.get('precio');
 	cantidad = this.activate.snapshot.paramMap.get('cantidad');
-	total: string;
-	direcciones: any = JSON.parse(localStorage.getItem('direcciones'));
+	precio: string;
+	direcciones: any = [];
 	direccion: number = 0;
 	limite: number = 3;
 	texto_dir: string = 'Mostrar todas las direcciones';
@@ -22,7 +22,15 @@ export class FacturacionPage implements OnInit {
 
   ngOnInit() {
 
-  	this.total = ((parseFloat(this.precio)*parseInt(this.cantidad)).toFixed(2)).toString();
+    const dir = localStorage.getItem('direcciones');
+
+    if (dir) {
+
+      this.direcciones = JSON.parse(localStorage.getItem('direcciones'));
+      
+    }
+
+  	this.precio = ((parseFloat(this.total)/parseInt(this.cantidad)).toFixed(2)).toString();
 
   }
 
