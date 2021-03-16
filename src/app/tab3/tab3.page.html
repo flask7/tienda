@@ -13,6 +13,7 @@
 		  					<ion-col size="8">
 		  						<p class="nombre">
 		  							{{ producto.nombre }}
+		  							Nombre
 		  						</p>
 		  					</ion-col>
 		  				</ion-row>
@@ -27,12 +28,12 @@
 		  			<ion-col size="4">
 		  				<ion-row class="filas">
 		  					<ion-col>
-			  					<ion-button class="facturar" routerLink="/facturacion/{{producto.id}}/{{producto.nombre}}/{{producto.precio}}/{{producto.cantidad}}">FACTURAR</ion-button>
+			  					<ion-button class="facturar" routerLink="/facturacion/{{producto.id_carrito}}/{{producto.id}}/{{producto.nombre}}/{{producto.precio}}/{{producto.cantidad}}">FACTURAR</ion-button>
 			  				</ion-col>
 		  				</ion-row>
 		  				<ion-row class="filas">
 		  					<ion-col>
-		  						<ion-button class="cancelar" color="danger" (click)="eliminar_producto(producto.id)">
+		  						<ion-button class="cancelar" color="danger" (click)="eliminar_producto(producto.id_carrito)">
 		  							<ion-icon name="close-circle-outline" class="icono"></ion-icon>
 		  						</ion-button>	
 			  				</ion-col>

@@ -59,7 +59,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button size="large" expand="full" class="bcarrito" (click)="add()" [disabled]="this.activo == 0 && this.cantidad == 0">
+  <ion-button size="large" expand="full" class="bcarrito" (click)="add()" [disabled]="this.activo == 0 && this.cantidad == 0 && sesion === 'activa'">
     <ion-icon name="cart-outline"></ion-icon>
     Añadir al carrito
   </ion-button>

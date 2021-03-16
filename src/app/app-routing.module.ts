@@ -39,7 +39,7 @@ const routes: Routes = [
     loadChildren: () => import('./geolocalizacion/geolocalizacion.module').then( m => m.GeolocalizacionPageModule)
   },
   {
-    path: 'facturacion/:id/:nombre/:precio/:cantidad',
+    path: 'facturacion/:carrito/:id/:nombre/:precio/:cantidad',
     loadChildren: () => import('./facturacion/facturacion.module').then( m => m.FacturacionPageModule)
   }
 ];

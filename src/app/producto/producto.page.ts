@@ -24,6 +24,8 @@ export class ProductoPage implements OnInit {
 	_productos: any = [];
   categoria: string;
   activo: number = 0;
+  sesion: string = localStorage.getItem('sesion');
+  direccion: string;
 
   constructor(private alertController: AlertController, private sanitizer: DomSanitizer, private comunicacion: ComunicacionService, private activate: ActivatedRoute) { }
 
@@ -33,6 +35,8 @@ export class ProductoPage implements OnInit {
     let parametro = this.activate.snapshot.paramMap.get('id');
     this.id = parametro;
     let json = {id: parametro, categoria: this.categoria};
+
+    this.obtener_direcciones();
 
   	this.comunicacion.productos_info(json).subscribe((data: any) => {
 
@@ -95,6 +99,24 @@ export class ProductoPage implements OnInit {
     });
 
     await alert.present();
+    
+  }
+
+  obtener_direcciones(){
+
+    const cliente_id = localStorage.getItem('cliente_id');
+    let direcciones = [];
+
+    this.comunicacion.obtener_direcciones(cliente_id).subscribe((data:any) => {
+
+      this.direccion = data.addresses[0].id;
+
+    }, Error => {
+
+      console.log(Error.message);
+
+    });
+
   }
 
   revision(){
@@ -116,11 +138,58 @@ export class ProductoPage implements OnInit {
 
   }
 
-  add(id = this.id, precio = this.precio, nombre = this.nombre, cantidad = this.cantidad){
+  add(id_customer = localStorage.getItem('cliente_id'), id = this.id, precio = this.precio, nombre = this.nombre, cantidad = this.cantidad){
 
-    let resultado = this.comunicacion.add_producto(id, precio, nombre, cantidad);
+    this.comunicacion.obtener_productos(id_customer).subscribe((data: any) => {
 
-    this.mensaje(resultado);
+      if (data.length > 0) {
+     
+        if (data[0].carts.length > 0) {
+        
+          let datos = data[0].carts;
+
+          for (let i = 0; i < datos.length; i++) {
+
+            if (datos[i].associations.cart_rows[0].id_product === id) {
+
+              return this.mensaje('Ya ha seleccionado este producto');
+
+            }
+
+          }
+
+        }
+
+        this.add_carrito(id_customer, id, precio, nombre, cantidad, this.direccion);
+
+      }else{
+
+        this.add_carrito(id_customer, id, precio, nombre, cantidad, this.direccion);
+
+      }
+
+
+    }, Error => {
+
+      console.log(Error.message);
+
+      this.mensaje(Error.message);
+
+    });
+
+  }
+
+  add_carrito(id_customer, id, precio, nombre, cantidad, direccion){
+
+    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion).subscribe((data: any) => {
+
+      this.mensaje(data[0]);
+
+    }, Error => {
+
+      this.mensaje(Error.message);
+
+    });
 
   }
 

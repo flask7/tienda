@@ -251,7 +251,7 @@ export class GeolocalizacionPage implements OnInit {
 
         });
 
-        this.buscar();        
+        //this.buscar();        
 
         break;
 
@@ -285,17 +285,17 @@ export class GeolocalizacionPage implements OnInit {
 
       this.alerta(data);
 
+      this.adding = 0;
+      this.direcciones = [];
+
+      this.obtener_direcciones();
+      this.blanquear_formulario();
+
     }, Error => {
 
       console.log(Error.message);
 
     });
-
-    this.adding = 0;
-    this.direcciones = [];
-
-    this.obtener_direcciones();
-    this.blanquear_formulario();
 
   }
 

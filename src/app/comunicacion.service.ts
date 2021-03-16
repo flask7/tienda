@@ -32,9 +32,23 @@ export class ComunicacionService {
 
   constructor(private http: HttpClient) { }
 
-  obtener_productos(): Observable<any> {
+  obtener_productos(id: string): Observable<any> {
 
-   return this.carrito.asObservable();
+    const headers = {
+
+      'Content-type': 'application/json'
+      
+    }
+
+    let _json = {
+
+      id: id
+
+    };
+
+   return this.http.post('https://tuwordpress.online/prestashop/public/api/get_carrito', JSON.stringify(_json), { headers });
+
+  // return this.carrito.asObservable();
 
   }
 
@@ -105,62 +119,46 @@ export class ComunicacionService {
 
   }
 
-  add_producto(id, precio, nombre, cantidad){
+  add_producto(id_customer, id, precio, nombre, cantidad, direccion): Observable<any>{
 
-    let mensaje;
-    let info;
     const json = {
-
+      id_customer: id_customer,
       id: id,
+      direccion: direccion,
       nombre: nombre,
       precio: ((parseFloat(precio) * parseInt(cantidad)).toFixed(2)).toString(),
-      cantidad: cantidad
+      quantity: cantidad
 
     };
 
-    this.obtener_productos().subscribe((data) => {
+    const headers = {
 
-      info = data;
-
-    }, Error => {
-
-      console.log(Error.message);
-
-    });
-
-    if (info.length > 0) {
-       
-      let datos = JSON.parse(info);
-
-      for (let i = 0; i < datos.length; i++) {
-     
-        if (datos[i].id === id) {
-
-          return 'Ya ha seleccionado este producto';
-
-        }
-
-      }
-
-      this.productos_almacenados.push(json);
-      this.carrito.next(JSON.stringify(this.productos_almacenados));
-      localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
-
-      return 'producto añadido exitosamente';
-
-    }else{
-
-      this.productos_almacenados.push(json);
-      this.carrito.next(JSON.stringify(this.productos_almacenados));
-      localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
-
-      return 'producto añadido exitosamente';
+      'Content-type': 'application/json'
 
     }
+
+    this.productos_almacenados.push(json);
+    this.carrito.next(JSON.stringify(this.productos_almacenados));
+    localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/carrito', json, { headers });
 
   }
 
   eliminar_producto(id) {
+
+    const json = {
+
+      id: id,
+      id_customer: localStorage.getItem('cliente_id')
+
+    }
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
 
     for (let i = 0; i < this.productos_almacenados.length; i++) {
 
@@ -183,6 +181,8 @@ export class ComunicacionService {
     localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
     this.carrito.next(JSON.stringify(this.productos_almacenados));
 
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/eliminar_carrito', json, { headers });
+
   }
 
   login(json){
@@ -193,8 +193,7 @@ export class ComunicacionService {
 
     }
 
-  	//return this.http.post('https://tuwordpress.online/prestashop/public/api/login', JSON.stringify(json), { headers })
-    return this.http.post('https://tuwordpress.online/prestashop/public/api/login', JSON.stringify(json), { headers })
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/login', JSON.stringify(json), { headers });
   	
   }
 
@@ -206,7 +205,6 @@ export class ComunicacionService {
 
     }
 
-    //return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json), { headers });
     return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json), { headers })
 
   }
