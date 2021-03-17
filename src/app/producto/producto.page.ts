@@ -4,6 +4,9 @@ import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AlertController } from '@ionic/angular';
+import { ModalController } from '@ionic/angular';
+
+import { TutorialPage } from '../tutorial/tutorial.page';
 
 @Component({
   selector: 'app-producto',
@@ -27,7 +30,12 @@ export class ProductoPage implements OnInit {
   sesion: string = localStorage.getItem('sesion');
   direccion: string;
 
-  constructor(private alertController: AlertController, private sanitizer: DomSanitizer, private comunicacion: ComunicacionService, private activate: ActivatedRoute) { }
+  constructor(
+    public modalController: ModalController,
+    private alertController: AlertController, 
+    private sanitizer: DomSanitizer, 
+    private comunicacion: ComunicacionService, 
+    private activate: ActivatedRoute) { }
 
   ngOnInit() {
 
@@ -36,7 +44,22 @@ export class ProductoPage implements OnInit {
     this.id = parametro;
     let json = {id: parametro, categoria: this.categoria};
 
-    this.obtener_direcciones();
+    
+    if (this.sesion == 'activa') {
+
+      this.obtener_direcciones();
+
+    }else{
+
+      let contador = parseInt(localStorage.getItem('contador'));
+
+      if (!contador || contador < 1) {
+       
+        this.presentModal();
+        
+      }
+
+    }
 
   	this.comunicacion.productos_info(json).subscribe((data: any) => {
 
@@ -72,19 +95,39 @@ export class ProductoPage implements OnInit {
 
       this._productos = data;
 
-      if (this.existencia > 0) {
-
-        this.activo = 1;      
-
-      }
-  
-
     }, Error => {
 
       console.log(Error);
 
     });
 
+
+  }
+
+  async presentModal() {
+
+    const modal = await this.modalController.create({
+      component: TutorialPage,
+      cssClass: 'my-custom-class'
+    });
+
+    return await modal.present();
+
+  }
+
+  validar_boton(cantidad){
+
+    this.cantidad = this.cantidad - (cantidad);
+
+    if (this.existencia > this.cantidad && this.cantidad > 0 && this.sesion == 'activa') {
+
+      this.activo = 1;
+
+    }else{
+
+      this.activo = 0;
+
+    }
 
   }
 

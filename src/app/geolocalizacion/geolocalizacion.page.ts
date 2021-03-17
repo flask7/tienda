@@ -35,7 +35,11 @@ export class GeolocalizacionPage implements OnInit {
   edicion: string;
   mostrar_lista: number = 0;
 
-  constructor(public alertController: AlertController, public geolocalizacion: Geolocation, public code: NativeGeocoder, private comunicacion: ComunicacionService) { }
+  constructor(
+    public alertController: AlertController, 
+    public geolocalizacion: Geolocation, 
+    public code: NativeGeocoder, 
+    private comunicacion: ComunicacionService) { }
 
   ngOnInit() {
 

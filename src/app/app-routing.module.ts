@@ -41,6 +41,10 @@ const routes: Routes = [
   {
     path: 'facturacion/:carrito/:id/:nombre/:precio/:cantidad',
     loadChildren: () => import('./facturacion/facturacion.module').then( m => m.FacturacionPageModule)
+  },
+  {
+    path: 'tutorial',
+    loadChildren: () => import('./tutorial/tutorial.module').then( m => m.TutorialPageModule)
   }
 ];
 @NgModule({

@@ -56,7 +56,7 @@
 	  	</ion-grid>
 	  </ion-toolbar>
 	</ion-header>
-	<ion-menu side="end" content-id="main">
+	<ion-menu side="end" content-id="main" autoHide="true">
 
 	  <ion-content>
 	  	
@@ -72,10 +72,14 @@
 	  				</ion-row>
 	  				<ion-row>
 	  					<ion-col *ngIf="this.mostrar == 'S'">
-	  						<a routerLink="/perfil">Ver perfil</a>
+	  						<ion-menu-toggle>
+	  							<a routerLink="/perfil">Ver perfil</a>
+	  						</ion-menu-toggle>
 	  					</ion-col>
 	  					<ion-col *ngIf="this.mostrar == 'N'">
-	  						<a routerLink="/tabs/login" style="color: black;">Iniciar sesión</a>
+	  						<ion-menu-toggle>
+	  							<a routerLink="/tabs/login" style="color: black;">Iniciar sesión</a>
+	  						</ion-menu-toggle>
 	  					</ion-col>
 	  				</ion-row>
 	  			</ion-col>
@@ -84,11 +88,11 @@
 	  	
 	  	<h3>CATÁLOGO PRODUCTOS</h3>
 	    <ion-list>
-	      <ion-menu-toggle auto-hide="true">
+	      <ion-menu-toggle>
 	        <ion-item *ngFor="let item of items">
 	        	<a routerLink="/categories/{{ item.id }}" class="items">{{ item.nombre }}</a>
 	    	</ion-item>
-	    	<ion-item>
+	    	<ion-item *ngIf="(this.usuario | async) != 'Iniciar sesión'">
 	    		<p (click)="cerrar()" class="items">Salir</p>
 	    	</ion-item>
 	      </ion-menu-toggle>

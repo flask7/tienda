@@ -23,8 +23,6 @@ export class LoginPage implements OnInit {
 
     this.comunicacion.estado_usuario().subscribe((data: any) => {
 
-      console.log(data);
-
       if (data !== 'Iniciar sesión' || data == null) {
 
         this.redirect();
@@ -63,8 +61,6 @@ export class LoginPage implements OnInit {
 
   	this.comunicacion.login(json).subscribe((data:any) => {
 
-  		console.log(data);
-
       if (data == 'Usuario no registrado') {
 
         this.error_autenticacion('Usuario no registrado');
@@ -72,8 +68,6 @@ export class LoginPage implements OnInit {
       }else{
 
         if (data != 'Error de autenticación') {
-
-          console.log('usuario en linea');
 
           localStorage.setItem('sesion', 'activa');
           localStorage.setItem('usuario', data[0]);

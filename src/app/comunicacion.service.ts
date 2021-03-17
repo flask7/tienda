@@ -9,21 +9,21 @@ import { Observable } from 'rxjs/Observable';
 export class ComunicacionService {
 
   items: any = [
-  {'nombre': 'Alimentacion y Bebida', 'id':'14043'}, 
+  {'nombre': 'Alimentacion y Bebidas', 'id':'208'}, 
   {'nombre': 'Artes gráficas', 'id': '45'}, 
   {'nombre': 'Material escolar', 'id': '7415'}, 
   {'nombre':'Industria', 'id': '28'},
   {'nombre': 'Deporte', 'id': '29'},
-  {'nombre': 'Movilidad', 'id': '0'}, 
-  {'nombre': 'Hogar', 'id': '26'}, 
-  {'nombre': 'Jardín', 'id': '0'}, 
-  {'nombre': 'Bricolage y herramientas', 'id': '0'}, 
-  {'nombre': 'Electrónica', 'id': '216'}, 
+  {'nombre': 'Movilidad', 'id': '27'}, 
+  {'nombre': 'Hogar', 'id': '30'}, 
+  {'nombre': 'Jardín', 'id': '7364'}, 
+  {'nombre': 'Bricolage y herramientas', 'id': '2048'}, 
+  {'nombre': 'Electrónica', 'id': '155'}, 
   {'nombre':'Juguetes y Ocio', 'id': '677'},
-  {'nombre': 'Mascotas', 'id': '0'}, 
+  {'nombre': 'Mascotas', 'id': '209'}, 
   {'nombre': 'Salud y Belleza', 'id': '203'},
-  {'nombre': 'Moda', 'id': '12976'}, 
-  {'nombre':'Disfraces', 'id': '0'}];
+  {'nombre': 'Moda', 'id': '7797'}, 
+  {'nombre':'Disfraces', 'id': '11968'}];
   productos_almacenados: any = [];
   direcciones_registradas: any = [];
   private carrito = new BehaviorSubject('');

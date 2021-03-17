@@ -25,7 +25,12 @@ export class CategoriesPage implements OnInit {
   imagenes: any = [];
   id: string;
 
-  constructor(private sanitizer: DomSanitizer, private activate: ActivatedRoute, private alerta: AlertController, private comunicacion: ComunicacionService, private cargando: LoadingController) { }
+  constructor(
+    private sanitizer: DomSanitizer, 
+    private activate: ActivatedRoute,
+    private alerta: AlertController, 
+    private comunicacion: ComunicacionService, 
+    private cargando: LoadingController) { }
 
    ngOnInit(){
 

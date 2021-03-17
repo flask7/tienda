@@ -38,11 +38,11 @@
        <ion-item class="ccompra" lines="none">
          
          <div class="contador">
-           <ion-button (click)="this.cantidad = cantidad - 1" [disabled]="this.cantidad <= 0" class="c3">-</ion-button>
+           <ion-button (click)="validar_boton(1)" [disabled]="this.cantidad < 1" class="c3">-</ion-button>
            <div class="c2">
             <h2>{{ cantidad }}</h2>
            </div>
-           <ion-button (click)="this.cantidad = cantidad + 1 " [disabled]="this.cantidad >= this.existencia" class="c1">+</ion-button>
+           <ion-button (click)="validar_boton(-1)" [disabled]="this.cantidad >= this.existencia" class="c1">+</ion-button>
          </div>
        </ion-item>
 
@@ -59,7 +59,7 @@
     </ion-row>
   </ion-grid>
 
-  <ion-button size="large" expand="full" class="bcarrito" (click)="add()" [disabled]="this.activo == 0 && this.cantidad == 0 && sesion === 'activa'">
+  <ion-button size="large" expand="full" class="bcarrito" (click)="add()" [disabled]="this.activo == 0">
     <ion-icon name="cart-outline"></ion-icon>
     Añadir al carrito
   </ion-button>

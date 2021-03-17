@@ -1,0 +1,35 @@
+.mensaje{
+	text-align: center;
+	a{
+		color: #a0bb30;
+		font-weight: bolder;
+		text-decoration: none;
+	}
+}
+.divisor{
+	display: flex;
+}
+.ok{
+	--background: #a0bb30;
+	font-weight: bold;
+	margin: auto;
+}	
+.ok:hover{
+	--background: #212121;
+	--color: white;
+}
+.margen{
+	margin-top: 30px;
+}
+ion-title{
+	p{
+		font-size: 16px;
+	}
+	.bolding{
+		font-weight: bolder;
+		color: #a0bb30;
+	}
+	.msj{
+		margin-left: 5px;
+	}
+}
