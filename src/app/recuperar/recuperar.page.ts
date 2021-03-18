@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
 import { AlertController } from '@ionic/angular';
 import { Form } from '@angular/forms';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-recuperar',
@@ -11,11 +12,15 @@ import { Form } from '@angular/forms';
 export class RecuperarPage implements OnInit {
 
 	correo: string;
-	confirmar: string;
-	password: string;
-	npassword: string;
-
-  constructor(private comunicacion: ComunicacionService, private alerta: AlertController) { }
+  codigo: string;
+  code: string;
+  activador: number = 0;
+	
+  constructor(
+    private comunicacion: ComunicacionService, 
+    private alerta: AlertController, 
+    private router: Router,
+    private activate: ActivatedRoute) { }
 
   ngOnInit() {
   }
@@ -35,30 +40,40 @@ export class RecuperarPage implements OnInit {
 
   recuperar(){
 
-  	if (this.npassword == this.confirmar && this.confirmar != '' && this.confirmar != undefined) {
-  		
-  		const json = {
-	  		correo: this.correo,
-	  		password: this.npassword
-	  	};
+		const json = {
+  		correo: this.correo
 
-	  	this.comunicacion.recuperar(json).subscribe((data:any) => {
+  	};
 
-	  		this.mensajeria('Correo de verificación enviado');
+  	this.comunicacion.recuperar(json).subscribe((data:any) => {
 
-	  	}, Error => {
+  		this.mensajeria('Correo de verificación enviado');
+      this.code = data[0];
+      this.activador = 1;
 
-	  		this.mensajeria(Error.message);
+      localStorage.setItem('correo', data[1]);
 
-	  		console.log(Error);
+  	}, Error => {
 
-	  	});
+  		this.mensajeria(Error.message);
 
-  	}else{
+  		console.log(Error);
 
-  		this.mensajeria('Las contraseñas no coinciden');
+  	});
 
-  	}
+  }
+
+  recuperar2(){
+
+    if (this.codigo == this.code) {
+     
+      this.router.navigateByUrl('/tabs/recuperar2');
+
+    }else{
+
+      this.mensajeria('Código incorrecto');
+
+    }
 
   }
 

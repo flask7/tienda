@@ -8,8 +8,20 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'categories/:id',
+        loadChildren: () => import('../categories/categories.module').then(m => m.CategoriesPageModule)
+      },
+      {
+        path: 'despliegue/:id',
+        loadChildren: () => import('../despliegue/despliegue.module').then(m => m.DesplieguePageModule)
+      },
+      {
         path: 'recuperar',
         loadChildren: () => import('../recuperar/recuperar.module').then(m => m.RecuperarPageModule)
+      },
+      {
+        path: 'recuperar2',
+        loadChildren: () => import('../recuperar2/recuperar2.module').then(m => m.Recuperar2PageModule)
       },
       {
         path: 'registro',

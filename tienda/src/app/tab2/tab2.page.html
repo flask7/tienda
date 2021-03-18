@@ -1,0 +1,15 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+
+  <p>¡<b>Hola</b>, {{ this.nombre | async }}!</p>
+  <div>
+    <ion-item *ngFor="let item of items" lines="full">
+      <a routerLink="/cliente/{{ item.id }}" class="items">{{ item.nombre }}</a>
+    </ion-item> 
+  </div>    
+
+  <!--<app-explore-container name="Tab 2 page"></app-explore-container>-->
+</ion-content>

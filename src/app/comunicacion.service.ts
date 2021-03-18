@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { BehaviorSubject } from 'rxjs';
 import { Observable } from 'rxjs/Observable';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -28,9 +29,33 @@ export class ComunicacionService {
   direcciones_registradas: any = [];
   private carrito = new BehaviorSubject('');
   private direcciones = new BehaviorSubject('');
+  private mostrar = new BehaviorSubject('N');
   private usuario = new BehaviorSubject('Iniciar sesión');
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private router: Router) { }
+
+  cerrar() {
+
+    localStorage.clear();
+    localStorage.setItem('usuario', 'Iniciar sesión');
+
+    this.mostrar.next('N');
+    this.cambiar_estado_usuario('Iniciar sesión');
+    this.router.navigateByUrl('/tabs/login');
+
+  }
+
+  estado_sesion(): Observable<string> {
+
+    return this.mostrar.asObservable();
+
+  }
+
+  cambiar_estado_sesion(valor: string) {
+
+    this.mostrar.next(valor);
+
+  }
 
   obtener_productos(id: string): Observable<any> {
 
@@ -217,7 +242,21 @@ export class ComunicacionService {
 
     }
 
+    //return this.http.post('http://localhost:8000/api/recuperar', JSON.stringify(json), { headers });
     return this.http.post('https://tuwordpress.online/prestashop/public/api/recuperar', JSON.stringify(json), { headers });
+
+  }
+
+  recuperar2(json){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+   // return this.http.post('http://localhost:8000/api/recuperar2', JSON.stringify(json), { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/recuperar2', JSON.stringify(json), { headers });
 
   }
 

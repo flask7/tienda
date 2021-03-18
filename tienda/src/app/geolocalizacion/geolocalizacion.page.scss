@@ -1,0 +1,52 @@
+.misd{
+	margin-top: 100px;
+	font-weight: 100;
+	font-size: 18px;
+	text-align: center;
+}
+.alias{
+	font-weight: 100;
+	font-size: 14px;
+	text-align: center;
+}
+.divisores{
+	margin: auto;
+	ion-label{
+		font-weight: 100;
+		b{
+			color: red;
+		}
+	}
+}
+.etiqueta{
+	text-align: center;
+	background: transparent;
+}
+.add{
+	height: 80px;
+	width: 80px;
+	margin: auto;
+	color: #e0f7ac;
+	background: transparent;
+}
+.add:hover{
+	color: white;
+}
+.carta{
+	--background: #8ac306;
+	margin: auto;
+	border-radius: 7.5px;
+	.separador{
+		display: flex;
+	}
+}
+.boton{
+	margin-top: 30px;
+}
+.tarjeta{
+	--background: #8ac306;
+}
+.lista_estados{
+	overflow-y: scroll;
+    height: 150px;
+}

@@ -4,11 +4,14 @@
 
 <ion-content [fullscreen]="true">
 
-  <p>¡<b>Hola</b>, {{ this.nombre | async }}!</p>
+  <p class="saludo">¡<b>Hola</b>, {{ this.nombre | async }}!</p>
   <div>
     <ion-item *ngFor="let item of items" lines="full">
       <a routerLink="/cliente/{{ item.id }}" class="items">{{ item.nombre }}</a>
     </ion-item> 
+    <ion-item lines="full">
+	  <p (click)="cerrar()" class="items">Salir</p>
+	</ion-item>
   </div>    
 
   <!--<app-explore-container name="Tab 2 page"></app-explore-container>-->

@@ -45,6 +45,10 @@ const routes: Routes = [
   {
     path: 'tutorial',
     loadChildren: () => import('./tutorial/tutorial.module').then( m => m.TutorialPageModule)
+  },
+  {
+    path: 'recuperar2',
+    loadChildren: () => import('./recuperar2/recuperar2.module').then( m => m.Recuperar2PageModule)
   }
 ];
 @NgModule({

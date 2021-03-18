@@ -33,24 +33,28 @@
 		<ion-button (click)="registro()" size="large" class="sesion">GUARDAR</ion-button>
 	</ion-item>
 	
-	<div class="separador">
-		<ion-row>
-			<p class="conectar">Conectar con tu perfil de redes sociales</p>
-		</ion-row>
-		<ion-row>
-			<ion-col>
-				<ion-icon name="logo-facebook"></ion-icon>
-			</ion-col>
-			<ion-col>
-				<ion-icon name="logo-twitter"></ion-icon>
-			</ion-col>
-			<ion-col>
-				<ion-icon name="logo-instagram"></ion-icon>
-			</ion-col>
-			<ion-col>
-				<ion-icon name="logo-pinterest"></ion-icon>
-			</ion-col>
-		</ion-row>
-	</div>
+	<ion-item class="separador" lines="none">
+		<ion-grid>
+			<ion-row>
+				<ion-col size="12">
+					<p class="conectar">Conectar con tu perfil de redes sociales</p>
+				</ion-col>
+			</ion-row>
+			<ion-row>
+				<ion-col size="3">
+					<ion-icon name="logo-facebook"></ion-icon>
+				</ion-col>
+				<ion-col size="3">
+					<ion-icon name="logo-twitter"></ion-icon>
+				</ion-col>
+				<ion-col size="3">
+					<ion-icon name="logo-instagram"></ion-icon>
+				</ion-col>
+				<ion-col size="3">
+					<ion-icon name="logo-pinterest"></ion-icon>
+				</ion-col>
+			</ion-row>
+		</ion-grid>
+	</ion-item>
 
 </ion-content>

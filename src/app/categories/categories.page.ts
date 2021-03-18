@@ -24,6 +24,7 @@ export class CategoriesPage implements OnInit {
   }];
   imagenes: any = [];
   id: string;
+  loading: any;
 
   constructor(
     private sanitizer: DomSanitizer, 
@@ -48,6 +49,19 @@ export class CategoriesPage implements OnInit {
 
    }
 
+  async presentLoading() {
+
+    this.loading = await this.cargando.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando categorías'
+    });
+
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+
+  }
+
   async error(mensaje) {
 
     const alert = await this.alerta.create({
@@ -62,6 +76,8 @@ export class CategoriesPage implements OnInit {
   }
 
   async datos() {
+
+    this.presentLoading();
 
     let parametro = this.activate.snapshot.paramMap.get('id');
 
@@ -108,11 +124,14 @@ export class CategoriesPage implements OnInit {
 
       }
 
+      this.loading.dismiss();
+
       this.obtener_imagenes(this.categorias[0].products);
 
     }, Error => {
 
       console.log(Error);
+      this.loading.dismiss();
 
     });
 

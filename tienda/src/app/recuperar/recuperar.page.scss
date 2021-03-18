@@ -1,0 +1,50 @@
+ion-title{
+	float: left;
+}
+ion-searchbar{
+	width: 80%;
+	float: right;
+	--border-radius: 25px;
+	box-shadow: none;
+	//border: 1px solid green;
+}
+ion-col{
+	text-align: right;
+	font-size: 15px;
+	font-weight: bold;
+	min-inline-size: fit-content;
+}
+ion-content{
+	--background: #90B953;
+}
+.resena{
+	text-align: center;
+	font-size: 25px;
+	font-weight: 100;
+}
+.forms{
+	--background: transparent;
+	display: flex;
+}
+ion-label{
+	margin-bottom: 10px;
+}
+.inputs{
+    border-radius: 20px;
+    --background: white;
+    width: 80%;
+    margin: auto;
+}
+.cambio{
+	--background: transparent;
+	display: flex;
+	ion-button{
+		width: 50%;
+		height: 40px;
+		--background: #171717;
+		--color: white;
+		margin: auto;
+		font-weight: bold;
+		font-size: 18px;
+	}
+}

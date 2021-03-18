@@ -11,16 +11,17 @@ import { Observable } from 'rxjs/Rx';
 export class Tab2Page implements OnInit  {
 
   nombre: Observable<any>;
-  items: any = [{'nombre': 'Información', 'id':'1'}, 
-  {'nombre': 'Mis direcciónes de envío', 'id': '2'}, 
-  {'nombre': 'Mis pedidos', 'id': '3'}, 
-  {'nombre':'Lista de deseos', 'id': '4'},
-  {'nombre': 'Facturas', 'id': '5'},
-  {'nombre': 'Cupones', 'id': '6'}, 
-  {'nombre': 'Recompensas', 'id': '7'}, 
-  {'nombre': 'Trae un amigo (patrocinador)', 'id': '8'}, 
-  {'nombre': 'Mis opiniones', 'id': '9'}, 
-  {'nombre': 'Salir', 'id': '10'}]
+  items: any = [
+    { 'nombre': 'Información', 'id': '1' },
+    { 'nombre': 'Mis direcciónes de envío', 'id': '2' },
+    { 'nombre': 'Mis pedidos', 'id': '3' },
+    { 'nombre': 'Lista de deseos', 'id': '4' },
+    { 'nombre': 'Facturas', 'id': '5' },
+    { 'nombre': 'Cupones', 'id': '6' },
+    { 'nombre': 'Recompensas', 'id': '7' },
+    { 'nombre': 'Trae un amigo (patrocinador)', 'id': '8' },
+    { 'nombre': 'Mis opiniones', 'id': '9' }
+  ];
 
   constructor(private router: Router, private comunicacion: ComunicacionService) {}
 
@@ -50,6 +51,12 @@ export class Tab2Page implements OnInit  {
       
     this.router.navigateByUrl('/tabs/login');
     
+  }
+
+  cerrar() {
+
+    this.comunicacion.cerrar();
+
   }
 
 }

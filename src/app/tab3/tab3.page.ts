@@ -52,9 +52,11 @@ export class Tab3Page implements OnInit {
              if (data[1].products[x].id == data[0].carts[i].associations.cart_rows[0].id_product) {
               
                this.info.push({
-                   "id_carrito": data[0].carts[i].id, "id": data[0].carts[i].associations.cart_rows[0].id_product,
-                  "precio": data[0].carts[i].order_total, "nombre": data[1].products[x].name,
-                   "cantidad": data[0].carts[i].associations.cart_rows[0].quantity});
+                  "id_carrito": data[0].carts[i].id, 
+                  "id": data[0].carts[i].associations.cart_rows[0].id_product,
+                  "precio": data[0].carts[i].order_total, 
+                  "nombre": data[1].products[x].name,
+                  "cantidad": data[0].carts[i].associations.cart_rows[0].quantity});
 
              }
 

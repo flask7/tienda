@@ -66,6 +66,7 @@ ion-datetime{
 }
 .conectar{
 	color: white;
+	margin: auto;
 }
 ion-icon{
 	font-size: 40px;
@@ -74,7 +75,7 @@ ion-icon{
 .separador{
 	margin-top: 5%;
 	background: #849B62;
-	width: 100%;
+	/*width: 100%;
 	height: 15%;
 
 	ion-row:nth-child(1){
@@ -83,10 +84,10 @@ ion-icon{
 	p{
 		text-align: center;
 		width: 100%;
-	}
+	}*/
 	ion-col{
-		height: 50%;
-		width: 25%;
+		/*height: 50%;
+		width: 25%;*/
 		display: flex;
 	}
 }

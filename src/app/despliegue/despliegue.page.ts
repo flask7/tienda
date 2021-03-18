@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-despliegue',
@@ -12,8 +13,13 @@ export class DesplieguePage implements OnInit {
 
 	productos: any = [];
 	id: string;
+  loading: any;
 
-  constructor(private sanitizer: DomSanitizer, private activate: ActivatedRoute, private comunicacion: ComunicacionService) { }
+  constructor(
+    private sanitizer: DomSanitizer, 
+    private activate: ActivatedRoute, 
+    private comunicacion: ComunicacionService,
+    private cargando: LoadingController) { }
 
   ngOnInit() {
 
@@ -26,7 +32,22 @@ export class DesplieguePage implements OnInit {
 
   }
 
+  async presentLoading() {
+
+    this.loading = await this.cargando.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando productos'
+    });
+
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
+
+  }
+
   async obtener_productos(id: string){
+
+    this.presentLoading();
 
   	await this.comunicacion.sub_productos(this.id).subscribe((data: any) => {
 
@@ -43,8 +64,11 @@ export class DesplieguePage implements OnInit {
 
 		}
 
+    this.loading.dismiss();
+
   	}, Error => {
 
+      this.loading.dismiss();
   		console.log(Error);
 
   	});

@@ -55,9 +55,10 @@ export class AppComponent implements OnInit {
       }else{
 
         this.mostrar = 'S';
-        this.usuario = Observable.of(data);
 
       }
+
+      this.usuario = Observable.of(data);
 
     }, Error => console.log(Error));
 
@@ -88,14 +89,8 @@ export class AppComponent implements OnInit {
   }
 
   cerrar(){
-
-    localStorage.clear();
-    localStorage.setItem('usuario', 'Iniciar sesión');
-
-    this.mostrar = 'N';
-    this.comunicacion.cambiar_estado_usuario('Iniciar sesión');
-    this.usuario = Observable.of('Iniciar sesión');
-    this.router.navigateByUrl('/tabs/login');
+    
+    this.comunicacion.cerrar();
 
   }
 

@@ -26,13 +26,13 @@
 		  	<nav>
 		    <ion-row>
 		      <ion-col class="headers" size="5">
-		      	<p routerLink="/categories/45">ARTES GRÁFICAS</p>
+		      	<p routerLink="/tabs/categories/45">ARTES GRÁFICAS</p>
 		      </ion-col>
 		      <ion-col class="headers" size="3">
-		      	<p routerLink="/categories/203">HIGIENE</p>
+		      	<p routerLink="/tabs/categories/203">HIGIENE</p>
 		      </ion-col>
 		      <ion-col class="headers" size="3">
-		      	<p routerLink="/categories/29">DEPORTE</p>
+		      	<p routerLink="/tabs/categories/29">DEPORTE</p>
 		      </ion-col>
 		      <ion-col class="headers" size="1">
 		      	<ion-menu-button>+</ion-menu-button>
@@ -73,7 +73,7 @@
 	  				<ion-row>
 	  					<ion-col *ngIf="this.mostrar == 'S'">
 	  						<ion-menu-toggle>
-	  							<a routerLink="/perfil">Ver perfil</a>
+	  							<a routerLink="/tabs/tab2">Ver perfil</a>
 	  						</ion-menu-toggle>
 	  					</ion-col>
 	  					<ion-col *ngIf="this.mostrar == 'N'">
@@ -90,7 +90,7 @@
 	    <ion-list>
 	      <ion-menu-toggle>
 	        <ion-item *ngFor="let item of items">
-	        	<a routerLink="/categories/{{ item.id }}" class="items">{{ item.nombre }}</a>
+	        	<a routerLink="/tabs/categories/{{ item.id }}" class="items">{{ item.nombre }}</a>
 	    	</ion-item>
 	    	<ion-item *ngIf="(this.usuario | async) != 'Iniciar sesión'">
 	    		<p (click)="cerrar()" class="items">Salir</p>
