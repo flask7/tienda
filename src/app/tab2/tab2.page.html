@@ -7,7 +7,7 @@
   <p class="saludo">¡<b>Hola</b>, {{ this.nombre | async }}!</p>
   <div>
     <ion-item *ngFor="let item of items" lines="full">
-      <a routerLink="/cliente/{{ item.id }}" class="items">{{ item.nombre }}</a>
+      <a routerLink="/tabs/cliente/{{ item.id }}" class="items">{{ item.nombre }}</a>
     </ion-item> 
     <ion-item lines="full">
 	  <p (click)="cerrar()" class="items">Salir</p>

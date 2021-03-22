@@ -8,6 +8,10 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
+        path: 'cliente/:id',
+        loadChildren: () => import('../cliente/cliente.module').then(m => m.ClientePageModule)
+      },
+      {
         path: 'categories/:id',
         loadChildren: () => import('../categories/categories.module').then(m => m.CategoriesPageModule)
       },

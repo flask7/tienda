@@ -442,4 +442,37 @@ export class ComunicacionService {
 
   }
 
+  obtener_perfil(json): Observable<any> {
+
+    const headers = {
+
+      'Content-type': 'application/json'
+      
+    }
+
+    let _json = {
+
+      id: json
+
+    };
+
+    return this.http.post('http://localhost:8000/api/perfil', JSON.stringify(_json), { headers });
+   //return this.http.post('https://tuwordpress.online/prestashop/public/api/get_direcciones', JSON.stringify(_json), { headers });
+
+  }
+
+  actualizar_perfil(json: any){
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('http://localhost:8000/api/actualizar_perfil', json, { headers });
+
+    //return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_direcciones', json, { headers });
+
+  }
+
 }
