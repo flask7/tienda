@@ -456,8 +456,8 @@ export class ComunicacionService {
 
     };
 
-    return this.http.post('http://localhost:8000/api/perfil', JSON.stringify(_json), { headers });
-   //return this.http.post('https://tuwordpress.online/prestashop/public/api/get_direcciones', JSON.stringify(_json), { headers });
+//return this.http.post('http://localhost:8000/api/perfil', JSON.stringify(_json), { headers });
+   return this.http.post('https://tuwordpress.online/prestashop/public/api/perfil', JSON.stringify(_json), { headers });
 
   }
 
@@ -469,9 +469,9 @@ export class ComunicacionService {
 
     }
 
-    return this.http.post('http://localhost:8000/api/actualizar_perfil', json, { headers });
+    //return this.http.post('http://localhost:8000/api/actualizar_perfil', json, { headers });
 
-    //return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_direcciones', json, { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_perfil', json, { headers });
 
   }
 

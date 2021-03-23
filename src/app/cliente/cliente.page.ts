@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
+import { ActivatedRoute } from '@angular/router';
+import { AlertController } from '@ionic/angular';
 
 @Component({
   selector: 'app-cliente',
@@ -13,13 +15,31 @@ export class ClientePage implements OnInit {
 	correo: string;
 	fecha: any;
 	password: string;
+	id: string = this.activate.snapshot.paramMap.get('id');
 
-  constructor(private comunicacion: ComunicacionService) { }
+  constructor(
+  	private comunicacion: ComunicacionService, 
+  	private alertController: AlertController,
+  	private activate: ActivatedRoute) { }
 
   ngOnInit() {
 
   	this.obtener_datos();
 
+  }
+
+  async mensaje(mensaje) {
+
+    const alert = await this.alertController.create({
+      cssClass: 'my-custom-class',
+      header: 'Información',
+      subHeader: '',
+      message: mensaje,
+      buttons: ['OK']
+    });
+
+    await alert.present();
+    
   }
 
   obtener_datos(){
@@ -43,16 +63,18 @@ export class ClientePage implements OnInit {
 
   	let json = {
 
+  		id: localStorage.getItem('cliente_id'),
   		nombre: this.nombre,
   		apellidos: this.apellidos,
   		correo: this.correo,
+  		password: this.password,
   		fecha: this.fecha.toString()
 
   	};
 
   	this.comunicacion.actualizar_perfil(json).subscribe((data: any) => {
 
-  		console.log(data);
+  		this.mensaje(data);
 
   	}, Error => {
 

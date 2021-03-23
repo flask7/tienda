@@ -3,8 +3,7 @@ import { Form } from '@angular/forms';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AlertController } from '@ionic/angular';
-import { ModalController } from '@ionic/angular';
+import { AlertController, ModalController } from '@ionic/angular';
 
 import { TutorialPage } from '../tutorial/tutorial.page';
 
