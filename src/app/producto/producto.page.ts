@@ -19,6 +19,7 @@ export class ProductoPage implements OnInit {
 	cantidad: number = 0;
   existencia: number;
 	ocultar: boolean = false;
+  ocultar_comentarios: boolean = false;
 	imagen: any;
   precio: string;
   descripcion: string;
@@ -28,6 +29,9 @@ export class ProductoPage implements OnInit {
   activo: number = 0;
   sesion: string = localStorage.getItem('sesion');
   direccion: string;
+  clientes: any = [];
+  respuesta: string;
+  limite: number = 2;
 
   constructor(
     public modalController: ModalController,
@@ -100,6 +104,7 @@ export class ProductoPage implements OnInit {
 
     });
 
+    this.get_mensajes();
 
   }
 
@@ -163,20 +168,41 @@ export class ProductoPage implements OnInit {
 
   revision(){
 
-  	let ocultar = document.getElementById('ocultar')
-  	let mostrar = document.getElementById('desplegar')
+  	let ocultar = document.getElementById('ocultar');
+  	let mostrar = document.getElementById('desplegar');
 
   	if (this.ocultar) {
 
-  		ocultar.style.display = 'block'
-  		mostrar.style.display = 'none'
+  		ocultar.style.display = 'block';
+  		mostrar.style.display = 'none';
 
   	}else{
 
-  		ocultar.style.display = 'none'
-  		mostrar.style.display = 'block'
+  		ocultar.style.display = 'none';
+  		mostrar.style.display = 'block';
 
   	}
+
+  }
+
+  revision_comentarios(){
+
+    let ocultar = document.getElementById('hide');
+    let mostrar = document.getElementById('deploy');
+
+    if (this.ocultar_comentarios) {
+
+      ocultar.style.display = 'block';
+      mostrar.style.display = 'none';
+      this.limite = this.clientes.length;
+
+    }else{
+
+      ocultar.style.display = 'none';
+      mostrar.style.display = 'block';
+      this.limite = 2;
+
+    }
 
   }
 
@@ -229,7 +255,41 @@ export class ProductoPage implements OnInit {
 
     }, Error => {
 
-      this.mensaje(Error.message);
+      this.mensaje('Error al añadir el producto');
+      console.log(Error);
+
+    });
+
+  }
+
+  get_mensajes(){
+
+    const json = {
+      id: this.id
+    }
+
+    this.comunicacion.obtener_mensajes(json).subscribe((data: any) => {
+
+      console.log(data);
+
+      if (data == 'Este producto no tiene comentarios') {
+
+        this.respuesta = data;
+
+      }else{
+
+        for (let i = 0; i < data.mensaje.length; i++) {
+       
+          this.clientes.push({mensaje: data.mensaje[i], cliente: data.cliente[i]});
+
+        }
+
+      }
+
+    }, Error => {
+
+      this.mensaje('Error al obtener los mensajes');
+      console.log(Error);
 
     });
 

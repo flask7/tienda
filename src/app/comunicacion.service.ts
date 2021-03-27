@@ -456,8 +456,8 @@ export class ComunicacionService {
 
     };
 
-//return this.http.post('http://localhost:8000/api/perfil', JSON.stringify(_json), { headers });
-   return this.http.post('https://tuwordpress.online/prestashop/public/api/perfil', JSON.stringify(_json), { headers });
+   return this.http.post('http://localhost:8000/api/perfil', JSON.stringify(_json), { headers });
+   //return this.http.post('https://tuwordpress.online/prestashop/public/api/perfil', JSON.stringify(_json), { headers });
 
   }
 
@@ -469,10 +469,36 @@ export class ComunicacionService {
 
     }
 
-    //return this.http.post('http://localhost:8000/api/actualizar_perfil', json, { headers });
+    return this.http.post('http://localhost:8000/api/actualizar_perfil', json, { headers });
 
-    return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_perfil', json, { headers });
+    //return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_perfil', json, { headers });
 
+  }
+
+  obtener_mensajes(json: any){
+    
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    //return this.http.post('http://localhost:8000/api/mensajes_productos', json, { headers });
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/mensajes_productos', json, { headers });
+  }
+
+  obtener_mensajes_usuario(json: any){
+    
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    //return this.http.post('http://localhost:8000/api/mensajes_clientes', json, { headers });
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/mensajes_clientes', json, { headers });
   }
 
 }

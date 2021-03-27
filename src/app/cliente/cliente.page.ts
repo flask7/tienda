@@ -16,6 +16,8 @@ export class ClientePage implements OnInit {
 	fecha: any;
 	password: string;
 	id: string = this.activate.snapshot.paramMap.get('id');
+  respuesta: any = [];
+  vendedores: any = [];
 
   constructor(
   	private comunicacion: ComunicacionService, 
@@ -24,7 +26,15 @@ export class ClientePage implements OnInit {
 
   ngOnInit() {
 
-  	this.obtener_datos();
+    if (this.id == '1') {
+      
+      this.obtener_datos();
+
+    }else{
+
+      this.get_mensajes();
+
+    }
 
   }
 
@@ -54,6 +64,7 @@ export class ClientePage implements OnInit {
   	}, Error => {
 
   		console.log(Error.message);
+  		this.mensaje('Error al obtener los datos');
 
   	});
 
@@ -75,12 +86,49 @@ export class ClientePage implements OnInit {
   	this.comunicacion.actualizar_perfil(json).subscribe((data: any) => {
 
   		this.mensaje(data);
+  		console.log(data);
 
   	}, Error => {
 
   		console.log(Error.message);
+  		this.mensaje('Error al actualizar los datos');
 
   	});
+
+  }
+
+  get_mensajes(){
+
+    const json = {
+      id: localStorage.getItem('cliente_id')
+    }
+
+    this.comunicacion.obtener_mensajes_usuario(json).subscribe((data: any) => {
+
+      console.log(data);
+
+      if (data == 'Aún no tienes comentarios') {
+
+        this.respuesta = data;
+
+      }else{
+
+        for (let i = 0; i < data.mensaje.length; i++) {
+         
+          console.log(data.mensaje[i]);
+
+          this.vendedores.push({mensaje: data.mensaje[i], vendedor: data.vendedor[i]});
+
+        }
+
+      }
+
+    }, Error => {
+
+      this.mensaje('Error al obtener los mensajes');
+      console.log(Error);
+
+    });
 
   }
 

@@ -22,15 +22,39 @@ export class FacturacionPage implements OnInit {
 
   ngOnInit() {
 
-    const dir = localStorage.getItem('direcciones');
-
-    if (dir) {
-
-      this.direcciones = JSON.parse(localStorage.getItem('direcciones'));
-      
-    }
+    this.obtener_direcciones();
 
   	this.precio = ((parseFloat(this.total)/parseInt(this.cantidad)).toFixed(2)).toString();
+
+  }
+
+  obtener_direcciones(){
+
+    const cliente_id = localStorage.getItem('cliente_id');
+    let direcciones = [];
+
+    this.comunicacion.obtener_direcciones(cliente_id).subscribe((data:any) => {
+
+      if (data.addresses) {
+
+        for (let i = 0; i < data.addresses.length; i++) {
+       
+          let objeto = {"direccion": data.addresses[i].address1, "id": data.addresses[i].id};
+
+          this.direcciones.push(objeto);
+          direcciones.push(data.addresses[i].address1);
+         
+        }
+
+      }
+
+      this.comunicacion.actualizar_direcciones(this.direcciones);
+
+    }, Error => {
+
+      console.log(Error.message);
+
+    });
 
   }
 
