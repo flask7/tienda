@@ -2,7 +2,7 @@
   <ion-toolbar></ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content #content>
 	<p class="misd">Mis direcciones de <b>envío</b></p>
 	<p class="alias">Alias, identifica tus direcciones para diferenciarlas</p>
 	<ion-grid>
@@ -134,7 +134,7 @@
 		<ion-row *ngIf="direcciones.length > 0">
 			<ng-container *ngFor="let direccion of direcciones; let i = index">
 				<ion-col size="4">
-					<ion-card class="tarjeta" (click)="mostrar = i + 1">
+					<ion-card class="tarjeta" (click)="scrolling(i)">
 					  <ion-card-header>
 					    <ion-card-subtitle>Dirección</ion-card-subtitle>
 					    <ion-card-title>Detalle:</ion-card-title>
@@ -144,7 +144,7 @@
 					    {{ direcciones[i].direccion }}
 					  </ion-card-content>
 					</ion-card>
-					<ion-row *ngIf="mostrar == i + 1">
+					<ion-row *ngIf="mostrar == i + 1" id="b{{ i }}">
 						<ion-col size="6">
 							<ion-button (click)="borrar(direcciones[i].id)" color="danger" fill="solid">
 								<ion-icon name="close-circle-outline"></ion-icon>

@@ -138,7 +138,6 @@ export class ComunicacionService {
     this.direcciones.next(this.direcciones_registradas);
 
     localStorage.setItem('direcciones', JSON.stringify(this.direcciones_registradas));
-
     
     return this.http.post('https://tuwordpress.online/prestashop/public/api/direcciones', JSON.stringify(json), { headers })
 
@@ -243,6 +242,7 @@ export class ComunicacionService {
     }
 
     //return this.http.post('http://localhost:8000/api/recuperar', JSON.stringify(json), { headers });
+
     return this.http.post('https://tuwordpress.online/prestashop/public/api/recuperar', JSON.stringify(json), { headers });
 
   }
@@ -256,6 +256,7 @@ export class ComunicacionService {
     }
 
    // return this.http.post('http://localhost:8000/api/recuperar2', JSON.stringify(json), { headers });
+
     return this.http.post('https://tuwordpress.online/prestashop/public/api/recuperar2', JSON.stringify(json), { headers });
 
   }
@@ -456,8 +457,9 @@ export class ComunicacionService {
 
     };
 
-   return this.http.post('http://localhost:8000/api/perfil', JSON.stringify(_json), { headers });
-   //return this.http.post('https://tuwordpress.online/prestashop/public/api/perfil', JSON.stringify(_json), { headers });
+   //return this.http.post('http://localhost:8000/api/perfil', JSON.stringify(_json), { headers });
+
+   return this.http.post('https://tuwordpress.online/prestashop/public/api/perfil', JSON.stringify(_json), { headers });
 
   }
 
@@ -469,9 +471,9 @@ export class ComunicacionService {
 
     }
 
-    return this.http.post('http://localhost:8000/api/actualizar_perfil', json, { headers });
+    //return this.http.post('http://localhost:8000/api/actualizar_perfil', json, { headers });
 
-    //return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_perfil', json, { headers });
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_perfil', json, { headers });
 
   }
 
@@ -499,6 +501,19 @@ export class ComunicacionService {
     //return this.http.post('http://localhost:8000/api/mensajes_clientes', json, { headers });
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/mensajes_clientes', json, { headers });
+  }
+
+  pago(json: any){
+    
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    //return this.http.post('http://localhost:8000/api/orden_pago', json, { headers });
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/orden_pago', json, { headers });
   }
 
 }

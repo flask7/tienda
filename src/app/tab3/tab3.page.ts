@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
 import { Observable } from 'rxjs/Rx';
-import { AlertController } from '@ionic/angular';
+import { AlertController, LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-tab3',
@@ -13,12 +13,29 @@ export class Tab3Page implements OnInit {
 	info: any = [];
 	nombres: any = [];
   productos: Observable<Array<string>>;
+  loading: any;
 
-  constructor(private comunicacion: ComunicacionService, private alerta: AlertController) {}
+  constructor(
+    private comunicacion: ComunicacionService,
+    private cargando: LoadingController, 
+    private alerta: AlertController) {}
 
   ngOnInit(){
 
     this.get_products();
+
+  }
+
+  async presentLoading() {
+
+    this.loading = await this.cargando.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando...'
+    });
+
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
 
   }
 
@@ -38,6 +55,8 @@ export class Tab3Page implements OnInit {
 
   get_products(){
 
+    this.presentLoading();
+
     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
 
       if (data.length > 0) {
@@ -46,7 +65,6 @@ export class Tab3Page implements OnInit {
           
           for (let i = 0; i < data[0].carts.length; i++) {
          
-
            for (let x = 0; x < data[1].products.length; x++) {
              
              if (data[1].products[x].id == data[0].carts[i].associations.cart_rows[0].id_product) {
@@ -64,11 +82,21 @@ export class Tab3Page implements OnInit {
 
           }
 
+          this.loading.dismiss();
+
         }else{
 
           this.info = [];
 
+          this.loading.dismiss();
+
         }
+
+      }else{
+
+        this.info = [];
+
+        this.loading.dismiss();
 
       }
 
@@ -76,6 +104,9 @@ export class Tab3Page implements OnInit {
     }, Error => {
 
       console.log(Error.message);
+
+      this.loading.dismiss();
+      this.mensaje('Error al cargar los productos');
 
     });
 

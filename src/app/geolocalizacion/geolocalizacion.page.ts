@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -13,6 +13,8 @@ import { AlertController } from '@ionic/angular';
   styleUrls: ['./geolocalizacion.page.scss'],
 })
 export class GeolocalizacionPage implements OnInit {
+
+  @ViewChild('content') private content: any;
 
 	ubicacion: any = [];
   resultado: string;
@@ -341,6 +343,33 @@ export class GeolocalizacionPage implements OnInit {
     this.estado_id = this.resultados[i].id; 
     this.estado = this.resultados[i].name;
     this.mostrar_lista = 0;
+
+  }
+
+
+  async scrolling(i: number){
+
+    let id, h;
+    this.mostrar = i + 1;
+
+    /*id = 'b' + i.toString();
+
+    await cambio();
+
+    let checkExist = await setInterval(function() {
+
+      h = document.getElementById(id) as HTMLElement;
+
+      console.log(h);
+
+      if (h == null && h == undefined) {
+
+          this.content.scrollToBottom(h.offsetHeight);
+          clearInterval(checkExist);
+
+       }
+
+     }, 100);*/
 
   }
 

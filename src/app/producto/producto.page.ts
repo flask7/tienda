@@ -270,8 +270,6 @@ export class ProductoPage implements OnInit {
 
     this.comunicacion.obtener_mensajes(json).subscribe((data: any) => {
 
-      console.log(data);
-
       if (data == 'Este producto no tiene comentarios') {
 
         this.respuesta = data;

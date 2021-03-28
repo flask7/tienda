@@ -86,7 +86,6 @@ export class ClientePage implements OnInit {
   	this.comunicacion.actualizar_perfil(json).subscribe((data: any) => {
 
   		this.mensaje(data);
-  		console.log(data);
 
   	}, Error => {
 
@@ -105,8 +104,6 @@ export class ClientePage implements OnInit {
 
     this.comunicacion.obtener_mensajes_usuario(json).subscribe((data: any) => {
 
-      console.log(data);
-
       if (data == 'Aún no tienes comentarios') {
 
         this.respuesta = data;
@@ -114,8 +111,6 @@ export class ClientePage implements OnInit {
       }else{
 
         for (let i = 0; i < data.mensaje.length; i++) {
-         
-          console.log(data.mensaje[i]);
 
           this.vendedores.push({mensaje: data.mensaje[i], vendedor: data.vendedor[i]});
 
