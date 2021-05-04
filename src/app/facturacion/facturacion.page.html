@@ -46,7 +46,7 @@
 		</ion-row>
 		<ion-row>
 			<ng-container *ngIf="direcciones.length > 0">
-				<ng-container *ngFor="let direccion of direcciones; let i = index">
+				<ng-container *ngFor="let direccion of (dirs | async); let i = index">
 					<ion-col *ngIf="i < limite" size="4">
 						<ion-card class="tarjeta" (click)="seleccionar(i+1)">
 						  <ion-card-header>
@@ -55,13 +55,13 @@
 						  </ion-card-header>
 
 						  <ion-card-content>
-						    {{ direcciones[i].direccion }}
+						    {{ direccion.direccion }}
 						  </ion-card-content>
 						</ion-card>
 					</ion-col>
 				</ng-container>
 			</ng-container>
-			<ion-col size="12" *ngIf="direcciones?.length <= 0" routerLink="/geolocalizacion">
+			<ion-col size="12" *ngIf="(dirs | async)?.length == 0" routerLink="/geolocalizacion">
 				<ion-card>
 					<ion-card-content>
 						    No tiene registrada ninguna dirección de envío toque aquí para crear una nueva
@@ -71,7 +71,7 @@
 		</ion-row>
 		<ion-row>
 			<ion-col>
-				<p class="mostrar" *ngIf="direcciones?.length > 3" (click)="mostrar()">{{ texto_dir }}</p>
+				<p class="mostrar" *ngIf="(dirs | async)?.length > 3" (click)="mostrar()">{{ texto_dir }}</p>
 			</ion-col>
 		</ion-row>
 		<ion-row>

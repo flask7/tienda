@@ -12,6 +12,7 @@ export class TabsPage implements OnInit {
   constructor(private comunicacion: ComunicacionService) {}
 
   sesion: Observable<string>;
+  articulos: Observable<number>;
 
   ngOnInit(){
 
@@ -24,6 +25,47 @@ export class TabsPage implements OnInit {
   		console.log(Error.message);
 
   	});
+
+    if (localStorage.getItem('cliente_id')) {
+      
+      this.productos();
+
+    }
+
+  }
+
+  productos(){
+
+    this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
+
+      let info = [];
+
+      if (data.length > 0) {
+       
+        for (let i = 0; i < data[0].carts.length; i++) {
+        
+          info.push(data[0].carts[i]);
+
+        }
+
+      }
+
+      this.comunicacion.actualizar_productos(info);
+      this.comunicacion.obtener_productos_2().subscribe(data2 => {
+
+        this.articulos = Observable.of(JSON.parse(data2).length);
+
+      }, Error => {
+
+        console.log(Error);
+
+      });
+
+    }, Error => {
+
+      console.log(Error);
+
+    });
 
   }
 

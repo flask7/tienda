@@ -4,7 +4,14 @@
 	  	<ion-grid>
 	  		<ion-row>
 		  		<ion-col size="2">
-		  			<ion-img src="../assets/Logo.png" class="logo"></ion-img>
+					  <div *ngIf="( boton_activo | async ) == 1" class="contenedora">
+						  <ion-buttons slot="start">
+							<ion-button class="back" *ngIf="( boton_activo | async ) == 1" (click)="nav.pop()">
+								<ion-icon name="arrow-back-outline"></ion-icon>
+							</ion-button>
+						  </ion-buttons>
+					  </div>
+		  			<ion-img src="../assets/Logo.png" class="logo" *ngIf="( boton_activo | async ) == 0"></ion-img>
 		  		</ion-col>
 		  		<ion-col size="10">
 		  			<ion-row>

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Form } from '@angular/forms';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
@@ -7,21 +7,26 @@ import { AlertController, ModalController } from '@ionic/angular';
 
 import { TutorialPage } from '../tutorial/tutorial.page';
 
+import { Observable } from 'rxjs/Rx';
+import { isDeepStrictEqual } from 'util';
+
 @Component({
   selector: 'app-producto',
   templateUrl: './producto.page.html',
   styleUrls: ['./producto.page.scss'],
 })
-export class ProductoPage implements OnInit {
+export class ProductoPage implements OnInit, OnDestroy {
 
+  ruta_anterior: Observable<string>;
   id: string;
   nombre: string;
 	cantidad: number = 0;
   existencia: number;
 	ocultar: boolean = false;
   ocultar_comentarios: boolean = false;
-	imagen: any;
+	imagen: any = [];
   precio: string;
+  precio_base: number;
   descripcion: string;
   referencia: string;
 	_productos: any = [];
@@ -32,6 +37,12 @@ export class ProductoPage implements OnInit {
   clientes: any = [];
   respuesta: string;
   limite: number = 2;
+  pagos: any = ['Transferencia bancaria', 'Payin 7', 'PayPal', 'Cheque', 'Pago con tarjeta Redsys'];
+  pago: string = '';
+  opciones: any = [];
+  variantes: any = [];
+  valores_select: any = [];
+  opcion_seleccionada: any = [];
 
   constructor(
     public modalController: ModalController,
@@ -47,6 +58,7 @@ export class ProductoPage implements OnInit {
     this.id = parametro;
     let json = {id: parametro, categoria: this.categoria};
 
+    this.comunicacion.cambiar_estado_boton('1');
     
     if (this.sesion == 'activa') {
 
@@ -68,14 +80,78 @@ export class ProductoPage implements OnInit {
 
   		let conversion = parseFloat(data[0].products[0].price);
       let monto = conversion.toFixed(2);
-      let info = 'data:image/jpeg;base64, ' + data[1].toString();
-      
-      this.precio = monto.toString();
+      this.precio_base = parseFloat(monto);
       this.descripcion = data[0].products[0].description;
       this.nombre = data[0].products[0].name;
       this.referencia = data[0].products[0].reference;
       this.existencia = parseInt(data[0].products[0].quantity);
-      this.imagen = this.sanitizer.bypassSecurityTrustUrl(info);
+
+      for (let i = 0; i < data[1].length; i++) {
+
+        let info = 'data:image/jpeg;base64, ' + data[1][i].toString();
+        let imagen_limpia = this.sanitizer.bypassSecurityTrustUrl(info);
+
+        this.imagen.push(imagen_limpia);
+        
+      }
+
+      const datos = data[2];
+      const datos2 = data[3];
+
+      if(datos){
+
+        let ids = [];
+        let nombres = [];
+
+        for(let i = 0; i < datos2.length; i++){
+            
+          ids.push(datos2[i].product_options[0].id);
+          nombres.push(datos2[i].product_options[0].name);
+
+        }
+
+        for(let i = 0; i < datos.length; i++){
+
+          let opcion = datos[i].product_option_values[0];
+
+          this.opciones.push(opcion); 
+  
+        }
+
+        const ids_unicos = ids.filter((valor, indice) => {
+
+            return ids.indexOf(valor) === indice;
+
+          }
+
+        );
+
+        const nombres_unicos = nombres.filter((valor, indice) => {
+
+            return nombres.indexOf(valor) === indice;
+
+          }
+        
+        );
+      
+        for (let i = 0; i < nombres_unicos.length; i++) {
+          
+          this.variantes.push({
+
+            id: ids_unicos[i],
+            nombre: nombres_unicos[i]
+  
+          });
+          
+        }
+
+      }
+
+      if(this.existencia > 0) {
+
+        this.validar_boton(-1);
+
+      }
 
   	}, Error => {
 
@@ -108,6 +184,12 @@ export class ProductoPage implements OnInit {
 
   }
 
+  ngOnDestroy() {
+
+    this.comunicacion.cambiar_estado_boton('0');
+
+  }
+
   async presentModal() {
 
     const modal = await this.modalController.create({
@@ -122,6 +204,7 @@ export class ProductoPage implements OnInit {
   validar_boton(cantidad){
 
     this.cantidad = this.cantidad - (cantidad);
+    this.precio = ((this.precio_base * this.cantidad).toFixed(2)).toString();
 
     if (this.existencia > this.cantidad && this.cantidad > 0 && this.sesion == 'activa') {
 
@@ -156,7 +239,11 @@ export class ProductoPage implements OnInit {
 
     this.comunicacion.obtener_direcciones(cliente_id).subscribe((data:any) => {
 
-      this.direccion = data.addresses[0].id;
+      if (data.addresses) {
+
+        this.direccion = data.addresses[0].id;
+        
+      }
 
     }, Error => {
 
@@ -206,11 +293,18 @@ export class ProductoPage implements OnInit {
 
   }
 
-  add(id_customer = localStorage.getItem('cliente_id'), id = this.id, precio = this.precio, nombre = this.nombre, cantidad = this.cantidad){
+  add(
+    id_customer = localStorage.getItem('cliente_id'), 
+    id = this.id, 
+    precio = this.precio, 
+    nombre = this.nombre, 
+    cantidad = this.cantidad, pago = this.pago){
 
     this.comunicacion.obtener_productos(id_customer).subscribe((data: any) => {
 
-      if (data.length > 0) {
+      let productos = data;
+
+     /* if (data.length > 0) {
      
         if (data[0].carts.length > 0) {
         
@@ -228,14 +322,27 @@ export class ProductoPage implements OnInit {
 
         }
 
-        this.add_carrito(id_customer, id, precio, nombre, cantidad, this.direccion);
+      }*/
 
-      }else{
+      productos.push({
 
-        this.add_carrito(id_customer, id, precio, nombre, cantidad, this.direccion);
+        id_customer: id_customer,
+        id: id,
+        nombre: nombre,
+        precio: precio,
+        quantity: cantidad/*,
+        pago: this.pago*/
 
-      }
+      });
 
+      this.add_carrito(
+        id_customer, 
+        id, 
+        precio, 
+        nombre, 
+        cantidad, 
+        this.direccion, 
+        this.valores_select/*, this.pago*/);
 
     }, Error => {
 
@@ -247,9 +354,9 @@ export class ProductoPage implements OnInit {
 
   }
 
-  add_carrito(id_customer, id, precio, nombre, cantidad, direccion){
+  add_carrito(id_customer, id, precio, nombre, cantidad, direccion, opciones/*, pago*/){
 
-    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion).subscribe((data: any) => {
+    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones/*, pago*/).subscribe((data: any) => {
 
       this.mensaje(data[0]);
 
@@ -290,6 +397,38 @@ export class ProductoPage implements OnInit {
       console.log(Error);
 
     });
+
+  }
+
+  obtener_valor_select(valor){
+
+    if(this.valores_select.length == 0){
+
+      this.valores_select.push(valor);
+
+    }else{
+
+      let contador = 0;
+
+      for(let obj in this.valores_select) {
+  
+        if(this.valores_select[obj] === valor.select) {
+  
+          break;
+  
+        }else{
+        
+          if(contador == (this.valores_select.length - 1) && this.valores_select.length > 1){
+
+            this.valores_select.push(valor);
+
+          }
+  
+        }
+  
+      }
+
+    }
 
   }
 

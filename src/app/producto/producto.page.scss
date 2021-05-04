@@ -1,9 +1,8 @@
 .productox{
-	max-height: 40%;
-	max-width: 60%;
-	margin-top: 5%;
-	margin-left: 20%;
-	background: lightgray;
+    width: 300px;
+    height: auto;
+	margin: auto;
+    background: lightgray;
 }
 .titulo{
 	font-weight: bold;
@@ -16,13 +15,17 @@
 	font-weight: bold;
 	width: 90%;
 	margin: auto;
+	margin-bottom: 10px;
+	border-radius: 2.5px;
 }
 .catlist{
-	background: lightgray;
+	background: white;
 	top: 10px;
+	border-bottom: 1px solid #90B953;
 }
 .cat{
-	--background: lightgray;
+	--background: white;
+	border: none;
 	top: 15px;
 }
 .ccompra{
@@ -132,6 +135,7 @@
 	color: #9CC958;
 	font-size: 3em;
 	text-align: right;
+	text-align: center;
 }
 .comprar{
 	margin: auto;
@@ -164,14 +168,14 @@
 	font-weight: 100;
     margin-bottom: 5px;
 }
-#deploy{
-
-}
 #hide{
 	display: none;
 }
 #deploy, #hide{
 	margin-right: 20px
+}
+ion-slides{
+	--bullet-background-active: #90B953;
 }
 @media only screen and(max-width: 360px){
 	.preciox{

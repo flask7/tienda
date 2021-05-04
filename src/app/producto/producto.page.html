@@ -4,13 +4,36 @@
 
 <ion-content>
   <p class="titulo">{{ nombre }}</p>
-	<img [src]="imagen" class="productox">
-  <ion-select value="Variantes" okText="OK" cancelText="Cancelar" class="catlist">
-    <ion-select-option value="Variantes">Opción 1</ion-select-option>
-    <ion-select-option value="Variantes 2">Opción 2</ion-select-option>
-  </ion-select>
-  <ion-item class="cat" lines="none">Variante</ion-item>
-
+  <ion-row style="margin-top: 5%;">
+    <ion-col style="display: flex;">
+      <ion-slides pager="true" [options]="slideOpts">
+        <ion-slide *ngFor="let img of imagen">
+          <img [src]="img" class="productox">
+        </ion-slide>
+      </ion-slides>
+      <!--<img [src]="imagen" class="productox">-->
+    </ion-col>
+  </ion-row>
+  <ng-container *ngIf="opciones.length > 0">
+    <ng-container *ngFor="let variante of variantes; let i = index">
+      <ion-item class="cat" lines="none">
+        <ion-label position="floating" style="z-index: 100;">{{ variante.nombre }}:</ion-label>
+        <ion-select [(ngModel)]="opcion_seleccionada[i]" 
+        name="opcion_seleccionada"
+        value="" okText="OK" 
+        cancelText="Cancelar" 
+        (ionChange)="obtener_valor_select(opcion_seleccionada)" 
+        class="catlist">
+          <ng-container *ngFor="let opcion of opciones">
+            <ng-container *ngIf="opcion.id_attribute_group == variante.id">
+              <ion-select-option value="{{ opcion.id }}">{{ opcion.name }}</ion-select-option>
+            </ng-container>
+          </ng-container>
+  
+        </ion-select>
+      </ion-item>
+    </ng-container>
+  </ng-container>
   <ion-grid fixed>
   	<ion-row class="opciones1">
      <ion-col class="celda" size="6">
@@ -18,18 +41,19 @@
        <ion-item class="ccompra">
          <ion-label>Opciones de financiación</ion-label>
          <ion-select value="" okText="OK" cancelText="Cancelar">
-          <ion-select-option value="1">Pay7in</ion-select-option>
-          <ion-select-option value="2">Celetem</ion-select-option>
+          <ng-container *ngFor="let pay of pagos; let i = index">
+            <ion-select-option value="{{ i }}">{{ pay }}</ion-select-option>
+          </ng-container> 
          </ion-select>
        </ion-item>
-       
-       <ion-item class="ccompra">
+       <!--<ion-item class="ccompra">
          <ion-label>Cuotas</ion-label>
          <ion-select value="" okText="OK" cancelText="Cancelar">
           <ion-select-option value="1">2 meses</ion-select-option>
           <ion-select-option value="2">4 meses</ion-select-option>
          </ion-select>
-       </ion-item>
+  obtener_valor_select(valor){
+       </ion-item>-->
        
      </ion-col>
      <ion-col class="celda" size="6">
@@ -49,9 +73,9 @@
      </ion-col> 
     </ion-row>
     <ion-row>
-      <ion-col>
+      <!--<ion-col>
         <p class="montosc">{{ precio }} € /mes en 8 cuotas</p>
-      </ion-col>
+      </ion-col>-->
       <ion-col>
         <h1 class="preciox">{{ precio }} €</h1>
         <p class="impuestos">(impuestos incluidos)</p>

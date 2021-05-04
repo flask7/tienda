@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { MenuController } from '@ionic/angular';
+import { MenuController, NavController } from '@ionic/angular';
 
 import { ComunicacionService } from './comunicacion.service';
 
@@ -22,6 +22,7 @@ export class AppComponent implements OnInit {
   usuario: Observable<string>;
   resultados: any = [];
   mostrar: string = 'N';
+  boton_activo: Observable<number>;
 
   constructor(
     private platform: Platform,
@@ -29,12 +30,19 @@ export class AppComponent implements OnInit {
     private statusBar: StatusBar, 
     private menu: MenuController,
     private comunicacion: ComunicacionService,
-    private router: Router
+    private router: Router,
+    public nav: NavController
   ) {
     this.initializeApp();
   }
 
   ngOnInit(){
+     
+    this.comunicacion.estado_boton().subscribe(data => {
+
+      this.boton_activo = Observable.of(parseInt(data));
+
+    }, Error => { console.log(Error) });
 
     if (!localStorage.getItem('usuario')) {
 
@@ -68,7 +76,7 @@ export class AppComponent implements OnInit {
 
     let busqueda = event.target.value;
 
-    if (busqueda === '') {
+    if (busqueda == '' || busqueda == ' ') {
 
       this.resultados = [];
 
@@ -96,6 +104,9 @@ export class AppComponent implements OnInit {
 
   initializeApp() {
     this.platform.ready().then(() => {
+      this.statusBar.show();
+      this.statusBar.overlaysWebView(false);
+      this.statusBar.styleLightContent();
       this.statusBar.styleDefault();
       this.splashScreen.hide();
     });

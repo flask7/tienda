@@ -10,11 +10,11 @@ import { AlertController } from '@ionic/angular';
 })
 export class RegistroPage implements OnInit {
 
-	nombre: string;
-	correo: string;
-	password: string;
+	nombre: string = '';
+	correo: string = '';
+	password: string = '';
 	fecha: any;
-	apellido: string;
+	apellido: string = '';
 
   constructor(private comunicacion: ComunicacionService, private router: Router, private alerta: AlertController) { }
 
@@ -46,30 +46,54 @@ export class RegistroPage implements OnInit {
 
   	}
 
-  	this.comunicacion.registro(json).subscribe((data:any) => {
+    if (this.nombre != '' || this.apellido != '' || this.correo != '' || this.fecha != undefined || this.password != '') {
+     
+      if (this.password != '1234') { 
 
-  		if (data != 'Usuario registrado') {
+        if (this.password.length < 4) {
 
-        localStorage.setItem('sesion', 'activa');
-        localStorage.setItem('usuario', data[0]);
-        localStorage.setItem('cliente_id', data[1]); 
+          this.error_autenticacion('La contraseña debe ser mayor a 4 caracteres');
 
-        this.comunicacion.cambiar_estado_usuario(data[0]);
-  			this.router.navigateByUrl('/tabs/tab2');
+        }else{
 
-  		}else{
+          this.comunicacion.registro(json).subscribe((data:any) => {
 
-        this.error_autenticacion('Usuario registrado');
+            if (data != 'Usuario registrado') {
+
+              localStorage.setItem('sesion', 'activa');
+              localStorage.setItem('usuario', data[0]);
+              localStorage.setItem('cliente_id', data[1][0]); 
+
+              this.comunicacion.cambiar_estado_usuario(data[0]);
+              this.router.navigateByUrl('/tabs/tab2');
+
+            }else{        
+
+              this.error_autenticacion('Usuario registrado');
+
+            }
+
+          }, Error => {
+
+            this.error_autenticacion(Error.message);
+
+            console.log(Error);
+
+          });
+
+        }
+
+      }else{
+
+        this.error_autenticacion('Contraseña inválida (no se admiten valores seguidos)');
 
       }
 
-  	}, Error => {
+    }else{
 
-      this.error_autenticacion(Error.message);
+      this.error_autenticacion('Todos los campos son obligatorios');
 
-  		console.log(Error);
-
-  	});
+    }
 
   }
 

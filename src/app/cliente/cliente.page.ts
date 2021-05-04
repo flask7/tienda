@@ -18,6 +18,7 @@ export class ClientePage implements OnInit {
 	id: string = this.activate.snapshot.paramMap.get('id');
   respuesta: any = [];
   vendedores: any = [];
+  pedidos: any = [];
 
   constructor(
   	private comunicacion: ComunicacionService, 
@@ -29,6 +30,10 @@ export class ClientePage implements OnInit {
     if (this.id == '1') {
       
       this.obtener_datos();
+
+    }if (this.id == '3'){
+
+      this.obtener_pedidos();
 
     }else{
 
@@ -122,6 +127,37 @@ export class ClientePage implements OnInit {
 
       this.mensaje('Error al obtener los mensajes');
       console.log(Error);
+
+    });
+
+  }
+
+  obtener_pedidos(){
+
+    const json = {
+
+      id: localStorage.getItem('cliente_id')
+
+    }
+
+    this.comunicacion.pedidos(json).subscribe((data: any) => {
+      
+      for(let i = 0; i < data.orders.length; i++){
+
+        this.pedidos.push(
+            { 
+              pago: data.orders[i].payment, 
+              referencia: data.orders[i].reference, 
+              total: parseFloat(data.orders[i].total_paid).toFixed(2) 
+            }
+          );
+
+      }
+
+    }, Error => {
+
+      console.log(Error);
+      this.mensaje('Error al obtener los pedidos');
 
     });
 

@@ -7,7 +7,12 @@
   <p class="saludo">¡<b>Hola</b>, {{ this.nombre | async }}!</p>
   <div>
     <ion-item *ngFor="let item of items" lines="full">
-      <a routerLink="/tabs/cliente/{{ item.id }}" class="items">{{ item.nombre }}</a>
+      <ng-container *ngIf="item.id == 2">
+        <a routerLink="/geolocalizacion" class="items">{{ item.nombre }}</a>
+      </ng-container>
+      <ng-container *ngIf="item.id != 2">
+        <a routerLink="/tabs/cliente/{{ item.id }}" class="items">{{ item.nombre }}</a>
+      </ng-container>
     </ion-item> 
     <ion-item lines="full">
 	  <p (click)="cerrar()" class="items">Salir</p>

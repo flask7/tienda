@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComunicacionService } from '../comunicacion.service';
 import { LoadingController, AlertController } from '@ionic/angular';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-facturacion',
@@ -23,6 +24,7 @@ export class FacturacionPage implements OnInit {
   id: string = this.activate.snapshot.paramMap.get('id');
   estado: string;
   id_direccion: string;
+  dirs: Observable<any>;
 
   constructor(
     private router: Router, 
@@ -91,6 +93,18 @@ export class FacturacionPage implements OnInit {
       }
 
       this.comunicacion.actualizar_direcciones(this.direcciones);
+      this.comunicacion.obtener_direcciones_2().subscribe((data) => {
+
+        this.dirs = Observable.of(data);
+
+      }, Error => {
+
+        this.mensaje('Error al obtener las direcciones');
+        console.log(Error);
+
+      });
+
+
       this.loading.dismiss();
 
     }, Error => {
@@ -146,13 +160,13 @@ export class FacturacionPage implements OnInit {
 
     }
 
-    console.log(json);
-
     this.comunicacion.pago(json).subscribe((data) => {
 
-      console.log('Pago');
+      this.mensaje(data);
 
     }, Error => {
+
+      this.mensaje(Error.message);
 
       console.log(Error);
 

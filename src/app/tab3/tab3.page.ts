@@ -22,7 +22,11 @@ export class Tab3Page implements OnInit {
 
   ngOnInit(){
 
-    this.get_products();
+    if (localStorage.getItem('cliente_id')) {
+     
+      this.get_products();
+      
+    }
 
   }
 
@@ -65,29 +69,38 @@ export class Tab3Page implements OnInit {
           
           for (let i = 0; i < data[0].carts.length; i++) {
          
-           for (let x = 0; x < data[1].products.length; x++) {
+            for (let x = 0; x < data[1].products.length; x++) {
              
-             if (data[1].products[x].id == data[0].carts[i].associations.cart_rows[0].id_product) {
+              if(data[0].carts[i].associations){
+
+                if (data[1].products[x].id == data[0].carts[i].associations.cart_rows[0].id_product) {
               
-               this.info.push({
-                  "id_carrito": data[0].carts[i].id, 
-                  "id": data[0].carts[i].associations.cart_rows[0].id_product,
-                  "precio": data[0].carts[i].order_total, 
-                  "nombre": data[1].products[x].name,
-                  "cantidad": data[0].carts[i].associations.cart_rows[0].quantity});
+                  this.info.push({
+                     "id_carrito": data[0].carts[i].id, 
+                     "id": data[0].carts[i].associations.cart_rows[0].id_product,
+                     "precio": data[0].carts[i].order_total, 
+                     "nombre": data[1].products[x].name,
+                     "cantidad": data[0].carts[i].associations.cart_rows[0].quantity});
+   
+                }
 
-             }
+              }
 
-           }
+            }
 
           }
 
+          this.productos = Observable.of(this.info);
+
+          this.comunicacion.actualizar_productos(this.info);
           this.loading.dismiss();
 
         }else{
 
           this.info = [];
+          this.productos = Observable.of(this.info);
 
+          this.comunicacion.actualizar_productos(this.info);
           this.loading.dismiss();
 
         }
@@ -95,7 +108,9 @@ export class Tab3Page implements OnInit {
       }else{
 
         this.info = [];
+        this.productos = Observable.of(this.info);
 
+        this.comunicacion.actualizar_productos(this.info);
         this.loading.dismiss();
 
       }
@@ -109,10 +124,6 @@ export class Tab3Page implements OnInit {
       this.mensaje('Error al cargar los productos');
 
     });
-
-    this.productos = Observable.of(this.info);
-
-    this.comunicacion.actualizar_productos(this.info);
 
   }
 

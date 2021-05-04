@@ -27,12 +27,21 @@ export class ComunicacionService {
   {'nombre':'Disfraces', 'id': '11968'}];
   productos_almacenados: any = [];
   direcciones_registradas: any = [];
+  private back_button = new BehaviorSubject('0');
   private carrito = new BehaviorSubject('');
   private direcciones = new BehaviorSubject('');
+  //private url = new BehaviorSubject('');
   private mostrar = new BehaviorSubject('N');
   private usuario = new BehaviorSubject('Iniciar sesión');
 
   constructor(private http: HttpClient, private router: Router) { }
+
+  /*urls(url) {
+
+    this.url.next(url);
+    return this.url.asObservable();
+
+  }*/
 
   cerrar() {
 
@@ -51,9 +60,21 @@ export class ComunicacionService {
 
   }
 
+  estado_boton(): Observable<string> {
+
+    return this.back_button.asObservable();
+
+  }
+
   cambiar_estado_sesion(valor: string) {
 
     this.mostrar.next(valor);
+
+  }
+
+  cambiar_estado_boton(valor: string) {
+
+    this.back_button.next(valor);
 
   }
 
@@ -73,8 +94,18 @@ export class ComunicacionService {
 
    return this.http.post('https://tuwordpress.online/prestashop/public/api/get_carrito', JSON.stringify(_json), { headers });
 
-  // return this.carrito.asObservable();
+  }
 
+  obtener_productos_2(){
+
+    return this.carrito.asObservable();
+    
+  }
+
+  obtener_direcciones_2(){
+
+    return this.direcciones.asObservable();
+    
   }
 
   obtener_direcciones(json): Observable<any> {
@@ -121,7 +152,7 @@ export class ComunicacionService {
 
     this.direcciones_registradas = array;
     
-    this.direcciones.next(JSON.stringify(this.direcciones));
+    this.direcciones.next(array);
 
   }
 
@@ -143,15 +174,18 @@ export class ComunicacionService {
 
   }
 
-  add_producto(id_customer, id, precio, nombre, cantidad, direccion): Observable<any>{
+  add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones/*, pago*/): Observable<any>{
 
     const json = {
+
       id_customer: id_customer,
       id: id,
       direccion: direccion,
       nombre: nombre,
       precio: ((parseFloat(precio) * parseInt(cantidad)).toFixed(2)).toString(),
-      quantity: cantidad
+      quantity: cantidad,
+      opciones: opciones
+      //pago: pago
 
     };
 
@@ -163,6 +197,7 @@ export class ComunicacionService {
 
     this.productos_almacenados.push(json);
     this.carrito.next(JSON.stringify(this.productos_almacenados));
+    localStorage.removeItem('productos');
     localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/carrito', json, { headers });
@@ -514,6 +549,21 @@ export class ComunicacionService {
     //return this.http.post('http://localhost:8000/api/orden_pago', json, { headers });
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/orden_pago', json, { headers });
+
+  }
+
+  pedidos(json: any){
+    
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    //return this.http.post('http://localhost:8000/api/orden_pago', json, { headers });
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/historial_pedidos', json, { headers });
+    
   }
 
 }

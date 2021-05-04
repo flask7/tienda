@@ -104,6 +104,35 @@ export class GeolocalizacionPage implements OnInit {
 
   }
 
+  validar(json: any){
+
+    let valor = 0;
+    let valores = Object.values(json);
+
+    for(let i = 0; i < valores.length; i++){
+
+      if(valores[i] == undefined || valores[i] == null || valores[i] == ""){
+        
+        this.alerta('Todos los campos son obligatorios');
+        valor++;
+        break;
+
+      }
+
+    }
+
+    if(valor == 1){
+
+      return 'Error';
+
+    }else{
+
+      return 'Funciona';
+
+    }
+
+  }
+
   async add_location(){
 
     const cliente_id = localStorage.getItem('cliente_id');
@@ -123,19 +152,25 @@ export class GeolocalizacionPage implements OnInit {
 
     }
 
-    this.comunicacion.add_direccion(json).subscribe((data: any) => {
+    let respuesta = this.validar(json);
 
-      this.direcciones = [];
+    if(respuesta == 'Funciona'){
 
-      this.alerta(data[0]);
-      this.blanquear_formulario();
-      this.obtener_direcciones();
+      this.comunicacion.add_direccion(json).subscribe((data: any) => {
 
-    }, Error => {
+          this.direcciones = [];
 
-      console.log(Error.message);
+          this.alerta(data[0]);
+          this.blanquear_formulario();
+          this.obtener_direcciones();
 
-    });
+        }, Error => {
+
+          console.log(Error.message);
+
+      });
+
+    }
 
   }
 

@@ -55,6 +55,33 @@
 			</ion-row>
 		</ng-container>
 
+		<ng-container *ngIf="id == 3">
+			<ion-row *ngFor="let pedido of pedidos; let i = index" style="display: flex;">
+				<ion-col size="12">
+					<ion-item style="margin: auto;" lines="full">
+						<ion-grid>
+							<ion-row>
+								<ion-col class="columna" size="4">
+									<b>Referencia</b>
+								</ion-col>
+								<ion-col class="columna" size="4">
+									<b>Método de pago</b>
+								</ion-col>
+								<ion-col  class="columna" size="4">
+									<b>Total</b>
+								</ion-col>
+							</ion-row>
+							<ion-row>
+								<ion-col class="columna" size="4">{{ pedido.referencia }}</ion-col>
+								<ion-col class="columna" size="4">{{ pedido.pago }}</ion-col>
+								<ion-col class="columna" size="4">{{ pedido.total }}€</ion-col>
+							</ion-row>
+						</ion-grid>
+					</ion-item>
+				</ion-col>
+			</ion-row>
+		</ng-container>
+
 		<ng-container *ngIf="id == 9">
 			<ng-container *ngIf="respuesta != 'Aún no tienes comentarios'">
 		      <ion-item *ngFor="let vendedor of vendedores; let i = index" style="width: 95%;">

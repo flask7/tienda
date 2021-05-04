@@ -2,6 +2,9 @@
 	margin: 5px;
 	--background: #8ac306;
 	--color: white;
+	border-radius: 15px;
+    box-shadow: 0px 5px 5px lightgrey;
+    margin-bottom: 15px;
 }
 .facturar{
 	--background: #171717;
@@ -20,4 +23,7 @@
 	ion-col{
 		display: flex;
 	}
+}
+.nombre{
+	font-weight: bolder;
 }
