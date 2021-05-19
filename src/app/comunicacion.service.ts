@@ -30,18 +30,10 @@ export class ComunicacionService {
   private back_button = new BehaviorSubject('0');
   private carrito = new BehaviorSubject('');
   private direcciones = new BehaviorSubject('');
-  //private url = new BehaviorSubject('');
   private mostrar = new BehaviorSubject('N');
   private usuario = new BehaviorSubject('Iniciar sesión');
 
   constructor(private http: HttpClient, private router: Router) { }
-
-  /*urls(url) {
-
-    this.url.next(url);
-    return this.url.asObservable();
-
-  }*/
 
   cerrar() {
 
@@ -123,8 +115,6 @@ export class ComunicacionService {
     };
 
    return this.http.post('https://tuwordpress.online/prestashop/public/api/get_direcciones', JSON.stringify(_json), { headers });
-  
-   //return this.direcciones.asObservable();
 
   }
 
@@ -167,10 +157,9 @@ export class ComunicacionService {
 
     this.direcciones_registradas.push(dir);
     this.direcciones.next(this.direcciones_registradas);
-
     localStorage.setItem('direcciones', JSON.stringify(this.direcciones_registradas));
     
-    return this.http.post('https://tuwordpress.online/prestashop/public/api/direcciones', JSON.stringify(json), { headers })
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/direcciones', JSON.stringify(json), { headers });
 
   }
 
@@ -185,7 +174,6 @@ export class ComunicacionService {
       precio: ((parseFloat(precio) * parseInt(cantidad)).toFixed(2)).toString(),
       quantity: cantidad,
       opciones: opciones
-      //pago: pago
 
     };
 
@@ -264,6 +252,8 @@ export class ComunicacionService {
 
     }
 
+    console.log(json);
+
     return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json), { headers })
 
   }
@@ -276,8 +266,6 @@ export class ComunicacionService {
 
     }
 
-    //return this.http.post('http://localhost:8000/api/recuperar', JSON.stringify(json), { headers });
-
     return this.http.post('https://tuwordpress.online/prestashop/public/api/recuperar', JSON.stringify(json), { headers });
 
   }
@@ -289,8 +277,6 @@ export class ComunicacionService {
       'Content-type': 'application/json'
 
     }
-
-   // return this.http.post('http://localhost:8000/api/recuperar2', JSON.stringify(json), { headers });
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/recuperar2', JSON.stringify(json), { headers });
 
@@ -418,17 +404,13 @@ export class ComunicacionService {
 
   }
 
-  buscador_estados(/*busqueda: string*/){
+  buscador_estados(){
 
     const headers = {
 
       'Content-type': 'application/json'
 
     }
-
-    /*const json = {
-      busqueda: busqueda
-    }*/
 
     return this.http.get('https://tuwordpress.online/prestashop/public/api/buscador_estados'/*, json*/, { headers });
 
@@ -492,8 +474,6 @@ export class ComunicacionService {
 
     };
 
-   //return this.http.post('http://localhost:8000/api/perfil', JSON.stringify(_json), { headers });
-
    return this.http.post('https://tuwordpress.online/prestashop/public/api/perfil', JSON.stringify(_json), { headers });
 
   }
@@ -505,8 +485,6 @@ export class ComunicacionService {
       'Content-type': 'application/json'
 
     }
-
-    //return this.http.post('http://localhost:8000/api/actualizar_perfil', json, { headers });
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/actualizar_perfil', json, { headers });
 
@@ -520,8 +498,6 @@ export class ComunicacionService {
 
     }
 
-    //return this.http.post('http://localhost:8000/api/mensajes_productos', json, { headers });
-
     return this.http.post('https://tuwordpress.online/prestashop/public/api/mensajes_productos', json, { headers });
   }
 
@@ -532,8 +508,6 @@ export class ComunicacionService {
       'Content-type': 'application/json'
 
     }
-
-    //return this.http.post('http://localhost:8000/api/mensajes_clientes', json, { headers });
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/mensajes_clientes', json, { headers });
   }
@@ -546,8 +520,6 @@ export class ComunicacionService {
 
     }
 
-    //return this.http.post('http://localhost:8000/api/orden_pago', json, { headers });
-
     return this.http.post('https://tuwordpress.online/prestashop/public/api/orden_pago', json, { headers });
 
   }
@@ -559,8 +531,6 @@ export class ComunicacionService {
       'Content-type': 'application/json'
 
     }
-
-    //return this.http.post('http://localhost:8000/api/orden_pago', json, { headers });
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/historial_pedidos', json, { headers });
     

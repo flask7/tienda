@@ -103,12 +103,17 @@ export class AppComponent implements OnInit {
   }
 
   initializeApp() {
+
     this.platform.ready().then(() => {
+
       this.statusBar.show();
       this.statusBar.overlaysWebView(false);
       this.statusBar.styleLightContent();
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
     });
+
   }
+  
 }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
 import { ActivatedRoute } from '@angular/router';
 import { AlertController } from '@ionic/angular';
@@ -8,7 +8,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './cliente.page.html',
   styleUrls: ['./cliente.page.scss'],
 })
-export class ClientePage implements OnInit {
+export class ClientePage implements OnInit, OnDestroy {
 
 	nombre: string;
 	apellidos: string;
@@ -27,6 +27,8 @@ export class ClientePage implements OnInit {
 
   ngOnInit() {
 
+    this.comunicacion.cambiar_estado_boton('1');
+
     if (this.id == '1') {
       
       this.obtener_datos();
@@ -40,6 +42,12 @@ export class ClientePage implements OnInit {
       this.get_mensajes();
 
     }
+
+  }
+
+  ngOnDestroy() {
+
+    this.comunicacion.cambiar_estado_boton('0');
 
   }
 

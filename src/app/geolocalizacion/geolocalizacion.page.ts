@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, OnDestroy } from '@angular/core';
 
 import { NativeGeocoder, NativeGeocoderResult, NativeGeocoderOptions } from '@ionic-native/native-geocoder/ngx';
 import { Geolocation } from '@ionic-native/geolocation/ngx';
@@ -12,7 +12,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './geolocalizacion.page.html',
   styleUrls: ['./geolocalizacion.page.scss'],
 })
-export class GeolocalizacionPage implements OnInit {
+export class GeolocalizacionPage implements OnInit, OnDestroy {
 
   @ViewChild('content') private content: any;
 
@@ -28,7 +28,7 @@ export class GeolocalizacionPage implements OnInit {
   telefono2: string = "";
   direcciones: any = [];
   identificacion: string = "";
-  estado: string = "";
+ // estado: string = "";
   resultados: any = [];
   estado_id: string;
   mostrar: number = 0;
@@ -45,9 +45,16 @@ export class GeolocalizacionPage implements OnInit {
 
   ngOnInit() {
 
+    this.comunicacion.cambiar_estado_boton('1');
     this.buscar();
   	this.geolocation();
     this.obtener_direcciones();
+
+  }
+
+  ngOnDestroy() {
+
+    this.comunicacion.cambiar_estado_boton('0');
 
   }
 
@@ -93,11 +100,9 @@ export class GeolocalizacionPage implements OnInit {
   	this.code.reverseGeocode(lat, lon, opciones)
   	.then((result: NativeGeocoderResult[]) => {
 
-      console.log(result);
-
       this.ubicacion = result[0];
       this.resultado = this.ubicacion.locality + ', ' + this.ubicacion.thoroughfare + ', ' + this.ubicacion.subLocality + ', ' + this.ubicacion.countryName;
-      this.estado = this.ubicacion.administrativeArea;
+     // this.estado = this.ubicacion.administrativeArea;
 
 
     }).catch((error: any) => console.log(error));
@@ -112,7 +117,7 @@ export class GeolocalizacionPage implements OnInit {
     for(let i = 0; i < valores.length; i++){
 
       if(valores[i] == undefined || valores[i] == null || valores[i] == ""){
-        
+         
         this.alerta('Todos los campos son obligatorios');
         valor++;
         break;
@@ -125,7 +130,7 @@ export class GeolocalizacionPage implements OnInit {
 
       return 'Error';
 
-    }else{
+    } else {
 
       return 'Funciona';
 
@@ -187,7 +192,7 @@ export class GeolocalizacionPage implements OnInit {
 
         for (let i = 0; i < data.addresses.length; i++) {
        
-          let objeto = {"direccion": data.addresses[i].address1, "id": data.addresses[i].id};
+          let objeto = { "direccion": data.addresses[i].address1, "id": data.addresses[i].id };
 
           this.direcciones.push(objeto);
           direcciones.push(data.addresses[i].address1);
@@ -207,28 +212,6 @@ export class GeolocalizacionPage implements OnInit {
   }
 
   buscar(){
-
-    /*let busqueda = event.target.value;
-
-    if (busqueda === '') {
-
-      this.resultados = [];
-
-    }else{
-
-      this.comunicacion.buscador_estados(busqueda).subscribe((data: any) => {
-
-        this.resultados = data[0].states.state;
-
-        console.log(this.resultados);
-
-      }, Error => {
-
-        console.log(Error.message);
-
-      });
-      
-    }*/
 
     this.comunicacion.buscador_estados().subscribe((data: any) => {
 
@@ -284,15 +267,13 @@ export class GeolocalizacionPage implements OnInit {
 
             }
 
-            this.llenar_formulario(info[i].dni, info[i].firstname, info[i].lastname, info[i].company, info[i].address1, info[i].postcode, info[i].city, info[i].phone, info[i].phone_mobile, estado, info[i].id_state);
+            this.llenar_formulario(info[i].dni, info[i].firstname, info[i].lastname, info[i].company, info[i].address1, info[i].postcode, info[i].city, info[i].phone, info[i].phone_mobile, info[i].id_state);
 
           }, Error => {
 
             console.log(Error.message);
 
-        });
-
-        //this.buscar();        
+        });    
 
         break;
 
@@ -351,13 +332,13 @@ export class GeolocalizacionPage implements OnInit {
       this.ciudad = '';
       this.telefono = '';
       this.telefono2 = '';
-      this.estado = '';
+     // this.estado = '';
       this.estado_id = '';
       this.resultados = []; 
 
   }
 
-  llenar_formulario(identificacion, nombre, apellidos, empresa, direccion, cp, ciudad, telefono, telefono2, estado, estado_id){
+  llenar_formulario(identificacion, nombre, apellidos, empresa, direccion, cp, ciudad, telefono, telefono2, estado_id){
 
       this.identificacion = identificacion;
       this.nombre = nombre;
@@ -368,7 +349,7 @@ export class GeolocalizacionPage implements OnInit {
       this.ciudad = ciudad;
       this.telefono = telefono;
       this.telefono2 = telefono2;
-      this.estado = estado;
+     // this.estado = estado;
       this.estado_id = estado_id;
 
   }
@@ -376,7 +357,7 @@ export class GeolocalizacionPage implements OnInit {
   buscador_info(i){
 
     this.estado_id = this.resultados[i].id; 
-    this.estado = this.resultados[i].name;
+  //  this.estado = this.resultados[i].name;
     this.mostrar_lista = 0;
 
   }
@@ -386,25 +367,6 @@ export class GeolocalizacionPage implements OnInit {
 
     let id, h;
     this.mostrar = i + 1;
-
-    /*id = 'b' + i.toString();
-
-    await cambio();
-
-    let checkExist = await setInterval(function() {
-
-      h = document.getElementById(id) as HTMLElement;
-
-      console.log(h);
-
-      if (h == null && h == undefined) {
-
-          this.content.scrollToBottom(h.offsetHeight);
-          clearInterval(checkExist);
-
-       }
-
-     }, 100);*/
 
   }
 
