@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
@@ -9,7 +9,7 @@ import { LoadingController } from '@ionic/angular';
   templateUrl: './despliegue.page.html',
   styleUrls: ['./despliegue.page.scss'],
 })
-export class DesplieguePage implements OnInit {
+export class DesplieguePage implements OnInit, OnDestroy {
 
 	productos: any = [];
 	id: string;
@@ -23,12 +23,21 @@ export class DesplieguePage implements OnInit {
 
   ngOnInit() {
 
+    this.comunicacion.cambiar_estado_boton('1');
+
   	let parametro = this.activate.snapshot.paramMap.get('id');
     let json = {id: parametro};
 
     this.id = parametro;
 
-	this.obtener_productos(parametro);
+	  this.obtener_productos(parametro);
+
+  }
+
+  ngOnDestroy() {
+
+    this.comunicacion.cambiar_estado_boton('0');
+    this.loading.dismiss();
 
   }
 
@@ -45,7 +54,7 @@ export class DesplieguePage implements OnInit {
 
   }
 
-  async obtener_productos(id: string){
+  async obtener_productos(id: string) {
 
     this.presentLoading();
 

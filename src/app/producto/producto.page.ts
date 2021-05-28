@@ -3,7 +3,7 @@ import { Form } from '@angular/forms';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AlertController, ModalController } from '@ionic/angular';
+import { AlertController, ModalController, LoadingController } from '@ionic/angular';
 
 import { TutorialPage } from '../tutorial/tutorial.page';
 
@@ -43,26 +43,29 @@ export class ProductoPage implements OnInit, OnDestroy {
   variantes: any = [];
   valores_select: any = [];
   opcion_seleccionada: any = [];
+  loading: any = [];
+  descuento: number = 0.00;
 
   constructor(
+    private cargando: LoadingController, 
     public modalController: ModalController,
     private alertController: AlertController, 
     private sanitizer: DomSanitizer, 
     private comunicacion: ComunicacionService, 
     private activate: ActivatedRoute) { }
 
-  ngOnInit() {
+  async ngOnInit() {
 
     this.categoria = this.activate.snapshot.paramMap.get('categoria');
     let parametro = this.activate.snapshot.paramMap.get('id');
     this.id = parametro;
-    let json = {id: parametro, categoria: this.categoria};
+    let json = { id: parametro, categoria: this.categoria };
 
     this.comunicacion.cambiar_estado_boton('1');
     
     if (this.sesion == 'activa') {
 
-      this.obtener_direcciones();
+      await this.obtener_direcciones();
 
     }else{
 
@@ -70,17 +73,17 @@ export class ProductoPage implements OnInit, OnDestroy {
 
       if (!contador || contador < 1) {
        
-        this.presentModal();
-        
-      }
+        await this.presentModal();
+
+      } 
 
     }
 
+    this.presentLoading();
   	this.comunicacion.productos_info(json).subscribe((data: any) => {
 
-  		let conversion = parseFloat(data[0].products[0].price);
-      let monto = conversion.toFixed(2);
-      this.precio_base = parseFloat(monto);
+      this.precio_base = parseFloat(data[0].products[0].price);
+      this.precio = parseFloat(data[0].products[0].price).toFixed(2).toString();
       this.descripcion = data[0].products[0].description;
       this.nombre = data[0].products[0].name;
       this.referencia = data[0].products[0].reference;
@@ -95,27 +98,33 @@ export class ProductoPage implements OnInit, OnDestroy {
         
       }
 
-      const datos = data[2];
-      const datos2 = data[3];
+      this.loading.dismiss();
 
-      if(datos){
+      let datos = data[2];
+      let datos2 = data[3];
+
+      if(datos) {
 
         let ids = [];
         let nombres = [];
 
-        for(let i = 0; i < datos2.length; i++){
+        if(datos != undefined) {
+
+          for(let i = 0; i < datos2.length; i++){
             
-          ids.push(datos2[i].product_options[0].id);
-          nombres.push(datos2[i].product_options[0].name);
+            ids.push(datos2[i].product_options[0].id);
+            nombres.push(datos2[i].product_options[0].name);
 
-        }
+          }
 
-        for(let i = 0; i < datos.length; i++){
+          for(let i = 0; i < datos.length; i++){
 
-          let opcion = datos[i].product_option_values[0];
+            let opcion = datos[i].product_option_values[0];
 
-          this.opciones.push(opcion); 
-  
+            this.opciones.push(opcion); 
+    
+          }
+
         }
 
         const ids_unicos = ids.filter((valor, indice) => {
@@ -156,6 +165,7 @@ export class ProductoPage implements OnInit, OnDestroy {
   	}, Error => {
 
   		console.log(Error);
+      this.loading.dismiss();
 
   	});
 
@@ -177,6 +187,7 @@ export class ProductoPage implements OnInit, OnDestroy {
     }, Error => {
 
       console.log(Error);
+      this.loading.dismiss();
 
     });
 
@@ -187,6 +198,7 @@ export class ProductoPage implements OnInit, OnDestroy {
   ngOnDestroy() {
 
     this.comunicacion.cambiar_estado_boton('0');
+    this.loading.dismiss();
 
   }
 
@@ -204,7 +216,7 @@ export class ProductoPage implements OnInit, OnDestroy {
   validar_boton(cantidad){
 
     this.cantidad = this.cantidad - (cantidad);
-    this.precio = ((this.precio_base * this.cantidad).toFixed(2)).toString();
+    this.precio = (this.precio_base * this.cantidad).toFixed(2).toString();
 
     if (this.existencia > this.cantidad && this.cantidad > 0 && this.sesion == 'activa') {
 
@@ -304,32 +316,12 @@ export class ProductoPage implements OnInit, OnDestroy {
 
       let productos = data;
 
-     /* if (data.length > 0) {
-     
-        if (data[0].carts.length > 0) {
-        
-          let datos = data[0].carts;
-
-          for (let i = 0; i < datos.length; i++) {
-
-            if (datos[i].associations.cart_rows[0].id_product === id) {
-
-              return this.mensaje('Ya ha seleccionado este producto');
-
-            }
-
-          }
-
-        }
-
-      }*/
-
       productos.push({
 
-        id_customer: id_customer,
-        id: id,
-        nombre: nombre,
-        precio: precio,
+        id_customer,
+        id,
+        nombre,
+        precio,
         quantity: cantidad/*,
         pago: this.pago*/
 
@@ -351,6 +343,19 @@ export class ProductoPage implements OnInit, OnDestroy {
       this.mensaje(Error.message);
 
     });
+
+  }
+
+  async presentLoading() {
+
+    this.loading = await this.cargando.create({
+      cssClass: 'my-custom-class',
+      message: 'Cargando...'
+    });
+
+    await this.loading.present();
+
+    const { role, data } = await this.loading.onDidDismiss();
 
   }
 
@@ -393,6 +398,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
     }, Error => {
 
+      this.loading.dismiss();
       this.mensaje('Error al obtener los mensajes');
       console.log(Error);
 

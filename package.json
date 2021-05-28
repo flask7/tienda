@@ -27,6 +27,7 @@
     "@ionic/angular": "^5.0.0",
     "angular2-presta": "^0.1.14",
     "cordova-android": "9.0.0",
+    "js2xmlparser": "^4.0.1",
     "ng-simple-slideshow": "^1.2.9",
     "rxjs": "~6.5.5",
     "rxjs-compat": "^6.6.6",

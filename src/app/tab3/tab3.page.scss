@@ -8,7 +8,10 @@
 }
 .facturar{
 	--background: #171717;
-	margin: auto;
+	position: fixed;
+    bottom: 5px;
+    left: 35%;
+    width: 30%;
 }
 .cancelar{
 	height: 50px;

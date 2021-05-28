@@ -15,10 +15,11 @@ export class ClientePage implements OnInit, OnDestroy {
 	correo: string;
 	fecha: any;
 	password: string;
-	id: string = this.activate.snapshot.paramMap.get('id');
   respuesta: any = [];
   vendedores: any = [];
   pedidos: any = [];
+  titulo: string;
+  esquema: string;
 
   constructor(
   	private comunicacion: ComunicacionService, 
@@ -28,20 +29,9 @@ export class ClientePage implements OnInit, OnDestroy {
   ngOnInit() {
 
     this.comunicacion.cambiar_estado_boton('1');
-
-    if (this.id == '1') {
-      
-      this.obtener_datos();
-
-    }if (this.id == '3'){
-
-      this.obtener_pedidos();
-
-    }else{
-
-      this.get_mensajes();
-
-    }
+    this.titulo = 'Información del ';
+    this.esquema = 'perfil';
+    this.obtener_datos();
 
   }
 
@@ -107,68 +97,6 @@ export class ClientePage implements OnInit, OnDestroy {
 
   	});
 
-  }
-
-  get_mensajes(){
-
-    const json = {
-      id: localStorage.getItem('cliente_id')
-    }
-
-    this.comunicacion.obtener_mensajes_usuario(json).subscribe((data: any) => {
-
-      if (data == 'Aún no tienes comentarios') {
-
-        this.respuesta = data;
-
-      }else{
-
-        for (let i = 0; i < data.mensaje.length; i++) {
-
-          this.vendedores.push({mensaje: data.mensaje[i], vendedor: data.vendedor[i]});
-
-        }
-
-      }
-
-    }, Error => {
-
-      this.mensaje('Error al obtener los mensajes');
-      console.log(Error);
-
-    });
-
-  }
-
-  obtener_pedidos(){
-
-    const json = {
-
-      id: localStorage.getItem('cliente_id')
-
-    }
-
-    this.comunicacion.pedidos(json).subscribe((data: any) => {
-      
-      for(let i = 0; i < data.orders.length; i++){
-
-        this.pedidos.push(
-            { 
-              pago: data.orders[i].payment, 
-              referencia: data.orders[i].reference, 
-              total: parseFloat(data.orders[i].total_paid).toFixed(2) 
-            }
-          );
-
-      }
-
-    }, Error => {
-
-      console.log(Error);
-      this.mensaje('Error al obtener los pedidos');
-
-    });
-
-  }
+  }  
 
 }

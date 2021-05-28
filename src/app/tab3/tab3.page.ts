@@ -14,6 +14,7 @@ export class Tab3Page implements OnInit {
 	nombres: any = [];
   productos: Observable<Array<string>>;
   loading: any;
+  id_carrito: string;
 
   constructor(
     private comunicacion: ComunicacionService,
@@ -60,61 +61,76 @@ export class Tab3Page implements OnInit {
   get_products(){
 
     this.presentLoading();
-
     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
 
-      if (data.length > 0) {
+      try {
 
-        if (data[0].carts.length > 0) {
+        const index = data[0].carts.length - 1;
+
+        this.id_carrito = data[0].carts[index].id.toString();
+
+        let coincidencias = 0;
+
+        for (let i = 0; i < data[1].products.length; i++) {
           
-          for (let i = 0; i < data[0].carts.length; i++) {
-         
-            for (let x = 0; x < data[1].products.length; x++) {
-             
-              if(data[0].carts[i].associations){
+          for (let x = 0; x < data[0].carts[index].associations.cart_rows.length; x++) {
 
-                if (data[1].products[x].id == data[0].carts[i].associations.cart_rows[0].id_product) {
-              
+            if (data[1].products[i].id == data[0].carts[index].associations.cart_rows[x].id_product) {
+                      
+              coincidencias++;
+
+              if (x == (data[0].carts[index].associations.cart_rows.length - 1) && i == (data[1].products.length - 1)) {
+                
+                for (let a = 0; a < coincidencias; a++) {
+                
                   this.info.push({
-                     "id_carrito": data[0].carts[i].id, 
-                     "id": data[0].carts[i].associations.cart_rows[0].id_product,
-                     "precio": data[0].carts[i].order_total, 
-                     "nombre": data[1].products[x].name,
-                     "cantidad": data[0].carts[i].associations.cart_rows[0].quantity});
-   
+
+                   "id_carrito": data[0].carts[index].id, 
+                   "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
+                   "precio": data[0].carts[index].order_total, 
+                   "nombre": data[1].products[i].name,
+                   "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
+
+                  });
+
                 }
 
               }
+
+            } else {
+
+              for (let a = 0; a < coincidencias; a++) {
+                
+                this.info.push({
+
+                 "id_carrito": data[0].carts[index].id,
+                 "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
+                 "precio": data[0].carts[index].order_total, 
+                 "nombre": data[1].products[i].name,
+                 "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
+
+               });
+
+              }
+
+              coincidencias = 0;
 
             }
 
           }
 
-          this.productos = Observable.of(this.info);
-
-          this.comunicacion.actualizar_productos(this.info);
-          this.loading.dismiss();
-
-        }else{
-
-          this.info = [];
-          this.productos = Observable.of(this.info);
-
-          this.comunicacion.actualizar_productos(this.info);
-          this.loading.dismiss();
-
         }
 
-      }else{
+      } catch (e) {
 
         this.info = [];
-        this.productos = Observable.of(this.info);
 
-        this.comunicacion.actualizar_productos(this.info);
-        this.loading.dismiss();
+      }   
 
-      }
+      this.productos = Observable.of(this.info);
 
+      this.comunicacion.actualizar_productos(this.info);
+      this.loading.dismiss();
 
     }, Error => {
 
@@ -140,6 +156,7 @@ export class Tab3Page implements OnInit {
     }, Error => {
 
       this.mensaje(Error.message);
+      console.log(Error);
 
     });
 

@@ -10,7 +10,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class Tab1Page implements OnInit{
 
   categorias: any = [{
-    id: ['29', '216', '217', '27'], imagen: []
+    id: ['29', '30'], imagen: []
   }];
 
 	slideOpts = {
@@ -21,9 +21,39 @@ export class Tab1Page implements OnInit{
     	
   	};
 
+  productos: any = [{
+
+      id: 105799,
+      ruta: "https://www.wonduu.com/1296177-home_default/bicicleta-spining-gh706-d33.jpg",
+      price: "199.90",
+      name: "Bicicleta spinning con volante de inercia 24 KG | INDOOR MOD706 | LOIRA"
+
+  }, {
+
+      id: 22566,
+      ruta: "https://www.wonduu.com/510674-home_default/torre-de-ejercicios-con-banco-hdl-1010a.jpg",
+      price: "148.75",
+      name: "Torre de ejercicos con banco HDL-1010A"
+
+  }, {
+
+      id: 168,
+      ruta: "https://www.wonduu.com/450246-home_default/banco-de-musculacion-multiusos.jpg",
+      price: "147.50",
+      name: "Banco de musculación multiusos"
+
+  }, {
+
+    id: 264201,
+    ruta: "https://www.wonduu.com/1127202-home_default/mancuernas-convertibles-y-ajustables-10-kilos-30-kilos.jpg",
+    price: "38.74",
+    name: "Juego de mancuernas 2 en 1 con barra ajustable | peso de 10 KG a 50KG"
+
+  }];
+
   constructor(private sanitizer: DomSanitizer, private comunicacion: ComunicacionService) {}
 
-  ngOnInit(){
+  ngOnInit() {
 
     const json = {
       categorias: this.categorias[0].id
@@ -38,7 +68,6 @@ export class Tab1Page implements OnInit{
         this.categorias[0].imagen.push(imagen);
 
       }
-      
 
     }, Error => {
 

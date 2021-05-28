@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComunicacionService } from '../comunicacion.service';
 import { LoadingController, AlertController } from '@ionic/angular';
@@ -9,11 +9,8 @@ import { Observable } from 'rxjs';
   templateUrl: './facturacion.page.html',
   styleUrls: ['./facturacion.page.scss'],
 })
-export class FacturacionPage implements OnInit {
+export class FacturacionPage implements OnInit, OnDestroy {
 
-	nombre = this.activate.snapshot.paramMap.get('nombre');
-	total = this.activate.snapshot.paramMap.get('precio');
-	cantidad = this.activate.snapshot.paramMap.get('cantidad');
 	precio: string;
 	direcciones: any = [];
 	direccion: number = 0;
@@ -36,8 +33,14 @@ export class FacturacionPage implements OnInit {
   ngOnInit() {
 
     this.obtener_direcciones();
+    this.comunicacion.cambiar_estado_boton('1');
 
-  	this.precio = ((parseFloat(this.total)/parseInt(this.cantidad)).toFixed(2)).toString();
+  }
+
+  ngOnDestroy() {
+
+    this.comunicacion.cambiar_estado_boton('0');
+    this.loading.dismiss();
 
   }
 
@@ -152,11 +155,11 @@ export class FacturacionPage implements OnInit {
       id_cliente: localStorage.getItem('cliente_id'),
       id_direccion: this.id_direccion,
       id_carrito: this.carrito,
-      id_estado: this.estado,
-      pago: 'Transferencia',
-      total: this.total,
+      //id_estado: this.estado,
+      pago: 'PayPal',
+      /*total: this.total,
       product_id: this.id,
-      cantidad: this.cantidad
+      cantidad: this.cantidad*/
 
     }
 

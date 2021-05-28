@@ -125,7 +125,6 @@ export class CategoriesPage implements OnInit {
       }
 
       this.loading.dismiss();
-
       this.obtener_imagenes(this.categorias[0].products);
 
     }, Error => {

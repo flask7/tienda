@@ -1,0 +1,33 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p class="resena">{{ titulo }} <b>{{ esquema }}</b></p>
+  <ion-grid>
+      <ng-container *ngIf="respuesta[0] != 'Aún no tienes comentarios'">
+          <ion-item *ngFor="let vendedor of vendedores; let i = index" style="width: 95%;">
+            <ion-row>
+              <ion-col>
+                <ion-row>
+                  <ion-col size="9">
+                    <p><b>{{ vendedores[i].vendedor }}</b></p>
+                  </ion-col>
+                  <ion-col size="3"></ion-col>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <p>{{ vendedores[i].mensaje }}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-col>
+            </ion-row>
+          </ion-item>
+        </ng-container>
+        <ion-row *ngIf="respuesta == 'Aún no tienes comentarios'">
+          <ion-col>
+            <p style="text-align: center; margin-top: 60%;">{{ respuesta }}</p>
+          </ion-col>
+        </ion-row>
+  </ion-grid>
+</ion-content>

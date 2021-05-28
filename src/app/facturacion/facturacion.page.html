@@ -6,42 +6,7 @@
 	<ion-grid style="margin-top: 80px;">
 		<ion-row>
 			<ion-col size="12">
-				<ion-item>
-					<ion-label>
-						<ion-text>
-							Nombre de producto:
-						</ion-text>  
-						<p>{{ nombre }}</p>
-					</ion-label>
-				</ion-item>
-			</ion-col>
-			<ion-col size="12">
-				<ion-item>
-					<ion-label>
-						<ion-text>
-							Precio unitario:		
-						</ion-text>
-						<p>{{ precio }} €</p>
-					</ion-label>
-				</ion-item>
-			</ion-col>
-			<ion-col size="12">
-				<ion-item>
-					<ion-label>
-						<ion-text>
-							Cantidad:
-						</ion-text>
-						<p>{{ cantidad }}</p>
-					</ion-label>
-				</ion-item>
-			</ion-col>
-			<ion-col size="12">
-				<ion-item>
-					<ion-label>
-						<ion-text>Total:</ion-text>
-						<p>{{ total }} €</p>
-					</ion-label>
-				</ion-item>
+				<p style="text-align: center;">SELECCIONE UNA DIRECCIÓN PARA ENVIAR EL PEDIDO</p>
 			</ion-col>
 		</ion-row>
 		<ion-row>
@@ -50,8 +15,8 @@
 					<ion-col *ngIf="i < limite" size="4">
 						<ion-card class="tarjeta" (click)="seleccionar(i+1)">
 						  <ion-card-header>
+						    <!--<ion-card-title>Detalle:</ion-card-title>-->
 						    <ion-card-subtitle>Dirección</ion-card-subtitle>
-						    <ion-card-title>Detalle:</ion-card-title>
 						  </ion-card-header>
 
 						  <ion-card-content>

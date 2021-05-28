@@ -42,9 +42,9 @@ export class TabsPage implements OnInit {
 
       if (data.length > 0) {
        
-        for (let i = 0; i < data[0].carts.length; i++) {
+        for (let i = 0; i < data[0].carts[data[0].carts.length - 1].associations.cart_rows.length; i++) {
         
-          info.push(data[0].carts[i]);
+          info.push(data[0].carts[data[0].carts.length - 1].associations.cart_rows.length);
 
         }
 

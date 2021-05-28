@@ -56,36 +56,23 @@
 		</ion-row>
 		<ion-row>
 			<ion-col size="11" class="divisores">
-				
-					<!--<ion-searchbar debounce="1000" (ionInput)="buscar($event)" placeholder="Estado" class="barra_estados" showCancelButton="never" [(ngModel)]="estado" name="estado" autocorrect="on" required></ion-searchbar>-->
-	  				<ion-item>
-	  					<ion-label position="floating">Estado <b>*</b></ion-label>
-						<ion-select class="lista_estados" [(ngModel)]="estado_id" name="estado_id" style="height: 50px;">
-		  					<ion-select-option 
-		  					value = "{{ resultado.id }}"
-		  					lines="full" 
-		  					(click)="buscador_info(i)" 
-		  					class="lista_estados"
-		  					*ngFor="let resultado of resultados; let i = index" required>
-		  						{{ resultado.name }}
-		  					</ion-select-option>
-		  				</ion-select>
-	  				</ion-item>
-					<!--<ion-input [(ngModel)]="estado" name="estado" (click)="mostrar_lista = 1" required></ion-input>-->
-				
-			</ion-col>
-		</ion-row>
-		<!--<ng-container *ngIf="resultados.length > 0">
-			<ion-row class="results">
-				<ion-col>
-					<ion-select class="lista_estados">
-	  					<ion-select-option lines="full" (click)="buscador_info(i)" class="results" *ngFor="let resultado of resultados; let i = index">
-	  						<ion-label>{{ resultado.name }}</ion-label>
+
+  				<ion-item>
+  					<ion-label position="floating">Estado <b>*</b></ion-label>
+					<ion-select class="lista_estados" [(ngModel)]="estado_id" name="estado_id" style="height: 50px;">
+	  					<ion-select-option 
+	  					value = "{{ resultado.id }}"
+	  					lines="full" 
+	  					(click)="buscador_info(i)" 
+	  					class="lista_estados"
+	  					*ngFor="let resultado of resultados; let i = index" required>
+	  						{{ resultado.name }}
 	  					</ion-select-option>
 	  				</ion-select>
-				</ion-col>
-			</ion-row>
-		</ng-container>-->
+  				</ion-item>
+		
+			</ion-col>
+		</ion-row>
 		<ion-row>
 			<ion-col size="11" class="divisores">
 				<ion-item>
@@ -149,7 +136,7 @@
 					<ion-card class="tarjeta" (click)="scrolling(i)">
 					  <ion-card-header>
 					    <ion-card-subtitle>Dirección</ion-card-subtitle>
-					    <ion-card-title>Detalle:</ion-card-title>
+						<!--<ion-card-title>Dirección</ion-card-title>-->
 					  </ion-card-header>
 
 					  <ion-card-content>

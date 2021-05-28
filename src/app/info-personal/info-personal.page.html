@@ -1,0 +1,81 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>info_personal</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+  <p class="resena" style="text-align: left; margin-left: 15px;">Pedido: <b>{{ id_pedido }}</b></p>
+
+  <ion-grid>
+    <ion-row>
+      <ion-col>
+        <ion-row>
+          <ion-col>
+            Estado del pedido
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <b style="color: #c7e39d; font-weight: bolder;">{{ estado_pedido }}</b>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            Método de pago
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <b style="color: #c7e39d; font-weight: bolder;">Redsys</b>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <b style="font-weight: bolder; font-size: 16px;">Dirección de envío</b>
+          </ion-col>
+        </ion-row>
+        <ion-row>
+          <ion-col>
+            <p style="font-size: 18px; font-weight: 100;">
+              {{ direccion }}<br>
+              Teléfono: {{ telefono }}
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <b style="font-weight: bolder; font-size: 16px;">Resumen del pedido</b>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="10">Total de pedido:</ion-col>
+      <ion-col>{{ order_total }} €</ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col size="10">Envío:</ion-col>
+      <ion-col>12€</ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col size="10">
+        <b style="color: #c7e39d; font-weight: bolder; font-size: 16px;">Total de pedido:</b>
+      </ion-col>
+      <ion-col>
+        <b style="color: #c7e39d; font-weight: bolder; font-size: 16px;">52€</b>
+      </ion-col>
+    </ion-row>
+
+    <ion-row style="margin-top: 50px;">
+      <ion-col style="display: flex;">
+        <ion-button class="vpedir" (click)="repetir()">VOLVER A PEDIR</ion-button>
+      </ion-col>
+    </ion-row>
+
+  </ion-grid>
+
+</ion-content>

@@ -80,7 +80,7 @@ export class ComunicacionService {
 
     let _json = {
 
-      id: id
+      id
 
     };
 
@@ -163,17 +163,17 @@ export class ComunicacionService {
 
   }
 
-  add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones/*, pago*/): Observable<any>{
+  add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones): Observable<any>{
 
     const json = {
 
-      id_customer: id_customer,
-      id: id,
-      direccion: direccion,
-      nombre: nombre,
+      id_customer,
+      id,
+      direccion,
+      nombre,
       precio: ((parseFloat(precio) * parseInt(cantidad)).toFixed(2)).toString(),
       quantity: cantidad,
-      opciones: opciones
+      opciones: opciones[0]
 
     };
 
@@ -196,7 +196,7 @@ export class ComunicacionService {
 
     const json = {
 
-      id: id,
+      id,
       id_customer: localStorage.getItem('cliente_id')
 
     }
@@ -207,24 +207,8 @@ export class ComunicacionService {
 
     }
 
-    for (let i = 0; i < this.productos_almacenados.length; i++) {
-
-      if (id === this.productos_almacenados[i].id) {
-
-        if (this.productos_almacenados.length == 1) {
-
-          this.productos_almacenados = [];
-
-        }else{
-
-          this.productos_almacenados.splice(i, 1);
-
-        }
-
-      }
-     
-    }
-
+ 
+    this.productos_almacenados.splice(id, 1);
     localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
     this.carrito.next(JSON.stringify(this.productos_almacenados));
 
@@ -251,8 +235,6 @@ export class ComunicacionService {
        'Content-type': 'application/json'
 
     }
-
-    console.log(json);
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/registro', JSON.stringify(json), { headers })
 
@@ -524,7 +506,7 @@ export class ComunicacionService {
 
   }
 
-  pedidos(json: any){
+  pedidos(json: any) {
     
     const headers = {
 
@@ -534,6 +516,30 @@ export class ComunicacionService {
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/historial_pedidos', json, { headers });
     
+  }
+
+  pedido(id: string) {
+
+     const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/pedidos_info', { id }, { headers });
+
+  }
+
+  repetir_pedido(id:string) {
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/repetir_pedido', { id }, { headers });
+
   }
 
 }

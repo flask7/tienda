@@ -37,25 +37,12 @@
   <ion-grid fixed>
   	<ion-row class="opciones1">
      <ion-col class="celda" size="6">
-
-       <ion-item class="ccompra">
-         <ion-label>Opciones de financiación</ion-label>
-         <ion-select value="" okText="OK" cancelText="Cancelar">
-          <ng-container *ngFor="let pay of pagos; let i = index">
-            <ion-select-option value="{{ i }}">{{ pay }}</ion-select-option>
-          </ng-container> 
-         </ion-select>
-       </ion-item>
-       <!--<ion-item class="ccompra">
-         <ion-label>Cuotas</ion-label>
-         <ion-select value="" okText="OK" cancelText="Cancelar">
-          <ion-select-option value="1">2 meses</ion-select-option>
-          <ion-select-option value="2">4 meses</ion-select-option>
-         </ion-select>
-  obtener_valor_select(valor){
-       </ion-item>-->
-       
+        <ion-col>
+          <h1 class="preciox">{{ precio }} €</h1>
+          <p class="impuestos">(impuestos incluidos)</p>
+        </ion-col>
      </ion-col>
+
      <ion-col class="celda" size="6">
 
        <p class="cantidadl">Cantidad</p>
@@ -71,15 +58,6 @@
        </ion-item>
 
      </ion-col> 
-    </ion-row>
-    <ion-row>
-      <!--<ion-col>
-        <p class="montosc">{{ precio }} € /mes en 8 cuotas</p>
-      </ion-col>-->
-      <ion-col>
-        <h1 class="preciox">{{ precio }} €</h1>
-        <p class="impuestos">(impuestos incluidos)</p>
-      </ion-col>
     </ion-row>
   </ion-grid>
 
@@ -99,8 +77,8 @@
     <p id="ocultar" (click)="this.ocultar = false; revision()">ocultar</p></b>
   </div>
 
-  <ion-grid>
-    <ion-row class="valores">
+  <ion-grid style="display: hide;">
+    <ion-row class="valores" style="display: none;">
       <ion-col size="6">
         <ion-item lines="none" class="grid">
           <ion-icon name="heart-outline"></ion-icon>
@@ -128,10 +106,12 @@
             </ion-col>
           </ion-row>
           <ion-row>
-            <ion-col size="7">
+            <ion-col size="12">
               <p class="nombre">{{ p.nombre }}</p>
             </ion-col>
-            <ion-col style="display: flex;" size="5">
+          </ion-row>
+          <ion-row>
+            <ion-col style="display: flex;" size="12">
               <b class="precio_color">{{ p.precio }}€</b>
             </ion-col>
           </ion-row>

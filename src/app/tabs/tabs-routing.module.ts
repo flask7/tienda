@@ -8,7 +8,7 @@ const routes: Routes = [
     component: TabsPage,
     children: [
       {
-        path: 'cliente/:id',
+        path: 'cliente',
         loadChildren: () => import('../cliente/cliente.module').then(m => m.ClientePageModule)
       },
       {
@@ -46,6 +46,26 @@ const routes: Routes = [
       {
         path: 'tab3',
         loadChildren: () => import('../tab3/tab3.module').then(m => m.Tab3PageModule)
+      },
+      {
+        path: 'pedidos',
+        loadChildren: () => import('../pedidos/pedidos.module').then( m => m.PedidosPageModule)
+      },
+      {
+        path: 'resenas',
+        loadChildren: () => import('../resenas/resenas.module').then( m => m.ResenasPageModule)
+      },
+      {
+        path: 'historial-pedidos',
+        loadChildren: () => import('../historial-pedidos/historial-pedidos.module').then( m => m.HistorialPedidosPageModule)
+      },
+      {
+        path: 'geolocalizacion',
+        loadChildren: () => import('../geolocalizacion/geolocalizacion.module').then( m => m.GeolocalizacionPageModule)
+      },
+      {
+        path: 'info-personal/:id',
+        loadChildren: () => import('../info-personal/info-personal.module').then( m => m.InfoPersonalPageModule)
       },
       {
         path: '',

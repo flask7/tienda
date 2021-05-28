@@ -27,7 +27,7 @@ const routes: Routes = [
     loadChildren: () => import('./categories/categories.module').then( m => m.CategoriesPageModule)
   },
   {
-    path: 'cliente/:id',
+    path: 'cliente',
     loadChildren: () => import('./cliente/cliente.module').then( m => m.ClientePageModule)
   },
   {
@@ -39,7 +39,7 @@ const routes: Routes = [
     loadChildren: () => import('./geolocalizacion/geolocalizacion.module').then( m => m.GeolocalizacionPageModule)
   },
   {
-    path: 'facturacion/:carrito/:id/:nombre/:precio/:cantidad',
+    path: 'facturacion/:carrito',
     loadChildren: () => import('./facturacion/facturacion.module').then( m => m.FacturacionPageModule)
   },
   {
@@ -49,6 +49,22 @@ const routes: Routes = [
   {
     path: 'recuperar2',
     loadChildren: () => import('./recuperar2/recuperar2.module').then( m => m.Recuperar2PageModule)
+  },
+  {
+    path: 'pedidos',
+    loadChildren: () => import('./pedidos/pedidos.module').then( m => m.PedidosPageModule)
+  },
+  {
+    path: 'resenas',
+    loadChildren: () => import('./resenas/resenas.module').then( m => m.ResenasPageModule)
+  },
+  {
+    path: 'historial-pedidos',
+    loadChildren: () => import('./historial-pedidos/historial-pedidos.module').then( m => m.HistorialPedidosPageModule)
+  },
+  {
+    path: 'info-personal/:id',
+    loadChildren: () => import('./info-personal/info-personal.module').then( m => m.InfoPersonalPageModule)
   }
 ];
 @NgModule({
