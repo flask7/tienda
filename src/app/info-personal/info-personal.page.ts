@@ -54,8 +54,6 @@ export class InfoPersonalPage implements OnInit, OnDestroy {
 
     this.comunicacion.pedido(this.id).subscribe((data: any) => {
 
-      //console.log(data);
-
       this.id_carrito = data[0].orders[0].id_cart;
       this.id_pedido = data[0].orders[0].id;
       this.estado_pedido = data[2].order_states[0].name;
@@ -75,7 +73,7 @@ export class InfoPersonalPage implements OnInit, OnDestroy {
   repetir() {
 
     this.comunicacion.repetir_pedido(this.id_carrito).subscribe((data:any) => {
-      
+        
       this.mensaje(data);
 
     }, Error => {

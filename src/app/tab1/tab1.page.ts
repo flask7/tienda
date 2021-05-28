@@ -23,7 +23,7 @@ export class Tab1Page implements OnInit{
 
   productos: any = [{
 
-      id: 105799,
+      id: 254,
       ruta: "https://www.wonduu.com/1296177-home_default/bicicleta-spining-gh706-d33.jpg",
       price: "199.90",
       name: "Bicicleta spinning con volante de inercia 24 KG | INDOOR MOD706 | LOIRA"

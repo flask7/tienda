@@ -363,6 +363,8 @@ export class ProductoPage implements OnInit, OnDestroy {
 
     this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones/*, pago*/).subscribe((data: any) => {
 
+      console.log(data);
+
       this.mensaje(data[0]);
 
     }, Error => {
