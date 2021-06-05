@@ -35,7 +35,7 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
    ngOnInit() {
 
-     this.comunicacion.cambiar_estado_boton('1');
+     //this.comunicacion.cambiar_estado_boton('1');
      this.datos();
 
      for (let i = 0; i < this.comunicacion.items.length; i++) {

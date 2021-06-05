@@ -6,7 +6,7 @@
 		  		<ion-col size="2">
 					  <div *ngIf="( boton_activo | async ) == 1" class="contenedora">
 						  <ion-buttons slot="start">
-							<ion-button class="back" *ngIf="( boton_activo | async ) == 1" (click)="nav.pop()">
+							<ion-button class="back" *ngIf="( boton_activo | async ) == 1" (click)="backClicked()">
 								<ion-icon name="arrow-back-outline"></ion-icon>
 							</ion-button>
 						  </ion-buttons>

@@ -10,6 +10,7 @@ import { ComunicacionService } from './comunicacion.service';
 
 import { Router } from  '@angular/router';
 import { Observable } from 'rxjs/Rx';
+import { Location } from '@angular/common';
 
 @Component({
   selector: 'app-root',
@@ -31,7 +32,8 @@ export class AppComponent implements OnInit {
     private menu: MenuController,
     private comunicacion: ComunicacionService,
     private router: Router,
-    public nav: NavController
+    public nav: NavController,
+    private _location: Location
   ) {
     this.initializeApp();
   }
@@ -69,6 +71,12 @@ export class AppComponent implements OnInit {
       this.usuario = Observable.of(data);
 
     }, Error => console.log(Error));
+
+  }
+
+  backClicked() {
+    
+    this._location.back();
 
   }
 
