@@ -55,6 +55,8 @@ export class Tab1Page implements OnInit{
 
   ngOnInit() {
 
+    this.comunicacion.cambiar_estado_boton('0');
+
     const json = {
       categorias: this.categorias[0].id
     }

@@ -18,7 +18,7 @@
         <ion-col>
           <ion-row>
             <ng-container *ngFor="let x of categorias[0].products; let y = index">
-              <ion-col size="4" class="" *ngIf="x.id_category_default == categorias[0].id[i]"> 
+              <ion-col size="4" class="" *ngIf="x.id_category_default == categorias[0].id[i]" [routerLink]="'/producto/'+id+'/'+x.id"> 
                 <ion-row>
                   <ion-col style="display: flex;">
                     <div 

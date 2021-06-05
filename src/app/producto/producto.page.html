@@ -19,11 +19,11 @@
       <ion-item class="cat" lines="none">
         <ion-label position="floating" style="z-index: 100;">{{ variante.nombre }}:</ion-label>
         <ion-select [(ngModel)]="opcion_seleccionada[i]" 
-        name="opcion_seleccionada"
-        value="" okText="OK" 
-        cancelText="Cancelar" 
-        (ionChange)="obtener_valor_select(opcion_seleccionada)" 
-        class="catlist">
+          name="opcion_seleccionada"
+          value="" okText="OK" 
+          cancelText="Cancelar" 
+          (ionChange)="obtener_valor_select(opcion_seleccionada)" 
+          class="catlist">
           <ng-container *ngFor="let opcion of opciones">
             <ng-container *ngIf="opcion.id_attribute_group == variante.id">
               <ion-select-option value="{{ opcion.id }}">{{ opcion.name }}</ion-select-option>
@@ -49,7 +49,7 @@
        <ion-item class="ccompra" lines="none">
          
          <div class="contador">
-           <ion-button (click)="validar_boton(1)" [disabled]="this.cantidad < 1" class="c3">-</ion-button>
+           <ion-button (click)="validar_boton(1)" [disabled]="this.cantidad <= 1" class="c3">-</ion-button>
            <div class="c2">
             <h2>{{ cantidad }}</h2>
            </div>
@@ -58,6 +58,13 @@
        </ion-item>
 
      </ion-col> 
+    </ion-row>
+    <ion-row *ngIf="existencia < 1">
+      <ion-col style="margin-top: 0px; padding: 0;">
+        <p style="color: red; text-align: center; margin-top: 0;">
+          <b>No hay stock</b>
+        </p>
+      </ion-col>
     </ion-row>
   </ion-grid>
 
@@ -125,7 +132,7 @@
     </ion-row>
     <ion-row>
       <ion-col>
-        <p class="resena">Opiniones de Clientes</p>
+        <p class="resena" style="margin-top: 10px;">Opiniones de Clientes</p>
       </ion-col>
     </ion-row>
     <ng-container *ngIf="respuesta != 'Este producto no tiene comentarios' && clientes.length <= limite">

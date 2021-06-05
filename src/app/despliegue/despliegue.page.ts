@@ -25,8 +25,8 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
     this.comunicacion.cambiar_estado_boton('1');
 
-  	let parametro = this.activate.snapshot.paramMap.get('id');
-    let json = {id: parametro};
+  	let parametro = this.activate.snapshot.paramMap.get('id'),
+      json = { id: parametro };
 
     this.id = parametro;
 
@@ -36,7 +36,7 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    this.comunicacion.cambiar_estado_boton('0');
+    //this.comunicacion.cambiar_estado_boton('0');
     this.loading.dismiss();
 
   }
@@ -64,14 +64,24 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
   		for (let i = 0; i < this.productos.imagen.base64.length; i++) {
 
-			let conversion = parseFloat(this.productos.precio[i]);
-	      	let monto = conversion.toFixed(2);
-			let info_imagen = 'data:image/jpeg;base64, ' + this.productos.imagen.base64[i];
+        let conversion = parseFloat(this.productos.precio[i]),
+          monto = conversion.toFixed(2);
 
-			this.productos.imagen.base64[i] = this.sanitizer.bypassSecurityTrustUrl(info_imagen);
-			this.productos.precio[i] = monto;
+        if (this.productos.imagen.base64[i] != 'paso') {
 
-		}
+          let info_imagen = 'data:image/jpeg;base64, ' + this.productos.imagen.base64[i];
+
+          this.productos.imagen.base64[i] = this.sanitizer.bypassSecurityTrustUrl(info_imagen);
+
+        } else {
+
+          this.productos.imagen.base64[i] = '../assets/nd.svg.png';
+
+        }
+  			
+  			this.productos.precio[i] = monto;
+
+		  }
 
     this.loading.dismiss();
 

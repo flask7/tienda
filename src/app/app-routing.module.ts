@@ -65,6 +65,18 @@ const routes: Routes = [
   {
     path: 'info-personal/:id',
     loadChildren: () => import('./info-personal/info-personal.module').then( m => m.InfoPersonalPageModule)
+  },
+  {
+    path: 'terminos',
+    loadChildren: () => import('./terminos/terminos.module').then( m => m.TerminosPageModule)
+  },
+  {
+    path: 'politicas',
+    loadChildren: () => import('./politicas/politicas.module').then( m => m.PoliticasPageModule)
+  },
+  {
+    path: 'cookies',
+    loadChildren: () => import('./cookies/cookies.module').then( m => m.CookiesPageModule)
   }
 ];
 @NgModule({

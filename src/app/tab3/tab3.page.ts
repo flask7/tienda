@@ -15,6 +15,7 @@ export class Tab3Page implements OnInit {
   productos: Observable<Array<string>>;
   loading: any;
   id_carrito: string;
+  usuario: Observable<string>;
 
   constructor(
     private comunicacion: ComunicacionService,
@@ -22,6 +23,12 @@ export class Tab3Page implements OnInit {
     private alerta: AlertController) {}
 
   ngOnInit(){
+
+    this.comunicacion.estado_usuario().subscribe((data) => {
+
+      this.usuario = Observable.of(data);
+
+    }, Error => console.log(Error));
 
     if (localStorage.getItem('cliente_id')) {
      

@@ -35,6 +35,11 @@
   		<ion-col *ngIf="(productos| async)?.length == 0">
   			<p class="alertap" style="margin-top: 60%; text-align: center;">No ha sido añadido ningún producto</p>
   		</ion-col>
+  		<ion-col *ngIf="(this.usuario | async) == 'Iniciar sesión'">
+  			<p class="alertap" style="margin-top: 60%; text-align: center;">Debes 
+  				<b routerLink="/tabs/login" style="color: #9CC958;">iniciar sesión</b>
+  				 para añadir un producto</p>
+  		</ion-col>
   	</ion-row>
   </ion-grid>
 

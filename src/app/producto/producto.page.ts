@@ -67,7 +67,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
       await this.obtener_direcciones();
 
-    }else{
+    } else {
 
       let contador = parseInt(localStorage.getItem('contador'));
 
@@ -82,6 +82,8 @@ export class ProductoPage implements OnInit, OnDestroy {
     this.presentLoading();
   	this.comunicacion.productos_info(json).subscribe((data: any) => {
 
+      console.log(data);
+
       this.precio_base = parseFloat(data[0].products[0].price);
       this.precio = parseFloat(data[0].products[0].price).toFixed(2).toString();
       this.descripcion = data[0].products[0].description;
@@ -89,35 +91,45 @@ export class ProductoPage implements OnInit, OnDestroy {
       this.referencia = data[0].products[0].reference;
       this.existencia = parseInt(data[0].products[0].quantity);
 
-      for (let i = 0; i < data[1].length; i++) {
+      if(data[1] != undefined) {
 
-        let info = 'data:image/jpeg;base64, ' + data[1][i].toString();
-        let imagen_limpia = this.sanitizer.bypassSecurityTrustUrl(info);
+        console.log(data[4]);
 
-        this.imagen.push(imagen_limpia);
-        
+        for (let i = 0; i < data[1].length; i++) {
+
+          let info = 'data:image/jpeg;base64, ' + data[1][i].toString(),
+            imagen_limpia = this.sanitizer.bypassSecurityTrustUrl(info);
+
+          this.imagen.push(imagen_limpia);
+          
+        }
+
+      } else {
+
+        this.imagen.push("../assets/nd.svg.png");
+
       }
 
       this.loading.dismiss();
 
-      let datos = data[2];
-      let datos2 = data[3];
+      let datos = data[2],
+        datos2 = data[3];
 
       if(datos) {
 
-        let ids = [];
-        let nombres = [];
+        let ids = [],
+          nombres = [];
 
-        if(datos != undefined) {
+        if (datos != undefined && datos2.length > 0 && datos2 != undefined) {
 
-          for(let i = 0; i < datos2.length; i++){
+          for (let i = 0; i < datos2.length; i++){
             
             ids.push(datos2[i].product_options[0].id);
             nombres.push(datos2[i].product_options[0].name);
 
           }
 
-          for(let i = 0; i < datos.length; i++){
+          for (let i = 0; i < datos.length; i++){
 
             let opcion = datos[i].product_option_values[0];
 
@@ -156,7 +168,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
       }
 
-      if(this.existencia > 0) {
+      if (this.existencia > 0) {
 
         this.validar_boton(-1);
 
@@ -173,9 +185,9 @@ export class ProductoPage implements OnInit, OnDestroy {
 
       for (let i = 0; i < data.length; i++) {
 
-        let conversion = parseFloat(data[i].precio);
-        let monto = conversion.toFixed(2);
-        let info = 'data:image/jpeg;base64, ' + data[i].imagen.toString();
+        let conversion = parseFloat(data[i].precio),
+          monto = conversion.toFixed(2),
+          info = 'data:image/jpeg;base64, ' + data[i].imagen.toString();
 
         data[i].precio = monto.toString();
         data[i].imagen = this.sanitizer.bypassSecurityTrustUrl(info);
@@ -197,7 +209,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    this.comunicacion.cambiar_estado_boton('0');
+   // this.comunicacion.cambiar_estado_boton('0');
     this.loading.dismiss();
 
   }
@@ -213,11 +225,11 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   }
 
-  validar_boton(cantidad){
+  validar_boton(cantidad) {
 
     this.cantidad = this.cantidad - (cantidad);
     this.precio = (this.precio_base * this.cantidad).toFixed(2).toString();
-
+    
     if (this.existencia > this.cantidad && this.cantidad > 0 && this.sesion == 'activa') {
 
       this.activo = 1;
@@ -267,8 +279,8 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   revision(){
 
-  	let ocultar = document.getElementById('ocultar');
-  	let mostrar = document.getElementById('desplegar');
+  	let ocultar = document.getElementById('ocultar'),
+  	  mostrar = document.getElementById('desplegar');
 
   	if (this.ocultar) {
 
@@ -286,8 +298,8 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   revision_comentarios(){
 
-    let ocultar = document.getElementById('hide');
-    let mostrar = document.getElementById('deploy');
+    let ocultar = document.getElementById('hide'),
+      mostrar = document.getElementById('deploy');
 
     if (this.ocultar_comentarios) {
 
@@ -322,8 +334,7 @@ export class ProductoPage implements OnInit, OnDestroy {
         id,
         nombre,
         precio,
-        quantity: cantidad/*,
-        pago: this.pago*/
+        quantity: cantidad
 
       });
 
@@ -334,7 +345,7 @@ export class ProductoPage implements OnInit, OnDestroy {
         nombre, 
         cantidad, 
         this.direccion, 
-        this.valores_select/*, this.pago*/);
+        this.valores_select);
 
     }, Error => {
 
@@ -359,13 +370,11 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   }
 
-  add_carrito(id_customer, id, precio, nombre, cantidad, direccion, opciones/*, pago*/){
+  add_carrito(id_customer, id, precio, nombre, cantidad, direccion, opciones) {
 
-    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones/*, pago*/).subscribe((data: any) => {
+    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe((data: any) => {
 
-      console.log(data);
-
-      this.mensaje(data[0]);
+      this.mensaje(data);
 
     }, Error => {
 
@@ -410,11 +419,11 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   obtener_valor_select(valor){
 
-    if(this.valores_select.length == 0){
+    if (this.valores_select.length == 0) {
 
       this.valores_select.push(valor);
 
-    }else{
+    } else {
 
       let contador = 0;
 
@@ -424,9 +433,9 @@ export class ProductoPage implements OnInit, OnDestroy {
   
           break;
   
-        }else{
+        } else {
         
-          if(contador == (this.valores_select.length - 1) && this.valores_select.length > 1){
+          if (contador == (this.valores_select.length - 1) && this.valores_select.length > 1) {
 
             this.valores_select.push(valor);
 

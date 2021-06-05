@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComunicacionService } from '../comunicacion.service';
 import { LoadingController, AlertController } from '@ionic/angular';
@@ -9,7 +9,7 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
   templateUrl: './categories.page.html',
   styleUrls: ['./categories.page.scss'],
 })
-export class CategoriesPage implements OnInit {
+export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
   resultado: any = [];
 	categorias_llenas: any = [{
@@ -33,8 +33,9 @@ export class CategoriesPage implements OnInit {
     private comunicacion: ComunicacionService, 
     private cargando: LoadingController) { }
 
-   ngOnInit(){
+   ngOnInit() {
 
+     this.comunicacion.cambiar_estado_boton('1');
      this.datos();
 
      for (let i = 0; i < this.comunicacion.items.length; i++) {
@@ -48,6 +49,12 @@ export class CategoriesPage implements OnInit {
      }
 
    }
+
+  /*ngOnDestroy() {
+
+    this.comunicacion.cambiar_estado_boton('0');
+
+  }*/
 
   async presentLoading() {
 
@@ -95,12 +102,12 @@ export class CategoriesPage implements OnInit {
         this.categorias[0].id.push(data[0].sub_categorias.id[x]);
 
         for (let y = 0; y < data[0].sub_categorias.productos.length; y++) {
-          
-          for (let i = 0; i < data[0].sub_categorias.productos[y].length; i++) {              
+         
+          for (let i = 0; i < data[0].sub_categorias.productos[y].products.length; i++) {      
 
-            if (data[0].sub_categorias.productos[y][i].id_category_default == this.categorias[0].id[x].toString()) {
+            if (data[0].sub_categorias.productos[y].products[i].id_category_default == this.categorias[0].id[x]) {
           
-              this.categorias[0].products.push(data[0].sub_categorias.productos[y][i]);
+              this.categorias[0].products.push(data[0].sub_categorias.productos[y].products[i]);
               this.categorias_llenas[0].id.push(data[0].sub_categorias.id[x]);
               this.categorias_llenas[0].categoria.push(data[0].sub_categorias.nombre[x]);
 
@@ -117,8 +124,8 @@ export class CategoriesPage implements OnInit {
 
       for (let i = 0; i < this.categorias[0].products.length; i++) {
 
-        let conversion = parseFloat(this.categorias[0].products[i].price);
-        let monto = conversion.toFixed(2);
+        let conversion = parseFloat(this.categorias[0].products[i].price),
+          monto = conversion.toFixed(2);
 
         this.categorias[0].products[i].price = monto;
 
@@ -146,11 +153,11 @@ export class CategoriesPage implements OnInit {
 
     for (let i = 0; i < productos.length; i++) {
 
-      if (productos[i].id_default_image.toString() === '' || productos[i].id_default_image.toString() === undefined) {
+      if (productos[i].id_default_image.toString() === '' || productos[i].id_default_image.toString() === undefined || productos[i].id_default_image.toString() === null) {
 
         json.imagenes.push('pasa');
 
-      }else{
+      } else {
 
         let imagenes = productos[i].id.toString() + '/' + productos[i].id_default_image.toString();
 
@@ -178,6 +185,5 @@ export class CategoriesPage implements OnInit {
     });
 
   }
-
 
 }

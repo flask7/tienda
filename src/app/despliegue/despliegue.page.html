@@ -8,10 +8,10 @@
         <ion-col>
           <ion-row>
             <ng-container *ngFor="let x of productos.id_producto; let y = index">
-              <ion-col size="4" class=""> 
+              <ion-col size="4" [routerLink]="'/producto/'+id+'/'+x"> 
                 <ion-row>
                   <ion-col>
-                    <img style="background: lightgray; height: auto; max-height: 100px; width: 100px;" class="" [src]="productos.imagen.base64[y]">
+                    <img style="background: transparent; height: auto; max-height: 100px; width: 100px;" class="" [src]="productos.imagen.base64[y]">
                   </ion-col>
                 </ion-row>
                 <ion-row>
@@ -26,7 +26,7 @@
                 </ion-row>
                 <ion-row>
                   <ion-col style="display: flex;">
-                    <ion-button class="comprar" [routerLink]="'/producto/'+id+'/'+x">¡LO QUIERO!</ion-button>
+                    <ion-button class="comprar">¡LO QUIERO!</ion-button>
                   </ion-col>
                 </ion-row>
               </ion-col>

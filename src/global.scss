@@ -25,15 +25,15 @@
 @import "~@ionic/angular/css/text-transformation.css";
 @import "~@ionic/angular/css/flex-utils.css";
 
-.searchbar-cancel-button .sc-ion-searchbar-md, .searchbar-clear-button .sc-ion-searchbar-md {
+/*.searchbar-cancel-button .sc-ion-searchbar-md, .searchbar-clear-button .sc-ion-searchbar-md {
 
   display: none;
 
-}
+}*/
 
 ion-searchbar ion-icon {
-  right: 16px !important;
-  left: auto !important;
+  /*right: 16px !important;
+  left: auto !important;*/
   color: #8ac306 !important;
 }
 
@@ -41,7 +41,7 @@ ion-searchbar ion-icon {
   border-radius: 25px;
   height: auto;
   --placeholder-color: #8ac306;
-  padding-left: 15px;
+  /*padding-left: 15px;*/
   border: 1px solid #b4f61c;
   font-size: 1.1rem;
   font-weight: 400;
