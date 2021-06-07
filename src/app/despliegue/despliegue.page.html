@@ -11,7 +11,16 @@
               <ion-col size="4" [routerLink]="'/producto/'+id+'/'+x"> 
                 <ion-row>
                   <ion-col>
-                    <img style="background: transparent; height: auto; max-height: 100px; width: 100px;" class="" [src]="productos.imagen.base64[y]">
+                    <!--<img style="background: transparent; height: auto; max-height: 100px; width: 100px;" class="" [src]="productos.imagen.base64[y]">-->
+                    <div 
+                      [style.background-image]="productos.imagen.base64[y]"
+                      loading="lazy"
+                      style="
+                        background-image: url('../assets/nd.svg.png'); 
+                        margin: auto; 
+                        height: 100px; 
+                        width: 100px; 
+                        background-size: cover;"></div>
                   </ion-col>
                 </ion-row>
                 <ion-row>

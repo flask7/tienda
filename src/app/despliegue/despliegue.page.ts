@@ -58,7 +58,7 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
     this.presentLoading();
 
-  	await this.comunicacion.sub_productos(this.id).subscribe((data: any) => {
+  	await this.comunicacion.sub_productos(this.id).subscribe(async (data: any) => {
 
   		this.productos = data;
 
@@ -66,24 +66,42 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
         let conversion = parseFloat(this.productos.precio[i]),
           monto = conversion.toFixed(2);
-
-        if (this.productos.imagen.base64[i] != 'paso') {
-
-          let info_imagen = 'data:image/jpeg;base64, ' + this.productos.imagen.base64[i];
-
-          this.productos.imagen.base64[i] = this.sanitizer.bypassSecurityTrustUrl(info_imagen);
-
-        } else {
-
-          this.productos.imagen.base64[i] = '../assets/nd.svg.png';
-
-        }
   			
   			this.productos.precio[i] = monto;
 
 		  }
 
-    this.loading.dismiss();
+      let json = {
+
+        imagenes: this.productos.imagen.base64
+
+      }
+
+      this.loading.dismiss();
+
+      await this.comunicacion.obtener_imagenes(json).subscribe((data2: any) => {
+
+        for (let i = 0; i < data2.length; i++) {
+
+          if (this.productos.imagen.base64[i] != 'paso') {
+
+            let imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${ data2[i] })`);
+
+            this.productos.imagen.base64[i] = imagen;
+
+          } else {
+
+            this.productos.imagen.base64[i] = this.sanitizer.bypassSecurityTrustStyle("url('../assets/nd.svg.png')");
+
+          }
+
+        }
+
+      }, Error => {
+
+        console.log(Error);
+
+      });
 
   	}, Error => {
 

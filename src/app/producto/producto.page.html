@@ -7,9 +7,13 @@
   <ion-row style="margin-top: 5%;">
     <ion-col style="display: flex;">
       <ion-slides pager="true" [options]="slideOpts">
-        <ion-slide *ngFor="let img of imagen">
-          <img [src]="img" class="productox">
-        </ion-slide>
+        
+        <ng-container *ngFor="let img of imagen; let i = index">
+          <ion-slide (change)="lazy_imagenes(img, i)" class="imgp{{ i }}">
+            <!--<img class="productox" loading="lazy">-->
+          </ion-slide>  
+        </ng-container>
+        
       </ion-slides>
       <!--<img [src]="imagen" class="productox">-->
     </ion-col>
@@ -18,7 +22,8 @@
     <ng-container *ngFor="let variante of variantes; let i = index">
       <ion-item class="cat" lines="none">
         <ion-label position="floating" style="z-index: 100;">{{ variante.nombre }}:</ion-label>
-        <ion-select [(ngModel)]="opcion_seleccionada[i]" 
+        <ion-select 
+          [(ngModel)]="opcion_seleccionada[i]" 
           name="opcion_seleccionada"
           value="" okText="OK" 
           cancelText="Cancelar" 

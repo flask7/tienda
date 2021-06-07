@@ -82,8 +82,6 @@ export class ProductoPage implements OnInit, OnDestroy {
     this.presentLoading();
   	this.comunicacion.productos_info(json).subscribe((data: any) => {
 
-      console.log(data);
-
       this.precio_base = parseFloat(data[0].products[0].price);
       this.precio = parseFloat(data[0].products[0].price).toFixed(2).toString();
       this.descripcion = data[0].products[0].description;
@@ -91,16 +89,17 @@ export class ProductoPage implements OnInit, OnDestroy {
       this.referencia = data[0].products[0].reference;
       this.existencia = parseInt(data[0].products[0].quantity);
 
-      if(data[1] != undefined) {
-
-        console.log(data[4]);
+      if (data[1] != undefined) {
 
         for (let i = 0; i < data[1].length; i++) {
 
-          let info = 'data:image/jpeg;base64, ' + data[1][i].toString(),
-            imagen_limpia = this.sanitizer.bypassSecurityTrustUrl(info);
+          this.imagen.push(data[1][i]);
 
-          this.imagen.push(imagen_limpia);
+          if (i == 0) {
+
+            this.lazy_imagenes(this.imagen[i], i);
+
+          }
           
         }
 
@@ -122,16 +121,16 @@ export class ProductoPage implements OnInit, OnDestroy {
 
         if (datos != undefined && datos2.length > 0 && datos2 != undefined) {
 
-          for (let i = 0; i < datos2.length; i++){
+          for (let i = 0; i < datos2[0].product_options.length; i++){
             
-            ids.push(datos2[i].product_options[0].id);
-            nombres.push(datos2[i].product_options[0].name);
+            ids.push(datos2[0].product_options[i].id);
+            nombres.push(datos2[0].product_options[i].name);
 
           }
 
-          for (let i = 0; i < datos.length; i++){
+          for (let i = 0; i < datos[0].product_option_values.length; i++){
 
-            let opcion = datos[i].product_option_values[0];
+            let opcion = datos[0].product_option_values[i];
 
             this.opciones.push(opcion); 
     
@@ -388,7 +387,9 @@ export class ProductoPage implements OnInit, OnDestroy {
   get_mensajes(){
 
     const json = {
+
       id: this.id
+      
     }
 
     this.comunicacion.obtener_mensajes(json).subscribe((data: any) => {
@@ -401,7 +402,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
         for (let i = 0; i < data.mensaje.length; i++) {
        
-          this.clientes.push({mensaje: data.mensaje[i], cliente: data.cliente[i]});
+          this.clientes.push({ mensaje: data.mensaje[i], cliente: data.cliente[i] });
 
         }
 
@@ -417,7 +418,52 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   }
 
-  obtener_valor_select(valor){
+  lazy_imagenes(id, i) {
+
+    console.log(id);
+
+    this.comunicacion.obtener_imagenes({ imagenes: [id] }).subscribe((data: any) => {
+
+      console.log(data);
+
+      if (data != 'paso') {
+
+        for (let i = 0; i < this.imagen.length; i++) {
+
+          if (id == this.imagen[i].toString()) {
+
+            let info = 'data:image/jpeg;base64, ' + data,
+              imagen_limpia = this.sanitizer.bypassSecurityTrustUrl(info);
+
+            //this.imagen[i] = imagen_limpia;
+
+            let slide = document.querySelector(".imgp" + i.toString()),
+              img = document.createElement('img');
+
+            img.setAttribute('src', info);
+            img.setAttribute('class', 'productox');
+            slide.appendChild(img);
+            break;
+
+          }
+          
+        }
+
+      } else {
+
+        this.imagen.push("../assets/nd.svg.png");
+
+      }
+
+    }, Error => {
+
+      console.log(Error);
+
+    });
+
+  }
+
+  obtener_valor_select(valor) {
 
     if (this.valores_select.length == 0) {
 

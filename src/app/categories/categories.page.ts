@@ -35,7 +35,7 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
    ngOnInit() {
 
-     //this.comunicacion.cambiar_estado_boton('1');
+     this.comunicacion.cambiar_estado_boton('1');
      this.datos();
 
      for (let i = 0; i < this.comunicacion.items.length; i++) {
@@ -169,9 +169,22 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
     this.comunicacion.obtener_imagenes(json).subscribe((data: any) => {
 
+      //console.log(data);
+
       for (let i = 0; i < data.length; i++) {
 
-        let imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${data[i]})`);
+        let imagen;
+
+        if (data[i] == 'pasa') {
+
+          imagen = this.sanitizer.bypassSecurityTrustStyle("url('../assets/nd.svg.png')");
+
+        } else {
+
+          imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${data[i]})`);
+
+        }
+        //let imagen = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + data[i]);
 
         this.imagenes.push(imagen);
 

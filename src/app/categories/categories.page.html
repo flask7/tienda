@@ -21,14 +21,27 @@
               <ion-col size="4" class="" *ngIf="x.id_category_default == categorias[0].id[i]" [routerLink]="'/producto/'+id+'/'+x.id"> 
                 <ion-row>
                   <ion-col style="display: flex;">
-                    <div 
-                    [style.background-image]="imagenes[y]" 
+                   <div 
+                    [style.background-image]="imagenes[y]"
+                    loading="lazy"
                     style="
-                      background: lightgray; 
+                      background-image: url('../assets/nd.svg.png'); 
                       margin: auto; 
                       height: 80px; 
                       width: 80px; 
                       background-size: cover;"></div>
+                      <!--<ion-thumbnail 
+                        style=" 
+                          --border: none;
+                          margin: auto; 
+                          height: 80px; 
+                          width: 80px;
+                          background: lightgray;
+                          border: none;">
+                        
+                          <img [src]="imagenes[y]" loading="lazy">
+                        
+                      </ion-thumbnail>-->
                   </ion-col>
                 </ion-row>
                 <ion-row>
