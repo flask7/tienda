@@ -169,8 +169,6 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
     this.comunicacion.obtener_imagenes(json).subscribe((data: any) => {
 
-      //console.log(data);
-
       for (let i = 0; i < data.length; i++) {
 
         let imagen;
@@ -184,7 +182,6 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
           imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${data[i]})`);
 
         }
-        //let imagen = this.sanitizer.bypassSecurityTrustUrl('data:image/jpeg;base64,' + data[i]);
 
         this.imagenes.push(imagen);
 

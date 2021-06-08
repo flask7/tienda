@@ -34,26 +34,36 @@ export class TabsPage implements OnInit {
 
   }
 
-  productos(){
+  productos() {
 
-    this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
+    if (localStorage.getItem('cliente_id') && localStorage.getItem('cliente_id') != 'Iniciar sesión') {
 
-      let info = [];
+       this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
 
-      if (data.length > 0) {
-       
-        for (let i = 0; i < data[0].carts[data[0].carts.length - 1].associations.cart_rows.length; i++) {
-        
-          info.push(data[0].carts[data[0].carts.length - 1].associations.cart_rows.length);
+        let info = [];
+
+        if (data.length > 0) {
+         
+          for (let i = 0; i < data[0].carts[data[0].carts.length - 1].associations.cart_rows.length; i++) {
+          
+            info.push(data[0].carts[data[0].carts.length - 1].associations.cart_rows.length);
+
+          }
 
         }
 
-      }
+        this.comunicacion.actualizar_productos(info);
+        this.comunicacion.obtener_productos_2().subscribe(data2 => {
 
-      this.comunicacion.actualizar_productos(info);
-      this.comunicacion.obtener_productos_2().subscribe(data2 => {
+          console.log(data2);
 
-        this.articulos = Observable.of(JSON.parse(data2).length);
+          this.articulos = Observable.of(JSON.parse(data2).length);
+
+        }, Error => {
+
+          console.log(Error);
+
+        });
 
       }, Error => {
 
@@ -61,11 +71,7 @@ export class TabsPage implements OnInit {
 
       });
 
-    }, Error => {
-
-      console.log(Error);
-
-    });
+    }
 
   }
 

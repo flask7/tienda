@@ -6,16 +6,13 @@
   <p class="titulo">{{ nombre }}</p>
   <ion-row style="margin-top: 5%;">
     <ion-col style="display: flex;">
-      <ion-slides pager="true" [options]="slideOpts">
+      <ion-slides pager="true" [options]="slideOpts" (ionSlideDidChange)="obtener_indice()">
         
         <ng-container *ngFor="let img of imagen; let i = index">
-          <ion-slide (change)="lazy_imagenes(img, i)" class="imgp{{ i }}">
-            <!--<img class="productox" loading="lazy">-->
-          </ion-slide>  
+          <ion-slide class="imgp{{ i }}"></ion-slide>  
         </ng-container>
         
-      </ion-slides>
-      <!--<img [src]="imagen" class="productox">-->
+      </ion-slides> 
     </ion-col>
   </ion-row>
   <ng-container *ngIf="opciones.length > 0">

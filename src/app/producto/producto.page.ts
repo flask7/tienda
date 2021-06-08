@@ -1,9 +1,9 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Form } from '@angular/forms';
 import { ComunicacionService } from '../comunicacion.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
-import { AlertController, ModalController, LoadingController } from '@ionic/angular';
+import { AlertController, ModalController, LoadingController, IonSlides } from '@ionic/angular';
 
 import { TutorialPage } from '../tutorial/tutorial.page';
 
@@ -14,8 +14,12 @@ import { isDeepStrictEqual } from 'util';
   selector: 'app-producto',
   templateUrl: './producto.page.html',
   styleUrls: ['./producto.page.scss'],
+  providers: [IonSlides]
 })
+
 export class ProductoPage implements OnInit, OnDestroy {
+
+  @ViewChild(IonSlides) slides: IonSlides;
 
   ruta_anterior: Observable<string>;
   id: string;
@@ -37,7 +41,6 @@ export class ProductoPage implements OnInit, OnDestroy {
   clientes: any = [];
   respuesta: string;
   limite: number = 2;
-  pagos: any = ['Transferencia bancaria', 'Payin 7', 'PayPal', 'Cheque', 'Pago con tarjeta Redsys'];
   pago: string = '';
   opciones: any = [];
   variantes: any = [];
@@ -373,6 +376,8 @@ export class ProductoPage implements OnInit, OnDestroy {
 
     this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe((data: any) => {
 
+      console.log(data);
+
       this.mensaje(data);
 
     }, Error => {
@@ -418,13 +423,25 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   }
 
-  lazy_imagenes(id, i) {
+  obtener_indice() {
 
-    console.log(id);
+    this.slides.getActiveIndex().then((index: number) => {
 
-    this.comunicacion.obtener_imagenes({ imagenes: [id] }).subscribe((data: any) => {
+      let slide = document.querySelector(".imgp" + index.toString());
 
-      console.log(data);
+      if (slide.children.length == 0) {
+
+        this.lazy_imagenes(this.imagen[index], index);
+
+      }
+
+    });
+
+  }
+
+  lazy_imagenes(id, i) {   
+
+    this.comunicacion.obtener_imagenes({ imagenes: [id], size: 1 }).subscribe((data: any) => {     
 
       if (data != 'paso') {
 
@@ -434,8 +451,6 @@ export class ProductoPage implements OnInit, OnDestroy {
 
             let info = 'data:image/jpeg;base64, ' + data,
               imagen_limpia = this.sanitizer.bypassSecurityTrustUrl(info);
-
-            //this.imagen[i] = imagen_limpia;
 
             let slide = document.querySelector(".imgp" + i.toString()),
               img = document.createElement('img');
@@ -473,9 +488,9 @@ export class ProductoPage implements OnInit, OnDestroy {
 
       let contador = 0;
 
-      for(let obj in this.valores_select) {
+      for (let obj in this.valores_select) {
   
-        if(this.valores_select[obj] === valor.select) {
+        if (this.valores_select[obj] === valor.select) {
   
           break;
   

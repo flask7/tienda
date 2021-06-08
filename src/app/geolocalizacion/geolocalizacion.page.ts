@@ -12,7 +12,7 @@ import { AlertController } from '@ionic/angular';
   templateUrl: './geolocalizacion.page.html',
   styleUrls: ['./geolocalizacion.page.scss'],
 })
-export class GeolocalizacionPage implements OnInit, OnDestroy {
+export class GeolocalizacionPage implements OnInit {
 
   @ViewChild('content') private content: any;
 
@@ -28,7 +28,6 @@ export class GeolocalizacionPage implements OnInit, OnDestroy {
   telefono2: string = "";
   direcciones: any = [];
   identificacion: string = "";
- // estado: string = "";
   resultados: any = [];
   estado_id: string;
   mostrar: number = 0;
@@ -49,12 +48,6 @@ export class GeolocalizacionPage implements OnInit, OnDestroy {
     this.buscar();
   	this.geolocation();
     this.obtener_direcciones();
-
-  }
-
-  ngOnDestroy() {
-
-    this.comunicacion.cambiar_estado_boton('0');
 
   }
 
@@ -357,7 +350,6 @@ export class GeolocalizacionPage implements OnInit, OnDestroy {
   buscador_info(i){
 
     this.estado_id = this.resultados[i].id; 
-  //  this.estado = this.resultados[i].name;
     this.mostrar_lista = 0;
 
   }
