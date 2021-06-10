@@ -3,6 +3,9 @@
 </ion-header>
 
 <ion-content>
+  
+  <ng-container>{{ ocultar_boton() }}</ng-container>
+
   <ion-grid>
     <div class="carrusel">
       <ion-slides pager="true" [options]="slideOpts" startAutoplay>

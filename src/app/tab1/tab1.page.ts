@@ -55,7 +55,7 @@ export class Tab1Page implements OnInit{
 
   ngOnInit() {
 
-    this.comunicacion.cambiar_estado_boton('0');
+    this.ocultar_boton();
 
     const json = {
 
@@ -79,6 +79,12 @@ export class Tab1Page implements OnInit{
 
     });
 
+  }
+
+  ocultar_boton() {
+
+    this.comunicacion.cambiar_estado_boton('0');
+    
   }
 
 }

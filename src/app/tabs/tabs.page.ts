@@ -13,6 +13,7 @@ export class TabsPage implements OnInit {
 
   sesion: Observable<string>;
   articulos: Observable<number>;
+  contador: string = localStorage.getItem('carrito_contador');
 
   ngOnInit(){
 
@@ -38,7 +39,15 @@ export class TabsPage implements OnInit {
 
     if (localStorage.getItem('cliente_id') && localStorage.getItem('cliente_id') != 'Iniciar sesión') {
 
-       this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
+      this.get_products();
+
+    }
+
+  }
+
+  get_products() {
+
+     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
 
         let info = [];
 
@@ -55,9 +64,10 @@ export class TabsPage implements OnInit {
         this.comunicacion.actualizar_productos(info);
         this.comunicacion.obtener_productos_2().subscribe(data2 => {
 
-          console.log(data2);
-
           this.articulos = Observable.of(JSON.parse(data2).length);
+          this.contador = '1';
+
+          localStorage.setItem('carrito_contador', '1');
 
         }, Error => {
 
@@ -69,9 +79,7 @@ export class TabsPage implements OnInit {
 
         console.log(Error);
 
-      });
-
-    }
+    });
 
   }
 

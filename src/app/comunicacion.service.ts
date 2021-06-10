@@ -39,6 +39,7 @@ export class ComunicacionService {
 
     localStorage.clear();
     localStorage.setItem('usuario', 'Iniciar sesión');
+    localStorage.setItem('carrito_contador', '0');
 
     this.mostrar.next('N');
     this.cambiar_estado_usuario('Iniciar sesión');

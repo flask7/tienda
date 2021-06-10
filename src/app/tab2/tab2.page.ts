@@ -23,7 +23,7 @@ export class Tab2Page implements OnInit  {
     { 'nombre': 'Mis opiniones', 'ruta': '/resenas' }
   ];
 
-  constructor(private router: Router, private comunicacion: ComunicacionService) {}
+  constructor(private router: Router, private comunicacion: ComunicacionService) { }
 
   ngOnInit(){
 
@@ -33,7 +33,7 @@ export class Tab2Page implements OnInit  {
 
         this.redireccion();
         
-      }else{
+      } else {
 
         this.nombre = Observable.of(data);
 
