@@ -184,6 +184,8 @@ export class ComunicacionService {
 
     }
 
+    console.log(json);
+
     this.productos_almacenados.push(json);
     this.carrito.next(JSON.stringify(this.productos_almacenados));
     localStorage.removeItem('productos');

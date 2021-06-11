@@ -16,11 +16,17 @@ export class Tab3Page implements OnInit {
   loading: any;
   id_carrito: string;
   usuario: Observable<string>;
+  mostrar_boton: number = -1;
+  cantidad_mod: any = [];
+  valor_mod: any = [];
+  opcion_seleccionada: any = [];
+  asociaciones: any = [];
+  valores_select: any = [];
 
   constructor(
     private comunicacion: ComunicacionService,
     private cargando: LoadingController, 
-    private alerta: AlertController) {}
+    private alerta: AlertController) { }
 
   ngOnInit(){
 
@@ -67,12 +73,16 @@ export class Tab3Page implements OnInit {
 
   get_products(){
 
-    this.presentLoading();
+    //this.presentLoading();
     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
+
+      console.log(data);
 
       try {
 
         const index = data[0].carts.length - 1;
+
+        console.log(data[0].carts[index]);
 
         this.id_carrito = data[0].carts[index].id.toString();
 
@@ -99,6 +109,7 @@ export class Tab3Page implements OnInit {
                    "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
 
                   });
+                  this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
 
                 }
 
@@ -117,6 +128,7 @@ export class Tab3Page implements OnInit {
                  "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
 
                });
+                this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
 
               }
 
@@ -137,20 +149,68 @@ export class Tab3Page implements OnInit {
       this.productos = Observable.of(this.info);
 
       this.comunicacion.actualizar_productos(this.info);
-      this.loading.dismiss();
+      //this.loading.dismiss();
 
     }, Error => {
 
       console.log(Error.message);
 
-      this.loading.dismiss();
+      //this.loading.dismiss();
       this.mensaje('Error al cargar los productos');
 
     });
 
   }
 
-  eliminar_producto(id){
+  cantidad_modificada(i, valor) {
+
+    if (this.cantidad_mod[i] <= 1 && valor == 1) {
+
+      return false;
+
+    }
+
+    this.cantidad_mod[i] = this.cantidad_mod[i] - valor;
+
+  }
+
+  modificar_producto(i) {
+
+  }
+
+  obtener_valor_select(valor) {
+
+    if (this.valores_select.length == 0) {
+
+      this.valores_select.push(valor);
+
+    } else {
+
+      let contador = 0;
+
+      for (let obj in this.valores_select) {
+  
+        if (this.valores_select[obj] === valor.select) {
+  
+          break;
+  
+        } else {
+        
+          if (contador == (this.valores_select.length - 1) && this.valores_select.length > 1) {
+
+            this.valores_select.push(valor);
+
+          }
+  
+        }
+  
+      }
+
+    }
+
+  }
+
+  eliminar_producto(id) {
 
     this.comunicacion.eliminar_producto(id).subscribe((data: any) => {
 

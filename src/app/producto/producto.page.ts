@@ -48,6 +48,7 @@ export class ProductoPage implements OnInit, OnDestroy {
   opcion_seleccionada: any = [];
   loading: any = [];
   descuento: number = 0.00;
+  boton: any;
 
   constructor(
     private cargando: LoadingController, 
@@ -309,7 +310,7 @@ export class ProductoPage implements OnInit, OnDestroy {
       mostrar.style.display = 'none';
       this.limite = this.clientes.length;
 
-    }else{
+    } else {
 
       ocultar.style.display = 'none';
       mostrar.style.display = 'block';
@@ -324,9 +325,35 @@ export class ProductoPage implements OnInit, OnDestroy {
     id = this.id, 
     precio = this.precio, 
     nombre = this.nombre, 
-    cantidad = this.cantidad, pago = this.pago){
+    cantidad = this.cantidad, pago = this.pago) {
 
+    this.boton = document.querySelector('.bcarrito');
+
+    this.boton.setAttribute('disabled', '');
     this.comunicacion.obtener_productos(id_customer).subscribe((data: any) => {
+
+      /*this.boton.removeAttribute('disabled');
+      return this.mensaje(console.log(data));*/
+
+      if (data.length > 0) {
+
+        if (data[1].length > 0) {
+
+          for (let i = 0; i < data[1].products.length; i++) {
+
+            console.log(data[1].products.length);
+
+            if (data[1].products[i].id == id) {
+
+              return this.mensaje('El producto ya ha sido añadido, modfícalo en el carrito');
+
+            }
+            
+          }
+
+        }
+
+      }
 
       let productos = data;
 
@@ -352,7 +379,7 @@ export class ProductoPage implements OnInit, OnDestroy {
     }, Error => {
 
       console.log(Error.message);
-
+      this.boton.removeAttribute('disabled');
       this.mensaje(Error.message);
 
     });
@@ -377,6 +404,7 @@ export class ProductoPage implements OnInit, OnDestroy {
     this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe((data: any) => {
 
       this.mensaje(data[0]);
+      this.boton.removeAttribute('disabled');
 
     }, Error => {
 
