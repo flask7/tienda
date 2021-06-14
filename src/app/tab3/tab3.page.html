@@ -7,24 +7,6 @@
   	<ion-row>
   		<ion-col *ngIf="(productos | async)?.length > 0">
 			<ion-item *ngFor="let producto of productos | async; let i = index" class="item">
-		  		<!--<ion-row>
-		  			<ion-col size="8">
-  						<p class="nombre">{{ producto.nombre }}</p>
-		  			</ion-col>
-		  			<ion-col size="4" style="display: flex;">
-  						<ion-button style="
-  						  margin: auto;
-						  --border-radius: 50%;
-						  width: 55px;
-						  height: 55px;
-						  font-size: xx-small;" 
-						  class="cancelar" 
-						  color="danger" 
-						  (click)="eliminar_producto(i)">
-  							<ion-icon name="close-circle-outline" class="icono"></ion-icon>
-  						</ion-button>	
-	  				</ion-col>
-		  		</ion-row>-->
 		  	<ion-grid>
 		  		<ion-row>
 		  			<ion-col>
@@ -34,17 +16,17 @@
 		  				<ion-icon name="chevron-down-outline" 
 		  					class="ocultar_mostrar"
 		  					*ngIf="mostrar_boton == i" 
-		  					(click)="mostrar_boton = -1"></ion-icon>
+		  					(click)="abrir_producto(-1)"></ion-icon>
 		  				<ion-icon name="chevron-forward-outline" 
 		  					class="ocultar_mostrar"
 		  					*ngIf="mostrar_boton != i" 
-		  					(click)="mostrar_boton = i"></ion-icon>
+		  					(click)="abrir_producto(i)"></ion-icon>
 		  			</ion-col>
 		  		</ion-row>
 		  		<ng-container *ngIf="mostrar_boton == i">
 			  		<ion-row>
-			  			<ion-col>
-			  				<p><b>Precio: </b>  {{ producto.precio }}</p>
+			  			<ion-col style="display: contents;">
+			  				<p><b>Precio: </b> {{ producto.precio }}€</p><p class="unidad">(unidad)</p>
 			  			</ion-col>
 			  		</ion-row>
 			  		<ion-row>
@@ -65,20 +47,39 @@
 			  				</ion-row>
 			  			</ion-col>
 			  		</ion-row>
-			  		<ion-row *ngIf="asociaciones[i] != 'paso'">
-			  			<ion-select 
-			          [(ngModel)]="opcion_seleccionada[i]" 
-			          name="opcion_seleccionada"
-			          value="" okText="OK" 
-			          cancelText="Cancelar" 
-			          (ionChange)="obtener_valor_select(opcion_seleccionada)" 
-			          class="catlist">
-			          <ng-container *ngFor="let opcion of opciones">
-			            <ion-select-option value="{{ opcion.id }}">{{ opcion.name }}</ion-select-option>
-			          </ng-container>
-			  
-			        </ion-select>
-			  		</ion-row>
+			  		
+	  				<ng-container *ngFor="let opcion of opciones[i].grupo; let x = index">
+
+	  					<ion-row>
+	  						<ion-col>
+
+			  					<ion-item *ngIf="opciones[i] != 'paso'" class="item-opciones">
+
+			  						<ion-label style="margin-top: 10px;">{{ opciones[i].atributo[x] }}:</ion-label>
+					  				<ion-select 
+						          [(ngModel)]="opcion_seleccionada[x]" 
+						          name="opcion_seleccionada"
+						          value="" okText="OK" 
+						          cancelText="Cancelar" 
+						          (ionChange)="obtener_valor_select(i, opcion_seleccionada)" 
+						          class="catlist">
+						          	
+					          	<ng-container *ngFor="let opcions of opciones[i].valores; let z = index">
+					            	
+					          		<ng-container *ngIf="opciones[i].grupo[x] == opciones[i].valores[z].grupo">
+					          			<ion-select-option value="{{ opcions.id }}">{{ opciones[i].valores[z].nombre }}</ion-select-option>	
+					          		</ng-container>
+					            	
+						          </ng-container>
+						        </ion-select>
+
+			  					</ion-item>
+
+	  						</ion-col>
+	  					</ion-row>
+
+	  				</ng-container>
+			  	
 			  		<ion-row class="mods">
 			  			<ion-col style="display: flex;">
 			  				<ion-button class="modificar" (click)="modificar_producto(i)">MODIFICAR</ion-button>
@@ -116,5 +117,5 @@
     *ngIf="(productos | async)?.length > 0" 
   	class="facturar" 
   	routerLink="/facturacion/{{id_carrito}}">FACTURAR</ion-button>
-  <!--<app-explore-container name="Tab 3 page"></app-explore-container>-->
+  
 </ion-content>

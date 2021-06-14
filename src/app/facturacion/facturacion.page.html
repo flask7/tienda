@@ -43,5 +43,10 @@
 				<ion-button [disabled]="direccion == 0" class="comprar" (click)="comprar(direccion)">Comprar</ion-button>
 			</ion-col>
 		</ion-row>
+		<ion-row class="total">
+			<ion-col>
+				<ion-label><b>Total pedido</b> (envío e impuestos incluidos): <b>{{ total }} €</b></ion-label>
+			</ion-col>
+		</ion-row>
 	</ion-grid>
 </ion-content>

@@ -1,0 +1,127 @@
+<ion-app>
+	<ion-header [translucent]="false">
+	  <ion-toolbar>
+	  	<ion-grid>
+	  		<ion-row>
+		  		<ion-col size="2">
+					  <div *ngIf="( boton_activo | async ) == 1" class="contenedora">
+						  <ion-buttons slot="start">
+							<ion-button class="back" *ngIf="( boton_activo | async ) == 1" (click)="backClicked()">
+								<ion-icon name="arrow-back-outline"></ion-icon>
+							</ion-button>
+						  </ion-buttons>
+					  </div>
+		  			<ion-img src="../assets/Logo.png" class="logo" *ngIf="( boton_activo | async ) == 0"></ion-img>
+		  		</ion-col>
+		  		<ion-col size="10">
+		  			<ion-row>
+		  				<ion-col>
+		  					<ion-searchbar debounce="1000" (ionInput)="buscar($event)" placeholder="¿Qué necesitas?" class="barra_busqueda"></ion-searchbar>
+		  				</ion-col>
+		  			</ion-row>
+		  		</ion-col>
+		  	</ion-row>
+	  		<ion-row *ngFor="let resultado of resultados; let i = index" class="results">
+  				<ion-col>
+  					<ion-list>
+		  				<ion-item lines="full" (click)="resultados=[]" class="results" routerLink="/producto/{{resultado.id_category_default}}/{{resultado.id}}">
+		  					<ion-label>{{ resultado.name.language }}</ion-label>
+		  				</ion-item>
+		  			</ion-list>
+  				</ion-col>
+  			</ion-row>
+		  	<nav>
+		    <ion-row>
+		      <ion-col class="headers" size="5">
+		      	<p routerLink="/tabs/categories/45">ARTES GRÁFICAS</p>
+		      </ion-col>
+		      <ion-col class="headers" size="3">
+		      	<p routerLink="/tabs/categories/203">HIGIENE</p>
+		      </ion-col>
+		      <ion-col class="headers" size="3">
+		      	<p routerLink="/tabs/categories/29">DEPORTE</p>
+		      </ion-col>
+		      <ion-col class="headers" size="1">
+		      	<ion-menu-button>+</ion-menu-button>
+		      </ion-col>
+		    </ion-row>
+		    <ion-row id="geo" *ngIf="this.mostrar == 'S'">
+		    	<ion-col size="12" style="display: contents;">
+		    		<div routerLink="/geolocalizacion" style="height: 100%; width: 100%;">
+		    			<ion-row style="background: #c7e39d;">
+			    			<ion-col size="1" style="display: flex;">
+			    				<ion-icon name="locate-outline" style="margin: auto;"></ion-icon>
+			    			</ion-col>
+			    			<ion-col size="11" style="display: flex;">
+			    				<p style="margin: 0; text-align: left;">¿A dónde quieres que se envíe?</p>
+			    			</ion-col>
+			    		</ion-row>
+		    		</div>
+		    	</ion-col>
+		    </ion-row>
+		  </nav>
+	  	</ion-grid>
+	  </ion-toolbar>
+	</ion-header>
+	<ion-menu side="end" content-id="main" autoHide="true">
+
+	  <ion-content>
+	  	
+  		<ion-grid class="usuario">
+	  		<ion-row>
+	  			<ion-col size="4" style="display: flex;">
+	  				<ion-icon name="person-add-outline" class="iconos" *ngIf="(this.usuario | async) == 'Iniciar sesión'"></ion-icon>
+	  				<ion-icon name="person-outline" class="iconos" *ngIf="(this.usuario | async) != 'Iniciar sesión'"></ion-icon>
+	  			</ion-col>
+	  			<ion-col size="8">
+	  				<ion-row>
+	  					<ion-col *ngIf="this.mostrar == 'S'">{{ usuario | async }}</ion-col>
+	  				</ion-row>
+	  				<ion-row>
+	  					<ion-col *ngIf="this.mostrar == 'S'">
+	  						<ion-menu-toggle>
+	  							<a routerLink="/tabs/tab2">Ver perfil</a>
+	  						</ion-menu-toggle>
+	  					</ion-col>
+	  					<ion-col *ngIf="this.mostrar == 'N'">
+	  						<ion-menu-toggle>
+	  							<a routerLink="/tabs/login" style="color: black;">Iniciar sesión</a>
+	  						</ion-menu-toggle>
+	  					</ion-col>
+	  				</ion-row>
+	  			</ion-col>
+	  		</ion-row>
+  		</ion-grid>
+	  	
+	  	<h3>CATÁLOGO PRODUCTOS</h3>
+	    <ion-list>
+	      <ion-menu-toggle>
+	        <ion-item *ngFor="let item of items">
+	        	<a routerLink="/tabs/categories/{{ item.id }}" class="items">{{ item.nombre }}</a>
+	    	</ion-item>
+	    	<ion-item *ngIf="(this.usuario | async) != 'Iniciar sesión'">
+	    		<p (click)="cerrar()" class="items">Salir</p>
+	    	</ion-item>
+	      </ion-menu-toggle>
+	    </ion-list>
+
+	    <ion-row>
+	    	<ion-col>
+	    		<a routerLink="/terminos" class="links">Terminos y condiciones</a>
+	    	</ion-col>
+	    </ion-row>
+	    <ion-row>
+	    	<ion-col>
+	    		<a routerLink="/politicas" class="links">Política de privacidad</a>
+	    	</ion-col>
+	    </ion-row>
+	    <ion-row>
+	    	<ion-col>
+	    		<a routerLink="/cookies" class="links">Política de Cookies</a>
+	    	</ion-col>
+	    </ion-row>
+
+	  </ion-content>
+	</ion-menu>
+  <ion-router-outlet id="main"></ion-router-outlet>
+</ion-app>

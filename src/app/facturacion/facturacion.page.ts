@@ -22,6 +22,7 @@ export class FacturacionPage implements OnInit, OnDestroy {
   estado: string;
   id_direccion: string;
   dirs: Observable<any>;
+  total: string;
 
   constructor(
     private router: Router, 
@@ -107,6 +108,21 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
       });
 
+      const json = {
+
+        id: cliente_id
+
+      };
+
+      this.comunicacion.total_orden(json).subscribe((data:any) => {
+
+        this.total = data[0].toFixed(2);
+
+      }, Error => {
+
+        console.log(Error)
+
+      })
 
       this.loading.dismiss();
 
@@ -121,13 +137,13 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
   }
 
-  seleccionar(indice){
+  seleccionar(indice) {
 
   	this.direccion = indice;
 
   }
 
-  mostrar(){
+  mostrar() {
 
   	this.direccion = 0;
 
@@ -145,7 +161,7 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
   }
 
-  comprar(dir){
+  comprar(dir) {
 
     this.id_direccion = this.direcciones[dir - 1].id;
     this.estado = this.direcciones[dir - 1].id_estados;
@@ -155,11 +171,7 @@ export class FacturacionPage implements OnInit, OnDestroy {
       id_cliente: localStorage.getItem('cliente_id'),
       id_direccion: this.id_direccion,
       id_carrito: this.carrito,
-      //id_estado: this.estado,
-      pago: 'PayPal',
-      /*total: this.total,
-      product_id: this.id,
-      cantidad: this.cantidad*/
+      pago: 'Resdsys',
 
     }
 

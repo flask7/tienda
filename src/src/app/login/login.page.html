@@ -1,0 +1,55 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content>
+
+	<h1>Bienvenido</h1>
+	<p class="clientes">Cliente Registrado</p>
+
+	<ion-input placeholder="Tu correo" [(ngModel)]="correo" name="correo" required></ion-input>
+	<ion-input type="password" placeholder="Tu contraseña" [(ngModel)]="password" name="password" required></ion-input>
+	
+	<!--<ion-icon name="eye-outline" (click)="cambio()"></ion-icon>-->
+	
+
+	<a routerLink="/tabs/recuperar" class="rpassword">¿Has olvidado la contraseña?</a>
+
+	<ion-item lines="none" class="separar">
+		<ion-button (click)="login()" size="large" class="sesion">INICIAR SESIÓN</ion-button>
+	</ion-item>
+	
+	<div class="separador">
+		<ion-row>
+			<p class="conectar">Nuestras redes sociales:</p>
+		</ion-row>
+		<ion-row>
+			<ion-col size="3">
+				<a href="https://www.facebook.com/Wonduu/">
+					<ion-icon name="logo-facebook"></ion-icon>
+				</a>
+			</ion-col>
+			<ion-col size="3">
+				<a href="https://twitter.com/_wonduu_">
+					<ion-icon name="logo-twitter"></ion-icon>
+				</a>
+			</ion-col>
+			<ion-col size="3">
+				<a href="https://www.instagram.com/wonduu_2019/?hl=es">
+					<ion-icon name="logo-instagram"></ion-icon>
+				</a>
+			</ion-col>
+			<ion-col size="3">
+				<a href="https://www.youtube.com/user/VIDEOSGRUPOK2/feed">
+					<ion-icon name="logo-youtube"></ion-icon>
+				</a>
+			</ion-col>
+		</ion-row>
+	</div>
+
+	<p class="pregunta">¿No tienes cuenta?</p>
+	<ion-item lines="none">
+		<ion-button routerLink="/tabs/registro" size="large" class="cuenta">CREAR CUENTA</ion-button>
+	</ion-item>
+
+</ion-content>

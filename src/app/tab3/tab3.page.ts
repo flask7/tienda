@@ -22,6 +22,7 @@ export class Tab3Page implements OnInit {
   opcion_seleccionada: any = [];
   asociaciones: any = [];
   valores_select: any = [];
+  opciones: any = [];
 
   constructor(
     private comunicacion: ComunicacionService,
@@ -73,69 +74,155 @@ export class Tab3Page implements OnInit {
 
   get_products(){
 
-    //this.presentLoading();
+    this.presentLoading();
     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
-
-      console.log(data);
 
       try {
 
         const index = data[0].carts.length - 1;
 
-        console.log(data[0].carts[index]);
-
         this.id_carrito = data[0].carts[index].id.toString();
 
         let coincidencias = 0;
 
-        for (let i = 0; i < data[1].products.length; i++) {
-          
-          for (let x = 0; x < data[0].carts[index].associations.cart_rows.length; x++) {
+        if (data[1].products) {
 
-            if (data[1].products[i].id == data[0].carts[index].associations.cart_rows[x].id_product) {
-                      
-              coincidencias++;
+          if (data[1].products.length > 0) {
+            
+            for (let i = 0; i < data[1].products.length; i++) {
 
-              if (x == (data[0].carts[index].associations.cart_rows.length - 1) && i == (data[1].products.length - 1)) {
-                
-                for (let a = 0; a < coincidencias; a++) {
-                
-                  this.info.push({
+               if (data[1].products[i].associations) {
 
-                   "id_carrito": data[0].carts[index].id, 
-                   "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
-                   "precio": data[0].carts[index].order_total, 
-                   "nombre": data[1].products[i].name,
-                   "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
+                this.opciones[i] = {
+                  valores: [],
+                  atributo: [],
+                  grupo: [],
+                  cantidad: [],
+                  nombres: [],
+                  precio: [],
+                  id: []
+                };
 
-                  });
-                  this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+                this.opciones[i].id.push(data[1].products[i].id);
+                this.opciones[i].precio.push(data[1].products[i].price);
+                this.opciones[i].nombres.push(data[1].products[i].name);
+
+                if (data[1].products[i].associations.product_option_values) {
+
+                  if (data[1].products[i].associations.product_option_values.length > 0) {
+
+                    for (let x = 0; x < data[1].products[i].associations.product_option_values.length; x++) {
+
+                      for (let y = 0; y < data[3].product_option_values.length; y++) {
+
+                        if (data[3].product_option_values[y].id == data[1].products[i].associations.product_option_values[x].id) {
+
+                          for (let a = 0; a < data[2].product_options.length; a++) {
+
+                            if (data[3].product_option_values[y].id_attribute_group == data[2].product_options[a].id) {
+
+                              this.opciones[i].valores.push({ 
+                                id: data[3].product_option_values[y].id,
+                                nombre: data[3].product_option_values[y].name,
+                                grupo: data[2].product_options[a].id });
+
+                              this.opciones[i].atributo.push(data[2].product_options[a].name);
+                              this.opciones[i].grupo.push(data[2].product_options[a].id);
+                                                            
+                            }
+
+                          }
+
+                        }
+
+                      }
+
+                    }
+
+                  } else {
+
+                    this.opciones[i].push('paso');
+
+                  }
+
+                } else {
+
+                  this.opciones[i].push('paso');
+
+                }
+
+              } else {
+
+                this.opciones[i].push('paso');
+
+              }
+
+              for (let x = 0; x < data[0].carts[index].associations.cart_rows.length; x++) {
+
+                if (data[1].products[i].id == data[0].carts[index].associations.cart_rows[x].id_product) {
+                          
+                  coincidencias++;
+
+                  if (x == (data[0].carts[index].associations.cart_rows.length - 1) && i == (data[1].products.length - 1)) {
+                    
+                    for (let a = 0; a < coincidencias; a++) {
+                    
+                      this.info.push({
+
+                       "id_carrito": data[0].carts[index].id, 
+                       "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
+                       "precio": parseFloat(data[1].products[i].price).toFixed(2).toString(),
+                       "nombre": data[1].products[i].name,
+                       "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
+
+                      });
+
+                      this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+                      this.opciones[i].cantidad.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+
+                    }
+
+                  }
+
+                } else {
+
+                  for (let a = 0; a < coincidencias; a++) {
+                    
+                    this.info.push({
+
+                     "id_carrito": data[0].carts[index].id,
+                     "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
+                     "precio": parseFloat(data[1].products[i].price).toFixed(2).toString(),
+                     "nombre": data[1].products[i].name,
+                     "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
+
+                   });
+
+                    this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+                    this.opciones[i].cantidad.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+
+                  }
+
+                  coincidencias = 0;
 
                 }
 
               }
 
-            } else {
+              this.opciones[i].atributo = this.opciones[i].atributo.filter((valor, indice) => {
 
-              for (let a = 0; a < coincidencias; a++) {
-                
-                this.info.push({
+                return this.opciones[i].atributo.indexOf(valor) === indice;
 
-                 "id_carrito": data[0].carts[index].id,
-                 "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
-                 "precio": data[0].carts[index].order_total, 
-                 "nombre": data[1].products[i].name,
-                 "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
+              });
 
-               });
-                this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+              this.opciones[i].grupo = this.opciones[i].grupo.filter((valor, indice) => {
 
-              }
+                return this.opciones[i].grupo.indexOf(valor) === indice;
 
-              coincidencias = 0;
+              });
 
             }
-
+            
           }
 
         }
@@ -149,13 +236,13 @@ export class Tab3Page implements OnInit {
       this.productos = Observable.of(this.info);
 
       this.comunicacion.actualizar_productos(this.info);
-      //this.loading.dismiss();
+      this.loading.dismiss();
 
     }, Error => {
 
       console.log(Error.message);
 
-      //this.loading.dismiss();
+      this.loading.dismiss();
       this.mensaje('Error al cargar los productos');
 
     });
@@ -176,9 +263,44 @@ export class Tab3Page implements OnInit {
 
   modificar_producto(i) {
 
+    const json = {
+
+      id_customer: localStorage.getItem('cliente_id'),
+      id: this.opciones[i].id[0],
+      nombre: this.opciones[i].nombres[0],
+      precio: ((parseFloat(this.opciones[i].precio) * parseInt(this.opciones[i].cantidad)).toFixed(2)).toString(),
+      quantity: this.cantidad_mod[i],
+      opciones: this.valores_select,
+      indice: i
+
+    };
+
+    this.valores_select = [];
+
+    console.log(json);
+
+    this.comunicacion.modificar_producto(json).subscribe((data:any) => {
+
+      this.mensaje(data[0]);
+
+    }, Error => {
+
+      this.mensaje('Ha ocurrido un error al modificar el producto');
+      console.log(Error);
+
+    });
+
   }
 
-  obtener_valor_select(valor) {
+  abrir_producto(valor) {
+
+    this.valores_select = [];
+    this.opcion_seleccionada = [];
+    this.mostrar_boton = valor; 
+
+  }
+
+  obtener_valor_select(i, valor) {
 
     if (this.valores_select.length == 0) {
 

@@ -1,14 +1,6 @@
-/*.item{
-	margin: 5px;
-	--background: #8ac306;
-	--color: white;
-	border-radius: 15px;
-    box-shadow: 0px 5px 5px lightgrey;
-    margin-bottom: 15px;
-}*/
 .item {
 	border: 1px solid #8ac306;
-	margin-bottom: 5px;
+	margin-bottom: 15px;
 	box-shadow: 0px 5px 5px lightgrey;
 }
 .facturar {
@@ -50,6 +42,7 @@
 }
 .mods {
 	margin-top: 15px;
+	margin-bottom: 20px;
 }
 .ocultar_mostrar {
 	margin: auto;
@@ -58,4 +51,13 @@
 	margin: auto;
 	--color: white;
 	--background: #171717;
+}
+.item-opciones {
+	border: none;
+	box-shadow: none;
+}
+.unidad {
+	padding: 6px 0 0 5px;
+	font-size: 11px; 
+	font-weight: 100;
 }

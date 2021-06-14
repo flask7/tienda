@@ -184,14 +184,28 @@ export class ComunicacionService {
 
     }
 
-    console.log(json);
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/carrito', json, { headers });
+
+  }
+
+  actualizar_carrito(json) {
 
     this.productos_almacenados.push(json);
     this.carrito.next(JSON.stringify(this.productos_almacenados));
     localStorage.removeItem('productos');
     localStorage.setItem('productos', JSON.stringify(this.productos_almacenados));
 
-    return this.http.post('https://tuwordpress.online/prestashop/public/api/carrito', json, { headers });
+  }
+
+  modificar_producto(json) {
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/modificar_carrito', json, { headers });
 
   }
 
@@ -542,6 +556,18 @@ export class ComunicacionService {
     }
 
     return this.http.post('https://tuwordpress.online/prestashop/public/api/repetir_pedido', { id }, { headers });
+
+  }
+
+  total_orden(json:any) {
+
+    const headers = {
+
+      'Content-type': 'application/json'
+
+    }
+
+    return this.http.post('https://tuwordpress.online/prestashop/public/api/total_orden', json, { headers });
 
   }
 

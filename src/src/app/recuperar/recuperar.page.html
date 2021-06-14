@@ -1,0 +1,28 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content>
+	<p class="resena">Cambio de contraseña</p>
+
+	<ion-grid>
+		<ng-container *ngIf="this.activador < 1">
+			<ion-item lines="none" class="forms">
+				<ion-input placeholder="Tu correo" class="inputs" [(ngModel)]="correo" name="correo"></ion-input>
+			</ion-item>
+			<ion-item lines="none" class="cambio">
+				<ion-button (click)="recuperar()" size="medium">ENVIAR</ion-button>
+			</ion-item>
+		</ng-container>
+		
+		<ng-container *ngIf="this.activador > 0">
+			<ion-item lines="none" class="forms">
+				<ion-input placeholder="Ingrese el código de verificación" class="inputs" [(ngModel)]="codigo" name="codigo"></ion-input>
+			</ion-item>
+			<ion-item lines="none" class="cambio">
+				<ion-button (click)="recuperar2()" size="medium">CAMBIAR</ion-button>
+			</ion-item>
+		</ng-container>
+	</ion-grid>
+	
+</ion-content>

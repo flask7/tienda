@@ -1,0 +1,67 @@
+.item {
+	border: 1px solid #8ac306;
+	margin-bottom: 5px;
+	box-shadow: 0px 5px 5px lightgrey;
+}
+.facturar {
+	z-index: 100;
+	--background: #171717;
+	position: fixed;
+    bottom: 5px;
+    left: 35%;
+    width: 30%;
+}
+.cancelar {
+	height: 50px;
+	margin: auto;
+}
+.icono {
+	height: 50px;
+	width: 50px;
+}
+.filas {
+	height: 50%;
+	ion-col{
+		display: flex;
+	}
+}
+.nombre {
+	font-weight: bolder;
+}
+.fields {
+	display: flex;
+	p {
+		margin: auto;
+	}
+	border: 1px solid #8ac306;
+}
+.divisor {
+	height: 100%;
+}
+.mods {
+	margin-top: 15px;
+}
+.ocultar_mostrar {
+	margin: auto;
+}
+.modificar {
+	margin: auto;
+	--color: white;
+	--background: #171717;
+}
+.div {
+	--background: transparent; 
+	box-shadow: none; 
+	border: none; 
+	z-index: -1;
+}
+.alertap {
+	margin-top: 60%; 
+	text-align: center;
+}
+.catlist {
+	background: white;
+	top: 10px;
+	border-bottom: 1px solid #90B953;
+	width: 100%;
+}

@@ -1,0 +1,176 @@
+<ion-header>
+  <ion-toolbar></ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <p class="titulo">{{ nombre }}</p>
+  <ion-row style="margin-top: 5%;">
+    <ion-col style="display: flex;">
+      <ion-slides pager="true" [options]="slideOpts" (ionSlideDidChange)="obtener_indice()">
+        
+        <ng-container *ngFor="let img of imagen; let i = index">
+          <ion-slide class="imgp{{ i }}"></ion-slide>  
+        </ng-container>
+        
+      </ion-slides> 
+    </ion-col>
+  </ion-row>
+  <ng-container *ngIf="opciones.length > 0">
+    <ng-container *ngFor="let variante of variantes; let i = index">
+      <ion-item class="cat" lines="none">
+        <ion-label position="floating" style="z-index: 100;">{{ variante.nombre }}:</ion-label>
+        <ion-select 
+          [(ngModel)]="opcion_seleccionada[i]" 
+          name="opcion_seleccionada"
+          value="" okText="OK" 
+          cancelText="Cancelar" 
+          (ionChange)="obtener_valor_select(opcion_seleccionada)" 
+          class="catlist">
+          <ng-container *ngFor="let opcion of opciones">
+            <ng-container *ngIf="opcion.id_attribute_group == variante.id">
+              <ion-select-option value="{{ opcion.id }}">{{ opcion.name }}</ion-select-option>
+            </ng-container>
+          </ng-container>
+  
+        </ion-select>
+      </ion-item>
+    </ng-container>
+  </ng-container>
+  <ion-grid fixed>
+  	<ion-row class="opciones1">
+     <ion-col class="celda" size="6">
+        <ion-col>
+          <h1 class="preciox">{{ precio }} €</h1>
+          <p class="impuestos">(impuestos incluidos)</p>
+        </ion-col>
+     </ion-col>
+
+     <ion-col class="celda" size="6">
+
+       <p class="cantidadl">Cantidad</p>
+       <ion-item class="ccompra" lines="none">
+         
+         <div class="contador">
+           <ion-button (click)="validar_boton(1)" [disabled]="this.cantidad <= 1" class="c3">-</ion-button>
+           <div class="c2">
+            <h2>{{ cantidad }}</h2>
+           </div>
+           <ion-button (click)="validar_boton(-1)" [disabled]="this.cantidad >= this.existencia" class="c1">+</ion-button>
+         </div>
+       </ion-item>
+
+     </ion-col> 
+    </ion-row>
+    <ion-row *ngIf="existencia < 1">
+      <ion-col style="margin-top: 0px; padding: 0;">
+        <p style="color: red; text-align: center; margin-top: 0;">
+          <b>No hay stock</b>
+        </p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-button size="large" expand="full" class="bcarrito" (click)="add()" [disabled]="this.activo == 0">
+    <ion-icon name="cart-outline"></ion-icon>
+    Añadir al carrito
+  </ion-button>
+
+  <div class="datos">
+    <b><p>Referencia: {{ referencia }}</p>
+    <p>{{ nombre }}</p>
+    <p>Descripción:</p>
+    <p>{{ descripcion_corta }}</p>
+    <p *ngIf="ocultar">Detalles del producto:</p>
+    <p *ngIf="ocultar" [innerHTML]="descripcion"></p>
+    <p id="desplegar" (click)="this.ocultar = true; revision()">ver más</p>
+    <p id="ocultar" (click)="this.ocultar = false; revision()">ocultar</p></b>
+  </div>
+
+  <ion-grid style="display: hide;">
+    <ion-row class="valores" style="display: none;">
+      <ion-col size="6">
+        <ion-item lines="none" class="grid">
+          <ion-icon name="heart-outline"></ion-icon>
+          <p>Añadir a la lista de deseos</p>        
+        </ion-item>
+      </ion-col>
+      <ion-col size="6">
+        <ion-item lines="none" class="grid2">
+          <ion-icon name="star-outline"></ion-icon>
+          <p>Valorar producto</p>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+  <ion-row style="width: 100%;">
+    <ion-col class="relatedp">
+      <h2>Productos relacionados</h2>
+    </ion-col>
+  </ion-row>
+
+  <ion-grid fixed="true">
+    <ion-row>
+      <ion-col size="4" *ngFor="let p of _productos; let i = index" [routerLink]="'/producto/'+categoria+'/'+p.id">
+        <ng-container *ngIf="i < 3">
+          <ion-row>
+            <ion-col>
+              <img [src]="p.imagen" class="imgp">    
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col size="12">
+              <p class="nombre">{{ p.nombre }}</p>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="display: flex;" size="12">
+              <b class="precio_color">{{ p.precio }}€</b>
+            </ion-col>
+          </ion-row>
+          <ion-row>
+            <ion-col style="display: flex;">
+              <ion-button class="comprar" style="margin: auto;">¡LO QUIERO!</ion-button>
+            </ion-col>
+          </ion-row>
+        </ng-container>
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <ion-col>
+        <p class="resena" style="margin-top: 10px;">Opiniones de Clientes</p>
+      </ion-col>
+    </ion-row>
+    <ng-container *ngIf="respuesta != 'Este producto no tiene comentarios' && clientes.length <= limite">
+      <ion-item *ngFor="let cliente of clientes; let i = index" style="width: 95%;">
+        <ion-row>
+          <ion-col>
+            <ion-row>
+              <ion-col size="9">
+                <p><b>{{ clientes[i].cliente }}</b></p>
+              </ion-col>
+              <ion-col size="3"></ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col>
+                <p>{{ clientes[i].mensaje }}</p>
+              </ion-col>
+            </ion-row>
+          </ion-col>
+        </ion-row>
+      </ion-item>
+    </ng-container>
+    <p id="deploy" (click)="ocultar_comentarios = true; revision_comentarios()" *ngIf="clientes.length > 2">
+      <b>ver más</b>
+    </p>
+    <p id="hide" (click)="ocultar_comentarios = false; revision_comentarios()">
+      <b>Ocultar</b>
+    </p>
+    <ion-row *ngIf="respuesta == 'Este producto no tiene comentarios'">
+      <ion-col>
+        <p style="text-align: center;">{{ respuesta }}</p>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

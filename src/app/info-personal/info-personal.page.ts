@@ -17,6 +17,8 @@ export class InfoPersonalPage implements OnInit, OnDestroy {
   telefono: string;
   order_total: string;
   id_carrito: string;
+  total: string;
+  envio: string;
 
   constructor(
     private alertController: AlertController,
@@ -60,6 +62,8 @@ export class InfoPersonalPage implements OnInit, OnDestroy {
       this.direccion = data[1].addresses[0].address1;
       this.telefono = data[1].addresses[0].phone;
       this.order_total = parseFloat(data[0].orders[0].total_paid_real).toFixed(2).toString();
+      this.envio = parseFloat(data[3]).toFixed(2).toString();
+      this.total = (parseFloat(this.order_total) + parseFloat(this.envio)).toFixed(2).toString();
 
     }, Error => {
 

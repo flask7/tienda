@@ -1,0 +1,186 @@
+.productox{
+    width: 300px;
+    height: auto;
+	margin: auto;
+    background: transparent;
+}
+.titulo{
+	font-weight: bold;
+	margin-top: 90px;
+	margin-left: 5%;
+	font-size: 12px;
+}
+.cat, .catlist{
+	position: relative;
+	font-weight: bold;
+	width: 90%;
+	margin: auto;
+	margin-bottom: 10px;
+	border-radius: 2.5px;
+}
+.catlist{
+	background: white;
+	top: 10px;
+	border-bottom: 1px solid #90B953;
+}
+.cat{
+	--background: white;
+	border: none;
+	top: 15px;
+}
+.ccompra{
+	width: 180px;
+	margin-left: 15px;
+	margin: auto;
+}
+.opciones1{
+	margin-top: 15px;
+}
+.cantidadl{
+	text-align: left;
+	margin-left: 30px;
+}
+.bcarrito{
+	--background: #a0bb30;
+	font-weight: bold;
+	width: 90%;
+	margin: auto;
+}
+.bcarrito:hover{
+	--background: #212121;
+	--color: white;
+}
+.preciox, .impuestos{
+	text-align: center;
+	color:  #a0bb30;
+}
+.preciox{
+	font-size: 50px;
+	font-weight: bold;
+}
+.montosc{
+	color: gray;
+	font-weight: bold;
+	font-size: 20px;
+    text-align: left;
+}
+.contador{
+	border-radius: 5px;
+	border: 2px solid lightgray;
+	width: 100px;
+    height: 50px;
+    display: contents;
+}
+.c1, .c2, .c3{
+	height: 100%;
+    width: 33%;
+}
+.c2{
+	text-align: center;
+}
+.c1, .c3{
+	--background: #a0bb30;
+}
+.datos{
+	width: 90%;
+	margin: auto;
+	margin-top: 20px;
+	margin-bottom: 7.5%;
+}
+#desplegar, #ocultar, #deploy, #hide{
+	float: right;
+}
+#ocultar{
+	display: none;
+}
+.grid, .grid2{
+	height: 100%;
+	display: flex;
+	--background: #a0bb30;
+	--color: white;
+	border-radius: 2.5px;
+	p{
+		margin: auto;
+    	padding: 5px 5px 5px 5px;
+	}
+}
+.valores{
+	margin-top: 80px;
+	width: 90%;
+	margin-left: 5%;
+	font-size: 9px;
+	font-weight: bold;
+}
+.relatedp{
+	text-align: center;
+}
+.imgp{
+	background: lightgray;
+	max-height: 100px; 
+	max-width: 100px;
+}
+.nombre{
+	font-size: 12px; 
+	font-weight: bold; 
+	overflow: hidden; 
+	text-overflow: ellipsis; 
+	white-space: nowrap;
+}
+.precio_color{
+	color: #a0bb30;
+	padding: 0 0 0 3px;
+	font-size: 18px;
+	margin: auto;
+}
+.preciox{
+	color: #9CC958;
+	font-size: 2.5em;
+	text-align: right;
+	text-align: center;
+}
+.comprar{
+	margin: auto;
+	font-weight: bold;
+	--background: #90B953;
+	--background-hover: #171717;
+	--color: black;
+	width: 80px;
+    height: 30px;
+    font-size: 10px;
+}
+.comprar:hover{
+	--background: #212121;
+	--color: white;
+}
+.products{
+	margin: auto;
+	display: grid;
+	grid-template-columns: 120px 120px 120px;
+	grid-row-gap: 9em;
+}
+.producto{
+	height: 85px;
+	width: 85px;
+	margin-left: 40px;
+}
+.resena{
+	text-align: center;
+	font-size: 25px;
+	font-weight: 100;
+    margin-bottom: 5px;
+}
+#hide{
+	display: none;
+}
+#deploy, #hide{
+	margin-right: 20px
+}
+ion-slides{
+	--bullet-background-active: #90B953;
+}
+@media only screen and(max-width: 360px){
+	.preciox{
+		font-size: 2em;
+		text-align: center;
+	}
+}

@@ -125,14 +125,14 @@ export class ProductoPage implements OnInit, OnDestroy {
 
         if (datos != undefined && datos2.length > 0 && datos2 != undefined) {
 
-          for (let i = 0; i < datos2[0].product_options.length; i++){
+          for (let i = 0; i < datos2[0].product_options.length; i++) {
             
             ids.push(datos2[0].product_options[i].id);
             nombres.push(datos2[0].product_options[i].name);
 
           }
 
-          for (let i = 0; i < datos[0].product_option_values.length; i++){
+          for (let i = 0; i < datos[0].product_option_values.length; i++) {
 
             let opcion = datos[0].product_option_values[i];
 
@@ -332,25 +332,25 @@ export class ProductoPage implements OnInit, OnDestroy {
     this.boton.setAttribute('disabled', '');
     this.comunicacion.obtener_productos(id_customer).subscribe((data: any) => {
 
-      /*this.boton.removeAttribute('disabled');
-      return this.mensaje(console.log(data));*/
-
       if (data.length > 0) {
 
-        if (data[1].length > 0) {
+        if (data[1] != undefined) {
 
-          for (let i = 0; i < data[1].products.length; i++) {
+          if (data[1].products) {
 
-            console.log(data[1].products.length);
+            for (let i = 0; i < data[1].products.length; i++) {
 
-            if (data[1].products[i].id == id) {
+              if (data[1].products[i].id == id) {
 
-              return this.mensaje('El producto ya ha sido añadido, modfícalo en el carrito');
+                this.boton.removeAttribute('disabled');
+                return this.mensaje('El producto ya ha sido añadido, modifique sus valores en carrito');
+
+              }
 
             }
-            
-          }
 
+          }
+          
         }
 
       }
@@ -401,7 +401,17 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   add_carrito(id_customer, id, precio, nombre, cantidad, direccion, opciones) {
 
+    const json = {
+      id_customer, id, precio, nombre, cantidad, direccion, opciones
+    }
+
     this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe((data: any) => {
+
+      if (data[0] == "Producto añadido satisfactoriamente") {
+
+        this.comunicacion.actualizar_carrito(json);
+
+      }
 
       this.mensaje(data[0]);
       this.boton.removeAttribute('disabled');
@@ -409,6 +419,7 @@ export class ProductoPage implements OnInit, OnDestroy {
     }, Error => {
 
       this.mensaje('Error al añadir el producto');
+      this.boton.removeAttribute('disabled');
       console.log(Error);
 
     });
