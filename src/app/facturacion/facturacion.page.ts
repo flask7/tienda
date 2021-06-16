@@ -23,6 +23,9 @@ export class FacturacionPage implements OnInit, OnDestroy {
   id_direccion: string;
   dirs: Observable<any>;
   total: string;
+  numero: number;
+  fecha: any;
+  cvv: number;
 
   constructor(
     private router: Router, 
@@ -163,6 +166,18 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
   comprar(dir) {
 
+    const simple_form = [this.numero, this.cvv, this.fecha];
+
+    for (let i = 0; i < simple_form.length; i++) {
+
+      if (simple_form[i] === '' || simple_form[i] === null || simple_form[i] === undefined) {
+
+        return this.mensaje('Todos los campos son obligatorios');
+
+      }
+
+    }
+
     this.id_direccion = this.direcciones[dir - 1].id;
     this.estado = this.direcciones[dir - 1].id_estados;
 
@@ -172,6 +187,10 @@ export class FacturacionPage implements OnInit, OnDestroy {
       id_direccion: this.id_direccion,
       id_carrito: this.carrito,
       pago: 'Resdsys',
+      fecha_exp: simple_form[2],
+      monto: this.total,
+      numero_tarjeta: btoa(simple_form[0].toString()),
+      cvv: simple_form[1]
 
     }
 

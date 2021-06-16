@@ -4,6 +4,18 @@
 
 <ion-content>
 	<ion-grid style="margin-top: 80px;">
+		<ion-item class="pago_inputs">
+			<ion-label position="floating">Número de tarjeta:</ion-label>
+			<ion-input type="number" [(ngModel)]="numero" name="numero"></ion-input>
+		</ion-item>
+		<ion-item class="pago_inputs">
+			<ion-label position="stacked">Fecha de expiración de la tarjeta:</ion-label>
+			<ion-input type="date" [(ngModel)]="fecha" name="fecha"></ion-input>
+		</ion-item>
+		<ion-item class="pago_inputs">
+			<ion-label position="floating">CVV2:</ion-label>
+			<ion-input type="number" [(ngModel)]="cvv" name="cvv"></ion-input>
+		</ion-item>
 		<ion-row>
 			<ion-col size="12">
 				<p style="text-align: center;">SELECCIONE UNA DIRECCIÓN PARA ENVIAR EL PEDIDO</p>
@@ -43,10 +55,10 @@
 				<ion-button [disabled]="direccion == 0" class="comprar" (click)="comprar(direccion)">Comprar</ion-button>
 			</ion-col>
 		</ion-row>
-		<ion-row class="total">
+		<ion-footer class="total">
 			<ion-col>
 				<ion-label><b>Total pedido</b> (envío e impuestos incluidos): <b>{{ total }} €</b></ion-label>
 			</ion-col>
-		</ion-row>
+		</ion-footer>
 	</ion-grid>
 </ion-content>

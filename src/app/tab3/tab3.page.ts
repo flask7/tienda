@@ -8,7 +8,7 @@ import { AlertController, LoadingController } from '@ionic/angular';
   templateUrl: 'tab3.page.html',
   styleUrls: ['tab3.page.scss']
 })
-export class Tab3Page implements OnInit {
+export class Tab3Page implements OnInit  {
 
 	info: any = [];
 	nombres: any = [];
@@ -29,19 +29,19 @@ export class Tab3Page implements OnInit {
     private cargando: LoadingController, 
     private alerta: AlertController) { }
 
-  ngOnInit(){
+  ngOnInit () {
 
     this.comunicacion.estado_usuario().subscribe((data) => {
 
       this.usuario = Observable.of(data);
 
-    }, Error => console.log(Error));
-
-    if (localStorage.getItem('cliente_id')) {
+      if (localStorage.getItem('cliente_id')) {
      
-      this.get_products();
-      
-    }
+        this.get_products();
+        
+      }
+
+    }, Error => console.log(Error));
 
   }
 

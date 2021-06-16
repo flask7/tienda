@@ -118,26 +118,30 @@ export class ProductoPage implements OnInit, OnDestroy {
       let datos = data[2],
         datos2 = data[3];
 
-      if(datos) {
+      if (datos) {
 
         let ids = [],
           nombres = [];
 
-        if (datos != undefined && datos2.length > 0 && datos2 != undefined) {
+        if (datos != undefined && datos2 != undefined) {
 
-          for (let i = 0; i < datos2[0].product_options.length; i++) {
+          if (datos2.length > 0) {
+
+            for (let i = 0; i < datos2[0].product_options.length; i++) {
             
-            ids.push(datos2[0].product_options[i].id);
-            nombres.push(datos2[0].product_options[i].name);
+              ids.push(datos2[0].product_options[i].id);
+              nombres.push(datos2[0].product_options[i].name);
 
-          }
+            }
 
-          for (let i = 0; i < datos[0].product_option_values.length; i++) {
+            for (let i = 0; i < datos[0].product_option_values.length; i++) {
 
-            let opcion = datos[0].product_option_values[i];
+              let opcion = datos[0].product_option_values[i];
 
-            this.opciones.push(opcion); 
-    
+              this.opciones.push(opcion); 
+      
+            }
+
           }
 
         }
