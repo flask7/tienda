@@ -14,6 +14,10 @@ export class DesplieguePage implements OnInit, OnDestroy {
 	productos: any = [];
 	id: string;
   loading: any;
+  pagina: number = 0;
+  limite:number = 1;
+  multiplicador: number = 0;
+  paginator: string;
 
   constructor(
     private sanitizer: DomSanitizer, 
@@ -36,7 +40,11 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    //this.comunicacion.cambiar_estado_boton('0');
+    this.productos = [];
+    this.pagina = 0;
+    this.limite = 1;
+    this.multiplicador = 0;
+
     this.loading.dismiss();
 
   }
@@ -54,13 +62,38 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
   }
 
+  paginar(valor) {
+
+    if (this.pagina === (this.limite - 1) && valor === -1) {
+
+      return false;
+
+    }
+
+    if (this.pagina === 0 && valor === 1) {
+
+      return false;
+
+    }
+
+    this.pagina = this.pagina - valor;
+    this.productos = [];
+    this.multiplicador = 0;
+    this.multiplicador =  this.pagina * 30;
+
+    this.obtener_productos(this.id);
+
+  }
+
   async obtener_productos(id: string) {
 
     this.presentLoading();
 
-  	await this.comunicacion.sub_productos(this.id).subscribe(async (data: any) => {
+  	await this.comunicacion.sub_productos({ categoria: this.id, pagina: this.multiplicador }).subscribe(async (data: any) => {
 
+      this.limite = Math.round(parseFloat(data.paginas));
   		this.productos = data;
+      this.paginator = 'Página ' + (this.pagina + 1) + ' de ' + this.limite;
 
   		for (let i = 0; i < this.productos.imagen.base64.length; i++) {
 

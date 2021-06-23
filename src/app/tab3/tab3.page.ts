@@ -31,6 +31,14 @@ export class Tab3Page implements OnInit  {
 
   ngOnInit () {
 
+    this.verificar_productos();
+
+  }
+
+  verificar_productos() {
+
+    console.log('Ejecutando');
+
     this.comunicacion.estado_usuario().subscribe((data) => {
 
       this.usuario = Observable.of(data);
@@ -72,7 +80,7 @@ export class Tab3Page implements OnInit  {
     
   }
 
-  get_products(){
+  get_products() {
 
     this.presentLoading();
     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {

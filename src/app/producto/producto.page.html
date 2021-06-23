@@ -4,7 +4,8 @@
 
 <ion-content>
   <p class="titulo">{{ nombre }}</p>
-  <ion-row style="margin-top: 5%;">
+  <p class="rutaje">{{ routing }}</p>
+  <ion-row>
     <ion-col style="display: flex;">
       <ion-slides pager="true" [options]="slideOpts" (ionSlideDidChange)="obtener_indice()">
         

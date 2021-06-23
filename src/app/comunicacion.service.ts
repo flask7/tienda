@@ -333,17 +333,11 @@ export class ComunicacionService {
 
   }
 
-  sub_productos(id: string){
+  sub_productos(json: any) {
 
     const headers = {
 
       'Content-type': 'application/json'
-
-    }
-
-    const json = {
-
-      categoria: id
 
     }
 

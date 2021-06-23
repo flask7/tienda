@@ -49,6 +49,7 @@ export class ProductoPage implements OnInit, OnDestroy {
   loading: any = [];
   descuento: number = 0.00;
   boton: any;
+  routing: string = 'Deportes > equipaciones';
 
   constructor(
     private cargando: LoadingController, 
@@ -92,6 +93,7 @@ export class ProductoPage implements OnInit, OnDestroy {
       this.nombre = data[0].products[0].name;
       this.referencia = data[0].products[0].reference;
       this.existencia = parseInt(data[0].products[0].quantity);
+      this.routing = data[data.length - 1];
 
       if (data[1] != undefined) {
 
@@ -196,6 +198,12 @@ export class ProductoPage implements OnInit, OnDestroy {
           monto = conversion.toFixed(2),
           info = 'data:image/jpeg;base64, ' + data[i].imagen.toString();
 
+        if (data[i].imagen.toString() == '' || data[i].imagen.toString() == undefined) {
+
+           info = '../assets/nd.svg.png';
+
+        }
+
         data[i].precio = monto.toString();
         data[i].imagen = this.sanitizer.bypassSecurityTrustUrl(info);
 
@@ -216,7 +224,6 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-   // this.comunicacion.cambiar_estado_boton('0');
     this.loading.dismiss();
 
   }
@@ -294,7 +301,7 @@ export class ProductoPage implements OnInit, OnDestroy {
   		ocultar.style.display = 'block';
   		mostrar.style.display = 'none';
 
-  	}else{
+  	} else {
 
   		ocultar.style.display = 'none';
   		mostrar.style.display = 'block';

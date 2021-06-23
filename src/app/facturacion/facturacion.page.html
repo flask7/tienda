@@ -9,8 +9,8 @@
 			<ion-input type="number" [(ngModel)]="numero" name="numero"></ion-input>
 		</ion-item>
 		<ion-item class="pago_inputs">
-			<ion-label position="stacked">Fecha de expiración de la tarjeta:</ion-label>
-			<ion-input type="date" [(ngModel)]="fecha" name="fecha"></ion-input>
+			<ion-label position="stacked">Fecha de vencimiento (Mes/Año):</ion-label>
+			<ion-datetime displayFormat="MM/YY" [(ngModel)]="fecha" name="fecha" value="04/21"></ion-datetime>
 		</ion-item>
 		<ion-item class="pago_inputs">
 			<ion-label position="floating">CVV2:</ion-label>

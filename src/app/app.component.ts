@@ -88,11 +88,17 @@ export class AppComponent implements OnInit {
 
       this.resultados = [];
 
-    }else{
+    } else {
 
       this.comunicacion.buscador(busqueda).subscribe((data: any) => {
 
         this.resultados = data[0].products.product;
+
+        window.addEventListener('click', (e) => {
+
+          this.resultados = [];
+
+        });
 
       }, Error => {
 
