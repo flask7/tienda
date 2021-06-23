@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Form } from '@angular/forms';
 import { ComunicacionService } from '../comunicacion.service';
+import { EventsService } from '../events.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { AlertController, ModalController, LoadingController, IonSlides } from '@ionic/angular';
@@ -57,7 +58,8 @@ export class ProductoPage implements OnInit, OnDestroy {
     private alertController: AlertController, 
     private sanitizer: DomSanitizer, 
     private comunicacion: ComunicacionService, 
-    private activate: ActivatedRoute) { }
+    private activate: ActivatedRoute,
+    public events: EventsService) { }
 
   async ngOnInit() {
 
@@ -291,7 +293,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   }
 
-  revision(){
+  revision() {
 
   	let ocultar = document.getElementById('ocultar'),
   	  mostrar = document.getElementById('desplegar');
@@ -310,7 +312,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   }
 
-  revision_comentarios(){
+  revision_comentarios() {
 
     let ocultar = document.getElementById('hide'),
       mostrar = document.getElementById('deploy');
@@ -416,15 +418,21 @@ export class ProductoPage implements OnInit, OnDestroy {
       id_customer, id, precio, nombre, cantidad, direccion, opciones
     }
 
-    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe((data: any) => {
+    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe(async (data: any) => {
 
       if (data[0] == "Producto añadido satisfactoriamente") {
 
         this.comunicacion.actualizar_carrito(json);
+        await this.mensaje(data[0]);
+        this.events.publish('CargarCarrito');
+        //this.events.publish('obtenerProductos');
+
+      } else {
+
+        this.mensaje(data[0]);
 
       }
 
-      this.mensaje(data[0]);
       this.boton.removeAttribute('disabled');
 
     }, Error => {
@@ -451,7 +459,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
         this.respuesta = data;
 
-      }else{
+      } else {
 
         for (let i = 0; i < data.mensaje.length; i++) {
        

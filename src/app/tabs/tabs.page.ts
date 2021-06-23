@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs/Rx';
 import { ComunicacionService } from '../comunicacion.service';
+import { EventsService } from '../events.service';
 
 @Component({
   selector: 'app-tabs',
@@ -9,13 +10,21 @@ import { ComunicacionService } from '../comunicacion.service';
 })
 export class TabsPage implements OnInit {
 
-  constructor(private comunicacion: ComunicacionService) {}
+  constructor(
+    private comunicacion: ComunicacionService, 
+    public events: EventsService) {}
 
   sesion: Observable<string>;
   articulos: Observable<number>;
-  contador: string = localStorage.getItem('carrito_contador');
 
-  ngOnInit(){
+  ngOnInit() {
+
+    this.events.destroy('obtenerProductos');
+    this.events.subscribe('obtenerProductos', () => {
+
+      this.get_products();
+
+    });
 
   	this.comunicacion.estado_usuario().subscribe((data) => {
 
@@ -65,9 +74,6 @@ export class TabsPage implements OnInit {
         this.comunicacion.obtener_productos_2().subscribe(data2 => {
 
           this.articulos = Observable.of(JSON.parse(data2).length);
-          this.contador = '1';
-
-          localStorage.setItem('carrito_contador', '1');
 
         }, Error => {
 

@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ComunicacionService } from '../comunicacion.service';
 import { Observable } from 'rxjs/Rx';
 import { AlertController, LoadingController } from '@ionic/angular';
+import { EventsService } from '../events.service';
 
 @Component({
   selector: 'app-tab3',
@@ -13,7 +14,7 @@ export class Tab3Page implements OnInit  {
 	info: any = [];
 	nombres: any = [];
   productos: Observable<Array<string>>;
-  loading: any;
+  loading: any = [1];
   id_carrito: string;
   usuario: Observable<string>;
   mostrar_boton: number = -1;
@@ -27,17 +28,25 @@ export class Tab3Page implements OnInit  {
   constructor(
     private comunicacion: ComunicacionService,
     private cargando: LoadingController, 
-    private alerta: AlertController) { }
+    private alerta: AlertController,
+    public events: EventsService) { }
 
-  ngOnInit () {
+  ngOnInit() {
+
+    this.events.destroy('CargarCarrito');
+    this.events.subscribe('CargarCarrito', () => {
+
+      this.verificar_productos();
+      this.loading = [];
+
+    });
 
     this.verificar_productos();
+    this.loading = [];
 
   }
 
   verificar_productos() {
-
-    console.log('Ejecutando');
 
     this.comunicacion.estado_usuario().subscribe((data) => {
 
@@ -82,61 +91,72 @@ export class Tab3Page implements OnInit  {
 
   get_products() {
 
-    this.presentLoading();
+    this.info = [];
+    this.mostrar_boton = -1;
+    this.productos = Observable.of(this.info);
+
     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
 
-      try {
+      if (data.length > 0) {
 
-        const index = data[0].carts.length - 1;
+        if (data[0].carts) {
 
-        this.id_carrito = data[0].carts[index].id.toString();
+          if (data[0].carts.length > 0) {
 
-        let coincidencias = 0;
+            const index = data[0].carts.length - 1;
 
-        if (data[1].products) {
+            this.id_carrito = data[0].carts[index].id.toString();
 
-          if (data[1].products.length > 0) {
-            
-            for (let i = 0; i < data[1].products.length; i++) {
+            let coincidencias = 0;
 
-               if (data[1].products[i].associations) {
+            if (data[1].products) {
 
-                this.opciones[i] = {
-                  valores: [],
-                  atributo: [],
-                  grupo: [],
-                  cantidad: [],
-                  nombres: [],
-                  precio: [],
-                  id: []
-                };
+              if (data[1].products.length > 0) {
+                
+                for (let i = 0; i < data[1].products.length; i++) {
 
-                this.opciones[i].id.push(data[1].products[i].id);
-                this.opciones[i].precio.push(data[1].products[i].price);
-                this.opciones[i].nombres.push(data[1].products[i].name);
+                   if (data[1].products[i].associations) {
 
-                if (data[1].products[i].associations.product_option_values) {
+                    this.opciones[i] = {
+                      valores: [],
+                      atributo: [],
+                      grupo: [],
+                      cantidad: [],
+                      nombres: [],
+                      precio: [],
+                      id: []
+                    };
 
-                  if (data[1].products[i].associations.product_option_values.length > 0) {
+                    this.opciones[i].id.push(data[1].products[i].id);
+                    this.opciones[i].precio.push(data[1].products[i].price);
+                    this.opciones[i].nombres.push(data[1].products[i].name);
 
-                    for (let x = 0; x < data[1].products[i].associations.product_option_values.length; x++) {
+                    if (data[1].products[i].associations.product_option_values) {
 
-                      for (let y = 0; y < data[3].product_option_values.length; y++) {
+                      if (data[1].products[i].associations.product_option_values.length > 0) {
 
-                        if (data[3].product_option_values[y].id == data[1].products[i].associations.product_option_values[x].id) {
+                        for (let x = 0; x < data[1].products[i].associations.product_option_values.length; x++) {
 
-                          for (let a = 0; a < data[2].product_options.length; a++) {
+                          for (let y = 0; y < data[3].product_option_values.length; y++) {
 
-                            if (data[3].product_option_values[y].id_attribute_group == data[2].product_options[a].id) {
+                            if (data[3].product_option_values[y].id == data[1].products[i].associations.product_option_values[x].id) {
 
-                              this.opciones[i].valores.push({ 
-                                id: data[3].product_option_values[y].id,
-                                nombre: data[3].product_option_values[y].name,
-                                grupo: data[2].product_options[a].id });
+                              for (let a = 0; a < data[2].product_options.length; a++) {
 
-                              this.opciones[i].atributo.push(data[2].product_options[a].name);
-                              this.opciones[i].grupo.push(data[2].product_options[a].id);
-                                                            
+                                if (data[3].product_option_values[y].id_attribute_group == data[2].product_options[a].id) {
+
+                                  this.opciones[i].valores.push({ 
+                                    id: data[3].product_option_values[y].id,
+                                    nombre: data[3].product_option_values[y].name,
+                                    grupo: data[2].product_options[a].id });
+
+                                  this.opciones[i].atributo.push(data[2].product_options[a].name);
+                                  this.opciones[i].grupo.push(data[2].product_options[a].id);
+                                                                
+                                }
+
+                              }
+
                             }
 
                           }
@@ -147,110 +167,102 @@ export class Tab3Page implements OnInit  {
 
                     }
 
-                  } else {
-
-                    this.opciones[i].push('paso');
-
                   }
 
-                } else {
+                  for (let x = 0; x < data[0].carts[index].associations.cart_rows.length; x++) {
 
-                  this.opciones[i].push('paso');
+                    if (data[1].products[i].id == data[0].carts[index].associations.cart_rows[x].id_product) {
+                              
+                      coincidencias++;
 
-                }
+                      if (x == (data[0].carts[index].associations.cart_rows.length - 1) && i == (data[1].products.length - 1)) {
+                        
+                        for (let a = 0; a < coincidencias; a++) {
+                        
+                          this.info.push({
 
-              } else {
+                           "id_carrito": data[0].carts[index].id, 
+                           "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
+                           "precio": parseFloat(data[1].products[i].price).toFixed(2).toString(),
+                           "nombre": data[1].products[i].name,
+                           "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
 
-                this.opciones[i].push('paso');
+                          });
 
-              }
+                          this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+                          this.opciones[i].cantidad.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
 
-              for (let x = 0; x < data[0].carts[index].associations.cart_rows.length; x++) {
+                        }
 
-                if (data[1].products[i].id == data[0].carts[index].associations.cart_rows[x].id_product) {
-                          
-                  coincidencias++;
+                      }
 
-                  if (x == (data[0].carts[index].associations.cart_rows.length - 1) && i == (data[1].products.length - 1)) {
-                    
-                    for (let a = 0; a < coincidencias; a++) {
-                    
-                      this.info.push({
+                    } else {
 
-                       "id_carrito": data[0].carts[index].id, 
-                       "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
-                       "precio": parseFloat(data[1].products[i].price).toFixed(2).toString(),
-                       "nombre": data[1].products[i].name,
-                       "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
+                      for (let a = 0; a < coincidencias; a++) {
+                        
+                        this.info.push({
 
-                      });
+                         "id_carrito": data[0].carts[index].id,
+                         "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
+                         "precio": parseFloat(data[1].products[i].price).toFixed(2).toString(),
+                         "nombre": data[1].products[i].name,
+                         "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
 
-                      this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
-                      this.opciones[i].cantidad.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+                       });
+
+                        this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+                        this.opciones[i].cantidad.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+
+                      }
+
+                      coincidencias = 0;
 
                     }
 
                   }
 
-                } else {
+                  this.opciones[i].atributo = this.opciones[i].atributo.filter((valor, indice) => {
 
-                  for (let a = 0; a < coincidencias; a++) {
-                    
-                    this.info.push({
+                    return this.opciones[i].atributo.indexOf(valor) === indice;
 
-                     "id_carrito": data[0].carts[index].id,
-                     "id": data[0].carts[index].associations.cart_rows[x - a].id_product,
-                     "precio": parseFloat(data[1].products[i].price).toFixed(2).toString(),
-                     "nombre": data[1].products[i].name,
-                     "cantidad": data[0].carts[index].associations.cart_rows[x - a].quantity
+                  });
 
-                   });
+                  this.opciones[i].grupo = this.opciones[i].grupo.filter((valor, indice) => {
 
-                    this.cantidad_mod.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
-                    this.opciones[i].cantidad.push(data[0].carts[index].associations.cart_rows[x - a].quantity);
+                    return this.opciones[i].grupo.indexOf(valor) === indice;
 
-                  }
-
-                  coincidencias = 0;
+                  });
 
                 }
-
+                
               }
 
-              this.opciones[i].atributo = this.opciones[i].atributo.filter((valor, indice) => {
-
-                return this.opciones[i].atributo.indexOf(valor) === indice;
-
-              });
-
-              this.opciones[i].grupo = this.opciones[i].grupo.filter((valor, indice) => {
-
-                return this.opciones[i].grupo.indexOf(valor) === indice;
-
-              });
-
             }
-            
+
+          } else {
+
+            this.info = [];
+
           }
 
         }
 
-      } catch (e) {
+          
+      } else {
 
         this.info = [];
 
-      }   
+      }
 
       this.productos = Observable.of(this.info);
 
       this.comunicacion.actualizar_productos(this.info);
-      this.loading.dismiss();
 
     }, Error => {
 
       console.log(Error.message);
 
-      this.loading.dismiss();
+      //this.loading.dismiss();
       this.mensaje('Error al cargar los productos');
 
     });
@@ -284,8 +296,6 @@ export class Tab3Page implements OnInit  {
     };
 
     this.valores_select = [];
-
-    console.log(json);
 
     this.comunicacion.modificar_producto(json).subscribe((data:any) => {
 
@@ -349,6 +359,7 @@ export class Tab3Page implements OnInit  {
       this.info = [];
 
       this.get_products();
+      this.events.publish('obtenerProductos');
 
     }, Error => {
 

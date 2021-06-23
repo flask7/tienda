@@ -125,13 +125,13 @@ export class ComunicacionService {
 
   }
 
-  cambiar_estado_usuario(usuario: any){
+  cambiar_estado_usuario(usuario: any) {
 
     this.usuario.next(usuario);
     
   }
 
-  actualizar_productos(array){
+  actualizar_productos(array) {
 
     this.productos_almacenados = array;
     
@@ -139,7 +139,7 @@ export class ComunicacionService {
 
   }
 
-  actualizar_direcciones(array){
+  actualizar_direcciones(array) {
 
     this.direcciones_registradas = array;
     
@@ -147,7 +147,7 @@ export class ComunicacionService {
 
   }
 
-  add_direccion(json:any){
+  add_direccion(json:any) {
 
     let dir = json.direccion;
     const headers = {
@@ -164,7 +164,7 @@ export class ComunicacionService {
 
   }
 
-  add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones): Observable<any>{
+  add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones): Observable<any> {
 
     const json = {
 
@@ -233,7 +233,7 @@ export class ComunicacionService {
 
   }
 
-  login(json){
+  login(json) {
 
     const headers = {
 
@@ -245,7 +245,7 @@ export class ComunicacionService {
   	
   }
 
-  registro(json){
+  registro(json) {
 
      const headers = {
 
@@ -257,7 +257,7 @@ export class ComunicacionService {
 
   }
 
-  recuperar(json){
+  recuperar(json) {
 
     const headers = {
 
@@ -269,7 +269,7 @@ export class ComunicacionService {
 
   }
 
-  recuperar2(json){
+  recuperar2(json) {
 
     const headers = {
 
@@ -281,7 +281,7 @@ export class ComunicacionService {
 
   }
 
-  productos_data(json){
+  productos_data(json) {
 
     const headers = {
 
@@ -293,7 +293,7 @@ export class ComunicacionService {
 
   }
 
-  productos(json){
+  productos(json) {
 
     const headers = {
 
@@ -305,7 +305,7 @@ export class ComunicacionService {
 
   }
 
-  productos_info(json){
+  productos_info(json) {
 
     const headers = {
 
@@ -317,7 +317,7 @@ export class ComunicacionService {
 
   }
 
-  imagenes(id){
+  imagenes(id) {
 
     const headers = {
 
@@ -345,7 +345,7 @@ export class ComunicacionService {
     
   }
 
-  obtener_imagenes(json){
+  obtener_imagenes(json) {
 
     const headers = {
 
@@ -357,7 +357,7 @@ export class ComunicacionService {
 
   }
 
-  home(json){
+  home(json) {
 
     const headers = {
 
@@ -369,7 +369,7 @@ export class ComunicacionService {
 
   }
 
-  relacionados(json){
+  relacionados(json) {
 
     const headers = {
 
@@ -381,7 +381,7 @@ export class ComunicacionService {
 
   }
 
-  buscador(busqueda: string){
+  buscador(busqueda: string) {
 
     const headers = {
 
@@ -397,7 +397,7 @@ export class ComunicacionService {
 
   }
 
-  buscador_estados(){
+  buscador_estados() {
 
     const headers = {
 
@@ -409,7 +409,7 @@ export class ComunicacionService {
 
   }
 
-   buscador_estado(busqueda: string){
+   buscador_estado(busqueda: string) {
 
     const headers = {
 
@@ -425,7 +425,7 @@ export class ComunicacionService {
 
   }
 
-  actualizar_direccion(json: any){
+  actualizar_direccion(json: any) {
 
     const headers = {
 
@@ -437,7 +437,7 @@ export class ComunicacionService {
 
   }
 
-  eliminar_direccion(id: string){
+  eliminar_direccion(id: string) {
 
     const headers = {
 
@@ -471,7 +471,7 @@ export class ComunicacionService {
 
   }
 
-  actualizar_perfil(json: any){
+  actualizar_perfil(json: any) {
 
     const headers = {
 
@@ -483,7 +483,7 @@ export class ComunicacionService {
 
   }
 
-  obtener_mensajes(json: any){
+  obtener_mensajes(json: any) {
     
     const headers = {
 
@@ -494,7 +494,7 @@ export class ComunicacionService {
     return this.http.post('https://tuwordpress.online/prestashop/public/api/mensajes_productos', json, { headers });
   }
 
-  obtener_mensajes_usuario(json: any){
+  obtener_mensajes_usuario(json: any) {
     
     const headers = {
 
@@ -505,7 +505,7 @@ export class ComunicacionService {
     return this.http.post('https://tuwordpress.online/prestashop/public/api/mensajes_clientes', json, { headers });
   }
 
-  pago(json: any){
+  pago(json: any) {
     
     const headers = {
 
