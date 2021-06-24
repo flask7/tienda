@@ -1,6 +1,7 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { ComunicacionService } from '../comunicacion.service';
+import { EventsService } from '../events.service';
 import { LoadingController, AlertController } from '@ionic/angular';
 import { Observable } from 'rxjs';
 
@@ -32,7 +33,8 @@ export class FacturacionPage implements OnInit, OnDestroy {
     private alerta: AlertController, 
     private comunicacion: ComunicacionService, 
     private cargando: LoadingController, 
-    private activate: ActivatedRoute) { }
+    private activate: ActivatedRoute,
+    public events: EventsService) { }
 
   ngOnInit() {
 
@@ -74,7 +76,7 @@ export class FacturacionPage implements OnInit, OnDestroy {
     await alert.present();
   }
 
-  obtener_direcciones(){
+  obtener_direcciones() {
 
     const cliente_id = localStorage.getItem('cliente_id');
     let direcciones = [];
@@ -166,6 +168,8 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
   comprar(dir) {
 
+    this.direccion = 0;
+
     const simple_form = [this.numero, this.cvv, this.fecha];
 
     for (let i = 0; i < simple_form.length; i++) {
@@ -197,6 +201,8 @@ export class FacturacionPage implements OnInit, OnDestroy {
     this.comunicacion.pago(json).subscribe((data) => {
 
       this.mensaje(data);
+      this.events.publish('CargarCarrito');
+      this.router.navigateByUrl('/historial-pedidos');
 
     }, Error => {
 

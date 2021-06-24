@@ -132,7 +132,7 @@
 
 		<ion-row *ngIf="direcciones.length > 0">
 			<ng-container *ngFor="let direccion of direcciones; let i = index">
-				<ion-col size="4">
+				<ion-col size="12">
 					<ion-card class="tarjeta" (click)="scrolling(i)">
 					  <ion-card-header>
 					    <ion-card-subtitle>Dirección</ion-card-subtitle>
@@ -144,13 +144,13 @@
 					  </ion-card-content>
 					</ion-card>
 					<ion-row *ngIf="mostrar == i + 1" id="b{{ i }}">
-						<ion-col size="6">
-							<ion-button (click)="borrar(direcciones[i].id)" color="danger" fill="solid">
+						<ion-col size="6" style="display: flex;">
+							<ion-button (click)="borrar(direcciones[i].id)" color="danger" fill="solid" style="margin: auto;">
 								<ion-icon name="close-circle-outline"></ion-icon>
 							</ion-button>
 						</ion-col>
-						<ion-col size="6">
-							<ion-button (click)="editar(direcciones[i].id)" color="dark" fill="solid">
+						<ion-col size="6" style="display: flex;">
+							<ion-button (click)="editar(direcciones[i].id)" color="dark" fill="solid" style="margin: auto;">
 								<ion-icon name="pencil-outline"></ion-icon>
 							</ion-button>
 						</ion-col>

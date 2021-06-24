@@ -16,7 +16,7 @@
 		  		<ion-col size="10">
 		  			<ion-row>
 		  				<ion-col>
-		  					<ion-searchbar debounce="1000" (ionInput)="buscar($event)" placeholder="¿Qué necesitas?" class="barra_busqueda"></ion-searchbar>
+		  					<ion-searchbar debounce="200" (ionChange)="buscar($event)" placeholder="¿Qué necesitas?" class="barra_busqueda"></ion-searchbar>
 		  				</ion-col>
 		  			</ion-row>
 		  		</ion-col>
@@ -106,21 +106,17 @@
 	    </ion-list>
 
 	    <ion-row>
-		    <ion-col>
+		    <ion-col style="margin: 10px 0;" size="12">
 		    	<ion-menu-toggle>
 		    		<a routerLink="/terminos" class="links">Terminos y condiciones</a>
 		    	</ion-menu-toggle>
 		    </ion-col>
-	    </ion-row>
-	    <ion-row>
-		    <ion-col>
+		    <ion-col style="margin: 10px 0;" size="12">
     			<ion-menu-toggle>
     				<a routerLink="/politicas" class="links">Política de privacidad</a>
     			</ion-menu-toggle>
 		    </ion-col>
-	    </ion-row>
-	    <ion-row>
-	    	<ion-col>
+	    	<ion-col style="margin: 10px 0;" size="12">
 	    		<ion-menu-toggle>
 	    			<a routerLink="/cookies" class="links">Política de Cookies</a>
 	    		</ion-menu-toggle>

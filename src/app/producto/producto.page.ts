@@ -50,7 +50,7 @@ export class ProductoPage implements OnInit, OnDestroy {
   loading: any = [];
   descuento: number = 0.00;
   boton: any;
-  routing: string = 'Deportes > equipaciones';
+  routing: string = '';
 
   constructor(
     private cargando: LoadingController, 
@@ -418,12 +418,12 @@ export class ProductoPage implements OnInit, OnDestroy {
       id_customer, id, precio, nombre, cantidad, direccion, opciones
     }
 
-    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe(async (data: any) => {
+    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe((data: any) => {
 
       if (data[0] == "Producto añadido satisfactoriamente") {
 
         this.comunicacion.actualizar_carrito(json);
-        await this.mensaje(data[0]);
+        this.mensaje(data[0]);
         this.events.publish('CargarCarrito');
         //this.events.publish('obtenerProductos');
 

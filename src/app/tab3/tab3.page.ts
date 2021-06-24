@@ -14,7 +14,7 @@ export class Tab3Page implements OnInit  {
 	info: any = [];
 	nombres: any = [];
   productos: Observable<Array<string>>;
-  loading: any = [1];
+  loading: any = true;
   id_carrito: string;
   usuario: Observable<string>;
   mostrar_boton: number = -1;
@@ -24,6 +24,7 @@ export class Tab3Page implements OnInit  {
   asociaciones: any = [];
   valores_select: any = [];
   opciones: any = [];
+  total_producto: any = [];
 
   constructor(
     private comunicacion: ComunicacionService,
@@ -36,13 +37,14 @@ export class Tab3Page implements OnInit  {
     this.events.destroy('CargarCarrito');
     this.events.subscribe('CargarCarrito', () => {
 
+      this.info = [];
       this.verificar_productos();
-      this.loading = [];
+      this.loading = false;
 
     });
 
     this.verificar_productos();
-    this.loading = [];
+    // this.loading = false;
 
   }
 
@@ -62,18 +64,18 @@ export class Tab3Page implements OnInit  {
 
   }
 
-  async presentLoading() {
+  // async presentLoading() {
 
-    this.loading = await this.cargando.create({
-      cssClass: 'my-custom-class',
-      message: 'Cargando...'
-    });
+  //   this.loading = await this.cargando.create({
+  //     cssClass: 'my-custom-class',
+  //     message: 'Cargando...'
+  //   });
 
-    await this.loading.present();
+  //   await this.loading.present();
 
-    const { role, data } = await this.loading.onDidDismiss();
+  //   const { role, data } = await this.loading.onDidDismiss();
 
-  }
+  // }
 
   async mensaje(mensaje) {
 
@@ -96,6 +98,67 @@ export class Tab3Page implements OnInit  {
     this.productos = Observable.of(this.info);
 
     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
+
+      this.loading = false;
+
+       if (data.length > 0) {
+
+        if (data[0].carts) {
+
+          if (data[0].carts.length > 0) {
+
+            let carts = data[0].carts,
+              products = data[1].products,
+              index = carts.length - 1;
+
+            this.id_carrito = carts[index].id.toString();
+
+            for (let i of carts[index].associations.cart_rows) {
+
+              if (i.id_product != '0') {
+
+                this.info.push({
+
+                  id_carrito: data[0].carts[index].id,
+                  id: i.id_product,
+                  precio: parseFloat(products.find(x => x.id == i.id_product).price).toFixed(2).toString(),
+                  nombre: products.find(x=>x.id == i.id_product).name,
+                  cantidad: i.quantity
+
+                });
+
+                let total = (parseFloat(products.find(x => x.id == i.id_product).price) * parseFloat(i.quantity)).toFixed(2).toString();
+
+                this.total_producto.push(total);
+                this.cantidad_mod.push(i.quantity);
+
+              }
+
+            }
+
+          } else {
+
+            this.info = [];
+
+          }
+
+        } else {
+
+          this.info = [];
+
+        }
+
+      } else {
+
+        this.info = [];
+
+      }
+
+      this.productos = Observable.of(this.info);
+
+      this.comunicacion.actualizar_productos(this.info);
+
+     /* return false;
 
       if (data.length > 0) {
 
@@ -256,7 +319,7 @@ export class Tab3Page implements OnInit  {
 
       this.productos = Observable.of(this.info);
 
-      this.comunicacion.actualizar_productos(this.info);
+      this.comunicacion.actualizar_productos(this.info);*/
 
     }, Error => {
 
@@ -286,20 +349,25 @@ export class Tab3Page implements OnInit  {
     const json = {
 
       id_customer: localStorage.getItem('cliente_id'),
-      id: this.opciones[i].id[0],
-      nombre: this.opciones[i].nombres[0],
-      precio: ((parseFloat(this.opciones[i].precio) * parseInt(this.opciones[i].cantidad)).toFixed(2)).toString(),
+      id: this.info[i].id,
+      nombre: this.info[i].nombre,
+      precio: ((parseFloat(this.info[i].precio) * parseInt(this.cantidad_mod[i])).toFixed(2)).toString(),
       quantity: this.cantidad_mod[i],
-      opciones: this.valores_select,
+      //opciones: this.valores_select,
       indice: i
 
     };
 
+    this.total_producto[i] = json.precio;
     this.valores_select = [];
 
     this.comunicacion.modificar_producto(json).subscribe((data:any) => {
 
       this.mensaje(data[0]);
+
+      for (let i in this.info) {
+        this.info[i].cantidad = this.cantidad_mod[i]
+      }
 
     }, Error => {
 

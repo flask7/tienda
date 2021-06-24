@@ -6,7 +6,7 @@
   <ion-grid style="margin-top: 80px;">
   	<ion-progress-bar 
 		type="indeterminate" 
-		*ngIf="loading[0] === 1"
+		*ngIf="loading"
 		color="success"></ion-progress-bar>
   	<ion-row>
   		<ion-col *ngIf="(productos | async)?.length > 0">
@@ -52,7 +52,12 @@
 			  			</ion-col>
 			  		</ion-row>
 			  		
-	  				<ng-container *ngFor="let opcion of opciones[i].grupo; let x = index">
+			  		<ion-row>
+			  			<ion-col style="text-align: center;">
+			  				<p><b>Total producto: </b> {{ total_producto[i] }}€</p>
+			  			</ion-col>
+			  		</ion-row>
+	  				<!--<ng-container *ngFor="let opcion of opciones[i].grupo; let x = index">
 
 	  					<ion-row>
 	  						<ion-col>
@@ -82,7 +87,7 @@
 	  						</ion-col>
 	  					</ion-row>
 
-	  				</ng-container>
+	  				</ng-container>-->
 			  	
 			  		<ion-row class="mods">
 			  			<ion-col style="display: flex;">
@@ -105,7 +110,7 @@
 				style="--background: transparent; box-shadow: none; border: none; z-index: -1;" >
 			</ion-item>
   		</ion-col>
-  		<ion-col *ngIf="(productos| async)?.length === 0">
+  		<ion-col *ngIf="(productos| async)?.length === 0 && loading == false">
   			<p class="alertap" style="margin-top: 60%; text-align: center;">No ha sido añadido ningún producto</p>
   		</ion-col>
   		<ion-col *ngIf="(this.usuario | async) == 'Iniciar sesión'">

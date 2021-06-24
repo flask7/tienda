@@ -64,7 +64,11 @@ export class TabsPage implements OnInit {
          
           for (let i = 0; i < data[0].carts[data[0].carts.length - 1].associations.cart_rows.length; i++) {
           
-            info.push(data[0].carts[data[0].carts.length - 1].associations.cart_rows.length);
+            if (data[0].carts[data[0].carts.length - 1].associations.cart_rows[i].id_product != '0') {
+
+              info.push(data[0].carts[data[0].carts.length - 1].associations.cart_rows.length);
+
+            }
 
           }
 
@@ -73,7 +77,7 @@ export class TabsPage implements OnInit {
         this.comunicacion.actualizar_productos(info);
         this.comunicacion.obtener_productos_2().subscribe(data2 => {
 
-          this.articulos = Observable.of(JSON.parse(data2).length);
+          this.articulos = Observable.of(info.length);
 
         }, Error => {
 

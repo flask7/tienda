@@ -32,7 +32,7 @@ export class HistorialPedidosPage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    this.comunicacion.cambiar_estado_boton('0');
+    //this.comunicacion.cambiar_estado_boton('0');
 
   }
 
