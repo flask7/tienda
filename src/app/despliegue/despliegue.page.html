@@ -12,10 +12,9 @@
                 <ion-row>
                   <ion-col>
                     <div 
-                      [style.background-image]="productos.imagen.base64[y]"
+                      [ngStyle]="{'background-image': 'url('+(productos.imagen.id_imagen[y] ? 'https://www.wonduu.com/'+productos.imagen.id_imagen[y]+'-home_default/imagen.jpg' : '../assets/nd.svg.png')+')'}"
                       loading="lazy"
                       style="
-                        background-image: url('../assets/nd.svg.png'); 
                         margin: auto; 
                         height: 100px; 
                         width: 100px; 

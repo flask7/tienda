@@ -21,11 +21,11 @@
               <ion-col size="4" class="" *ngIf="x.id_category_default == categorias[0].id[i]" [routerLink]="'/producto/'+id+'/'+x.id"> 
                 <ion-row>
                   <ion-col style="display: flex;">
+                    <!-- [style.background-image]="imagenes[y]" -->
                    <div 
-                    [style.background-image]="imagenes[y]"
+                    [ngStyle]="{'background-image': 'url('+(x.id_default_image ? 'https://www.wonduu.com/'+x.id_default_image+'-home_default/imagen.jpg' : '../assets/nd.svg.png')+')'}"
                     loading="lazy"
                     style="
-                      background-image: url('../assets/nd.svg.png'); 
                       margin: auto; 
                       height: 80px; 
                       width: 80px; 

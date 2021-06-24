@@ -16,7 +16,8 @@ export class GeolocalizacionPage implements OnInit {
 
   @ViewChild('content') private content: any;
 
-	ubicacion: any = [];
+	alias: any = "";
+  ubicacion: any = [];
   resultado: string;
   nombre: string;
   apellidos: string;
@@ -35,6 +36,8 @@ export class GeolocalizacionPage implements OnInit {
   adding: number = 0;
   edicion: string;
   mostrar_lista: number = 0;
+
+  showingAddresses = true;
 
   constructor(
     public alertController: AlertController, 
@@ -140,17 +143,35 @@ export class GeolocalizacionPage implements OnInit {
       identificacion: this.identificacion,
       nombre: this.nombre,
       apellidos: this.apellidos,
-      empresa: this.empresa,
+      // empresa: this.empresa,
       direccion: this.direccion,
       cp: this.cp,
       ciudad: this.ciudad,
       telefono: this.telefono,
-      telefono2: this.telefono2,
-      estado: this.estado_id
+      // telefono2: this.telefono2,
+      estado: this.estado_id,
+      alias: this.alias
 
     }
 
-    let respuesta = this.validar(json);
+    const valida = {
+
+      cliente_id: parseInt(cliente_id),
+      // identificacion: this.identificacion,
+      nombre: this.nombre,
+      apellidos: this.apellidos,
+      // empresa: this.empresa,
+      direccion: this.direccion,
+      cp: this.cp,
+      ciudad: this.ciudad,
+      telefono: this.telefono,
+      // telefono2: this.telefono2,
+      estado: this.estado_id,
+      alias: this.alias
+
+    }
+
+    let respuesta = this.validar(valida);
 
     if(respuesta == 'Funciona'){
 
@@ -161,6 +182,7 @@ export class GeolocalizacionPage implements OnInit {
           this.alerta(data[0]);
           this.blanquear_formulario();
           this.obtener_direcciones();
+          this.showingAddresses = true;
 
         }, Error => {
 
@@ -184,11 +206,22 @@ export class GeolocalizacionPage implements OnInit {
       if (data.addresses) {
 
         for (let i = 0; i < data.addresses.length; i++) {
-       
-          let objeto = { "direccion": data.addresses[i].address1, "id": data.addresses[i].id };
 
-          this.direcciones.push(objeto);
-          direcciones.push(data.addresses[i].address1);
+          this.comunicacion.buscador_estado(data.addresses[i].id_state).subscribe((data1: any) => {
+
+            let estado = "";
+            if (data1[0].states.state) {
+              estado = data1[0].states.state.name;
+            }
+
+            let objeto = { "alias": data.addresses[i].alias, "direccion": data.addresses[i].address1, "id": data.addresses[i].id,
+            "postcode":data.addresses[i].postcode, "city":data.addresses[i].city, "estado": estado, "phone": data.addresses[i].phone };
+
+            this.direcciones.push(objeto);
+            direcciones.push(data.addresses[i].address1);
+
+          });
+       
          
         }
 
@@ -248,6 +281,8 @@ export class GeolocalizacionPage implements OnInit {
 
       if (info[i].id == indice) {
 
+        console.log(info);
+
         this.comunicacion.buscador_estado(info[i].id_state).subscribe((data: any) => {
 
             if (data[0].states.state) {
@@ -260,7 +295,7 @@ export class GeolocalizacionPage implements OnInit {
 
             }
 
-            this.llenar_formulario(info[i].dni, info[i].firstname, info[i].lastname, info[i].company, info[i].address1, info[i].postcode, info[i].city, info[i].phone, info[i].phone_mobile, info[i].id_state);
+            this.llenar_formulario(info[i].dni, info[i].firstname, info[i].lastname, info[i].company, info[i].address1, info[i].postcode, info[i].city, info[i].phone, info[i].phone_mobile, info[i].id_state, info[i].alias);
 
           }, Error => {
 
@@ -292,7 +327,8 @@ export class GeolocalizacionPage implements OnInit {
       ciudad: this.ciudad,
       telefono: this.telefono,
       telefono2: this.telefono2,
-      estado: this.estado_id
+      estado: this.estado_id,
+      alias: this.alias
 
     }
 
@@ -316,6 +352,7 @@ export class GeolocalizacionPage implements OnInit {
 
   blanquear_formulario(){
 
+      this.alias = '';
       this.identificacion = '';
       this.nombre = '';
       this.apellidos = '';
@@ -327,11 +364,11 @@ export class GeolocalizacionPage implements OnInit {
       this.telefono2 = '';
      // this.estado = '';
       this.estado_id = '';
-      this.resultados = []; 
+      // this.resultados = []; 
 
   }
 
-  llenar_formulario(identificacion, nombre, apellidos, empresa, direccion, cp, ciudad, telefono, telefono2, estado_id){
+  llenar_formulario(identificacion, nombre, apellidos, empresa, direccion, cp, ciudad, telefono, telefono2, estado_id, alias){
 
       this.identificacion = identificacion;
       this.nombre = nombre;
@@ -344,6 +381,7 @@ export class GeolocalizacionPage implements OnInit {
       this.telefono2 = telefono2;
      // this.estado = estado;
       this.estado_id = estado_id;
+      this.alias = alias;
 
   }
 

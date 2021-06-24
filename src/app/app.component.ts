@@ -24,6 +24,7 @@ export class AppComponent implements OnInit {
   resultados: any = [];
   mostrar: string = 'N';
   boton_activo: Observable<number>;
+  query;
 
   constructor(
     private platform: Platform,
@@ -78,6 +79,11 @@ export class AppComponent implements OnInit {
     
     this._location.back();
 
+  }
+
+  clearInput()
+  {
+    (document.getElementsByClassName('barra_busqueda')[0] as any).value = '';
   }
 
   buscar(event){

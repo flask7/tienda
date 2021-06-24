@@ -16,7 +16,7 @@
 		  		<ion-col size="10">
 		  			<ion-row>
 		  				<ion-col>
-		  					<ion-searchbar debounce="200" (ionChange)="buscar($event)" placeholder="¿Qué necesitas?" class="barra_busqueda"></ion-searchbar>
+		  					<ion-searchbar debounce="500" (ionChange)="buscar($event)" placeholder="¿Qué necesitas?" class="barra_busqueda"></ion-searchbar>
 		  				</ion-col>
 		  			</ion-row>
 		  		</ion-col>
@@ -24,7 +24,7 @@
 	  		<ion-row *ngFor="let resultado of resultados; let i = index" class="results">
   				<ion-col>
   					<ion-list>
-		  				<ion-item lines="full" (click)="resultados=[]" class="results" routerLink="/producto/{{resultado.id_category_default}}/{{resultado.id}}">
+		  				<ion-item lines="full" (click)="resultados=[]; clearInput()" class="results" routerLink="/producto/{{resultado.id_category_default}}/{{resultado.id}}">
 		  					<ion-label>{{ resultado.name.language }}</ion-label>
 		  				</ion-item>
 		  			</ion-list>

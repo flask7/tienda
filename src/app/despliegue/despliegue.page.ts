@@ -104,37 +104,38 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
 		  }
 
-      let json = {
-
-        imagenes: this.productos.imagen.base64
-
-      }
-
       this.loading.dismiss();
 
-      await this.comunicacion.obtener_imagenes(json).subscribe((data2: any) => {
+      // let json = {
 
-        for (let i = 0; i < data2.length; i++) {
+      //   imagenes: this.productos.imagen.base64
 
-          if (this.productos.imagen.base64[i] != 'paso') {
+      // }
 
-            let imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${ data2[i] })`);
 
-            this.productos.imagen.base64[i] = imagen;
+      // await this.comunicacion.obtener_imagenes(json).subscribe((data2: any) => {
 
-          } else {
+      //   for (let i = 0; i < data2.length; i++) {
 
-            this.productos.imagen.base64[i] = this.sanitizer.bypassSecurityTrustStyle("url('../assets/nd.svg.png')");
+      //     if (this.productos.imagen.base64[i] != 'paso') {
 
-          }
+      //       let imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${ data2[i] })`);
 
-        }
+      //       this.productos.imagen.base64[i] = imagen;
 
-      }, Error => {
+      //     } else {
 
-        console.log(Error);
+      //       this.productos.imagen.base64[i] = this.sanitizer.bypassSecurityTrustStyle("url('../assets/nd.svg.png')");
 
-      });
+      //     }
+
+      //   }
+
+      // }, Error => {
+
+      //   console.log(Error);
+
+      // });
 
   	}, Error => {
 
