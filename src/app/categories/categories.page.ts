@@ -96,6 +96,8 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
     this.comunicacion.productos_data(json).subscribe((data: any) => {
 
+      //console.log(data);
+
       for (let x = 0; x < data[0].sub_categorias.nombre.length; x++) {
 
         this.categorias[0].name.push(data[0].sub_categorias.nombre[x]);
@@ -145,54 +147,54 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
   obtener_imagenes(productos) {
 
-    let json = {
+    // let json = {
 
-      imagenes: []
+    //   imagenes: []
 
-    }
+    // }
 
-    for (let i = 0; i < productos.length; i++) {
+    // for (let i = 0; i < productos.length; i++) {
 
-      if (productos[i].id_default_image.toString() === '' || productos[i].id_default_image.toString() === undefined || productos[i].id_default_image.toString() === null) {
+    //   if (productos[i].id_default_image.toString() === '' || productos[i].id_default_image.toString() === undefined || productos[i].id_default_image.toString() === null) {
 
-        json.imagenes.push('pasa');
+    //     json.imagenes.push('pasa');
 
-      } else {
+    //   } else {
 
-        let imagenes = productos[i].id.toString() + '/' + productos[i].id_default_image.toString();
+    //     let imagenes = productos[i].id.toString() + '/' + productos[i].id_default_image.toString();
 
-        json.imagenes.push(imagenes);
+    //     json.imagenes.push(imagenes);
 
-      }
+    //   }
 
-    }
+    // }
 
-    this.comunicacion.obtener_imagenes(json).subscribe((data: any) => {
+    // this.comunicacion.obtener_imagenes(json).subscribe((data: any) => {
 
-      for (let i = 0; i < data.length; i++) {
+    //   for (let i = 0; i < data.length; i++) {
 
-        let imagen;
+    //     let imagen;
 
-        if (data[i] == 'pasa') {
+    //     if (data[i] == 'pasa') {
 
-          imagen = this.sanitizer.bypassSecurityTrustStyle("url('../assets/nd.svg.png')");
+    //       imagen = this.sanitizer.bypassSecurityTrustStyle("url('../assets/nd.svg.png')");
 
-        } else {
+    //     } else {
 
-          imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${data[i]})`);
+    //       imagen = this.sanitizer.bypassSecurityTrustStyle(`url(data:image/jpeg;base64,${data[i]})`);
 
-        }
+    //     }
 
-        this.imagenes.push(imagen);
+    //     this.imagenes.push(imagen);
 
-      }
+    //   }
 
 
-    }, Error => {
+    // }, Error => {
 
-      console.log(Error);
+    //   console.log(Error);
 
-    });
+    // });
 
   }
 

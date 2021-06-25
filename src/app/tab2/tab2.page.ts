@@ -47,7 +47,7 @@ export class Tab2Page implements OnInit  {
 
   }
 
-  redireccion(){
+  redireccion() {
       
     this.router.navigateByUrl('/tabs/login');
     

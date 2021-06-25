@@ -220,7 +220,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
     });
 
-    this.get_mensajes();
+    //this.get_mensajes();
 
   }
 
@@ -445,7 +445,7 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   }
 
-  get_mensajes(){
+  get_mensajes() {
 
     const json = {
 
