@@ -23,7 +23,8 @@ export class InfoPersonalPage implements OnInit, OnDestroy {
   constructor(
     private alertController: AlertController,
     private activate: ActivatedRoute, 
-    private comunicacion: ComunicacionService) { }
+    private comunicacion: ComunicacionService,
+    private router: Router) { }
 
   ngOnInit() {
 
@@ -61,9 +62,9 @@ export class InfoPersonalPage implements OnInit, OnDestroy {
       this.estado_pedido = data[2].order_states[0].name;
       this.direccion = data[1].addresses[0].address1;
       this.telefono = data[1].addresses[0].phone;
-      this.order_total = parseFloat(data[0].orders[0].total_paid_real).toFixed(2).toString();
-      this.envio = parseFloat(data[3]).toFixed(2).toString();
-      this.total = (parseFloat(this.order_total) + parseFloat(this.envio)).toFixed(2).toString();
+      this.order_total = parseFloat(data[0].orders[0].total_paid).toFixed(2).toString();
+      this.envio = (parseFloat(data[0].orders[0].total_paid_real) - parseFloat(data[0].orders[0].total_paid)).toFixed(2).toString();
+      this.total = parseFloat(data[0].orders[0].total_paid_real).toFixed(2).toString();
 
     }, Error => {
 
@@ -76,9 +77,13 @@ export class InfoPersonalPage implements OnInit, OnDestroy {
 
   repetir() {
 
+    console.log(this.id_carrito, this.id_pedido);
+
     this.comunicacion.repetir_pedido(this.id_carrito).subscribe((data:any) => {
-        
-      this.mensaje(data);
+      
+      console.log(data);
+
+      this.router.navigateByUrl('/facturacion/' + data[0]["0"]);
 
     }, Error => {
 

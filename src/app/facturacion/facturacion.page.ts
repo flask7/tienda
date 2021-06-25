@@ -19,13 +19,14 @@ export class FacturacionPage implements OnInit, OnDestroy {
 	texto_dir: string = 'Mostrar todas las direcciones';
   loading: any;
   carrito: string = this.activate.snapshot.paramMap.get('carrito');
-  id: string = this.activate.snapshot.paramMap.get('id');
   estado: string;
   id_direccion: string;
   dirs: Observable<any>;
   total: string;
   numero: number;
   fecha: any;
+  fecha_1: any;
+  fecha_2: any;
   cvv: number;
 
   constructor(
@@ -80,6 +81,7 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
     const cliente_id = localStorage.getItem('cliente_id');
     let direcciones = [];
+    
     this.presentLoading();
 
     this.comunicacion.obtener_direcciones(cliente_id).subscribe((data:any) => {
@@ -90,8 +92,11 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
           let objeto = {
             "direccion": data.addresses[i].address1, 
+            "postcode": data.addresses[i].postcode,
+            "city": data.addresses[i].city,
             "id": data.addresses[i].id, 
-            "id_estados": data.addresses[i].id_state
+            "id_estados": data.addresses[i].id_state,
+            "alias": data.addresses[i].alias
           };
 
           this.direcciones.push(objeto);
@@ -115,7 +120,7 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
       const json = {
 
-        id: cliente_id
+        id: this.carrito
 
       };
 
@@ -170,6 +175,8 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
     this.direccion = 0;
 
+    this.fecha = this.fecha_1+'/'+this.fecha_2;
+
     const simple_form = [this.numero, this.cvv, this.fecha];
 
     for (let i = 0; i < simple_form.length; i++) {
@@ -194,15 +201,16 @@ export class FacturacionPage implements OnInit, OnDestroy {
       fecha_exp: simple_form[2],
       monto: this.total,
       numero_tarjeta: btoa(simple_form[0].toString()),
-      cvv: simple_form[1]
+      cvv: simple_form[1],
+      delivery: 4.84
 
     }
 
     this.comunicacion.pago(json).subscribe((data) => {
 
-      this.mensaje(data);
+      this.mensaje(data[0]);
       this.events.publish('CargarCarrito');
-      this.router.navigateByUrl('/historial-pedidos');
+      this.router.navigateByUrl('/info-personal/' + data[1]);
 
     }, Error => {
 

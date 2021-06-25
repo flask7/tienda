@@ -17,12 +17,20 @@
 .tarjeta{
 	--background: #8ac306;
 	--color: black;
+	border-radius: 10px;
+	--max-width: 100%;
+    width: 100%;
+    h4 {
+    	margin-top: 0px;
+    }
+    padding: -6px;
 }
 .mostrar{
 	float: right;
 	font-weight: bolder;
 }
 .total {
+	width: 100%;
 	position: absolute;
 	bottom: 0%;
 	left: 0%;

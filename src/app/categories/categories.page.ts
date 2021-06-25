@@ -96,7 +96,7 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
     this.comunicacion.productos_data(json).subscribe((data: any) => {
 
-      console.log(data);
+      //console.log(data);
 
       for (let x = 0; x < data[0].sub_categorias.nombre.length; x++) {
 

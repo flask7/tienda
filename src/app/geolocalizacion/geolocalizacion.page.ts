@@ -237,7 +237,7 @@ export class GeolocalizacionPage implements OnInit {
 
   }
 
-  buscar(){
+  buscar() {
 
     this.comunicacion.buscador_estados().subscribe((data: any) => {
 

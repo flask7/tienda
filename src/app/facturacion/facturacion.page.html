@@ -4,15 +4,39 @@
 
 <ion-content>
 	<ion-grid style="margin-top: 80px;">
-		<ion-item class="pago_inputs">
+		<ion-item class="pago_inputs ion-no-padding">
 			<ion-label position="floating">Número de tarjeta:</ion-label>
 			<ion-input type="number" [(ngModel)]="numero" name="numero"></ion-input>
 		</ion-item>
-		<ion-item class="pago_inputs">
-			<ion-label position="stacked">Fecha de vencimiento (Mes/Año):</ion-label>
-			<ion-datetime displayFormat="MM/YY" [(ngModel)]="fecha" name="fecha" value="04/21"></ion-datetime>
+		<ion-item style="--inner-padding-end: 0;" class="pago_inputs ion-no-padding">
+
+			<ion-row style="width: 100%;">
+				<ion-col size="12">
+					<ion-label position="stacked">Fecha de vencimiento</ion-label>
+				</ion-col>
+				<ion-col size="6">
+					<ion-label position="stacked">Mes:</ion-label>
+					<!-- <ion-datetime displayFormat="MM/YY" [(ngModel)]="fecha" name="fecha" value="04/21"></ion-datetime> -->
+					<ion-select style="max-width: 100%;" [(ngModel)]="fecha_1">
+						<ion-select-option *ngFor='let m of ["01","02","03","04","05","06","07","08","09","10","11","12"]'>{{ m }}</ion-select-option>
+					</ion-select>
+				</ion-col>
+
+				<ion-col size="6">
+					<ion-label position="stacked">Año:</ion-label>
+					<!-- <ion-datetime displayFormat="MM/YY" [(ngModel)]="fecha" name="fecha" value="04/21"></ion-datetime> -->
+					<ion-select style="max-width: 100%;" [(ngModel)]="fecha_2">
+						<ion-select-option>2021</ion-select-option>
+						<ion-select-option>2022</ion-select-option>
+						<ion-select-option>2023</ion-select-option>
+						<ion-select-option>2024</ion-select-option>
+						<ion-select-option>2025</ion-select-option>
+					</ion-select>
+				</ion-col>
+
+			</ion-row>
 		</ion-item>
-		<ion-item class="pago_inputs">
+		<ion-item class="pago_inputs ion-no-padding">
 			<ion-label position="floating">CVV2:</ion-label>
 			<ion-input type="number" [(ngModel)]="cvv" name="cvv"></ion-input>
 		</ion-item>
@@ -24,14 +48,18 @@
 		<ion-row>
 			<ng-container *ngIf="direcciones.length > 0">
 				<ng-container *ngFor="let direccion of (dirs | async); let i = index">
-					<ion-col *ngIf="i < limite" size="12">
+					<ion-col *ngIf="i < limite" size="4">
 						<ion-card class="tarjeta" (click)="seleccionar(i+1)">
 						  <ion-card-header>
-						    <ion-card-subtitle>Dirección</ion-card-subtitle>
+						    <h4><b>{{ direccion.alias }}</b></h4>
 						  </ion-card-header>
 
 						  <ion-card-content>
-						    {{ direccion.direccion }}
+
+						  	<p style="font-size: 11px;">
+						  		{{ direccion.direccion }}, {{ direccion.postcode }}, {{ direccion.city }}, España
+						  	</p>
+													  
 						  </ion-card-content>
 						</ion-card>
 					</ion-col>
@@ -55,10 +83,10 @@
 				<ion-button [disabled]="direccion == 0" class="comprar" (click)="comprar(direccion)">Comprar</ion-button>
 			</ion-col>
 		</ion-row>
-		<ion-footer class="total">
-			<ion-col>
+		<ion-row class="total">
+			<ion-col style="padding: 10px 0;">
 				<ion-label><b>Total pedido</b> (envío e impuestos incluidos): <b>{{ total }} €</b></ion-label>
 			</ion-col>
-		</ion-footer>
+		</ion-row>
 	</ion-grid>
 </ion-content>

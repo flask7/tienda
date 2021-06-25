@@ -60,7 +60,7 @@ export class HistorialPedidosPage implements OnInit, OnDestroy {
 
     this.comunicacion.pedidos(json).subscribe((data: any) => {
 
-      for(let i = 0; i < data.orders.length; i++){
+      for (let i = 0; i < data.orders.length; i++){
 
         this.pedidos.push(
             { 

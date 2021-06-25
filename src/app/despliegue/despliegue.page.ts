@@ -91,6 +91,8 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
   	await this.comunicacion.sub_productos({ categoria: this.id, pagina: this.multiplicador }).subscribe(async (data: any) => {
 
+      console.log(data);
+
       this.limite = Math.round(parseFloat(data.paginas));
   		this.productos = data;
       this.paginator = 'Página ' + (this.pagina + 1) + ' de ' + this.limite;
