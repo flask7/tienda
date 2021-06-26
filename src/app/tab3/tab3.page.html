@@ -6,7 +6,7 @@
   <ion-grid style="margin-top: 80px;">
   	<ion-progress-bar 
 		type="indeterminate" 
-		*ngIf="loading"
+		*ngIf="loading && (usuario | async) != 'Iniciar sesión'"
 		color="success"></ion-progress-bar>
   	<ion-row>
   		<ion-col *ngIf="(productos | async)?.length > 0">
@@ -125,6 +125,12 @@
   	style="z-index: 100;"
     *ngIf="(productos | async)?.length > 0" 
   	class="facturar" 
-  	routerLink="/facturacion/{{id_carrito}}">FACTURAR</ion-button>
+  	(click)="facturar(id_carrito)">FACTURAR</ion-button>
+
+  	<!-- <ion-button 
+  	style="z-index: 100;"
+    *ngIf="(productos | async)?.length > 0" 
+  	class="facturar" 
+  	routerLink="/facturacion/{{id_carrito}}">FACTURAR</ion-button> -->
   
 </ion-content>

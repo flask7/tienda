@@ -7,7 +7,7 @@
   <p class="rutaje">{{ routing }}</p>
   <ion-row>
     <ion-col style="display: flex;">
-      <ion-slides pager="true" [options]="slideOpts" (ionSlideDidChange)="obtener_indice()">
+      <ion-slides pager="true" (ionSlideDidChange)="obtener_indice()">
         
         <ng-container *ngFor="let img of imagen; let i = index">
           <ion-slide class="imgp{{ i }}"></ion-slide>  
@@ -80,7 +80,7 @@
     <b><p>Referencia: {{ referencia }}</p>
     <p>{{ nombre }}</p>
     <p>Descripción:</p>
-    <p>{{ descripcion_corta }}</p>
+    <!-- <p>{{ descripcion_corta }}</p> -->
     <p *ngIf="ocultar">Detalles del producto:</p>
     <p *ngIf="ocultar" [innerHTML]="descripcion"></p>
     <p id="desplegar" (click)="this.ocultar = true; revision()">ver más</p>
@@ -137,6 +137,28 @@
         </ng-container>
       </ion-col>
     </ion-row>
+
+    <div lines="none" class="carta">
+      <ion-row>
+        <ion-col size="4" style="display: flex;">
+          <ion-img src="assets/banners/newsletter.jpg"></ion-img>
+        </ion-col>
+      
+        <ion-col size="8" class="separador">
+
+          <div>
+            
+            <h3 class="newtitle">NewsLetter</h3>
+            <small>Suscribete a nuestro boletin de Novedades y se el primero en enterarte de todo.</small>
+
+            <input type="text" class="subscribe" placeholder="Tu correo electrónico">
+
+            <button class="button-subscribe">ENVIAR</button>
+
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
     <!--<ion-row>
       <ion-col>
         <p class="resena" style="margin-top: 10px;">Opiniones de Clientes</p>

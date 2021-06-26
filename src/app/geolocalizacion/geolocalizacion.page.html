@@ -20,14 +20,20 @@
 					  </p>
 
 						<ion-row *ngIf="mostrar == i + 1" id="b{{ i }}">
-							<ion-col size="6" style="display: flex;">
+							<ion-col size="4" style="display: flex;">
 								<ion-button (click)="borrar(direcciones[i].id)" color="danger" fill="solid" style="margin: auto;">
 									<ion-icon name="close-circle-outline"></ion-icon>
 								</ion-button>
 							</ion-col>
-							<ion-col size="6" style="display: flex;">
+							<ion-col size="4" style="display: flex;">
 								<ion-button (click)="editar(direcciones[i].id); showingAddresses = false;" color="dark" fill="solid" style="margin: auto;">
 									<ion-icon name="pencil-outline"></ion-icon>
+								</ion-button>
+							</ion-col>
+
+							<ion-col size="4" style="display: flex;">
+								<ion-button (click)="seleccionar(direcciones[i]);" color="success" fill="solid" style="margin: auto;">
+									<ion-icon name="checkmark-outline"></ion-icon>
 								</ion-button>
 							</ion-col>
 						</ion-row>

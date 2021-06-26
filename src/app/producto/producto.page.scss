@@ -193,3 +193,43 @@ ion-slides{
 		text-align: center;
 	}
 }
+
+.carta{
+	width: calc(100% + 10px);
+	position: relative;
+	left: -5px;
+	background: #a0bb31;
+	margin: auto;
+	// border-radius: 7.5px;
+	.separador{
+		display: flex;
+	}
+}
+
+.subscribe {
+	margin: 8px 0;
+	width: 100%;
+
+	background-color: #fff;
+	border-radius: 20px;
+	border: 1px solid gray;
+	padding: 8px;
+	color: silver;
+	&:placeholder {
+		color: silver;
+	}
+
+	outline: none !important;
+}
+
+.button-subscribe {
+	background-color: #111;
+	border-radius: 20px;
+	color: #fff;
+	padding: 8px;
+}
+
+.newtitle {
+	font-weight: bolder;
+	letter-spacing: 2px;
+}

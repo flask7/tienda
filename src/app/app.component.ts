@@ -12,6 +12,8 @@ import { Router } from  '@angular/router';
 import { Observable } from 'rxjs/Rx';
 import { Location } from '@angular/common';
 
+import { EventsService } from './events.service';
+
 @Component({
   selector: 'app-root',
   templateUrl: 'app.component.html',
@@ -26,6 +28,8 @@ export class AppComponent implements OnInit {
   boton_activo: Observable<number>;
   query;
 
+  address;
+
   constructor(
     private platform: Platform,
     private splashScreen: SplashScreen,
@@ -33,6 +37,7 @@ export class AppComponent implements OnInit {
     private menu: MenuController,
     private comunicacion: ComunicacionService,
     private router: Router,
+    public events: EventsService,
     public nav: NavController,
     private _location: Location
   ) {
@@ -40,6 +45,12 @@ export class AppComponent implements OnInit {
   }
 
   ngOnInit(){
+
+    this.address = JSON.parse(localStorage.getItem('address'));
+
+    this.events.subscribe('updateAddress',()=>{
+      this.address = JSON.parse(localStorage.getItem('address'));
+    })
      
     this.comunicacion.estado_boton().subscribe(data => {
 
@@ -128,8 +139,9 @@ export class AppComponent implements OnInit {
 
       this.statusBar.show();
       this.statusBar.overlaysWebView(false);
+      
       this.statusBar.styleLightContent();
-      this.statusBar.styleDefault();
+      // this.statusBar.styleDefault();
       this.splashScreen.hide();
 
     });

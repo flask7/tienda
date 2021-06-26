@@ -21,7 +21,24 @@
       </ion-slides>    
     </div>
 
-    <h3 class="related" style="font-size: 18px; text-align: center;">Artículos destacados</h3>
+    <ion-row class="servicios">
+
+      <ion-col size="6">
+        <ion-icon name="headset-outline"></ion-icon>
+        <h5>Servicio Técnico <small>y repuestos</small></h5>
+      </ion-col>
+      <ion-col size="6">
+        <ion-icon name="thumbs-up-outline"></ion-icon>
+        <h5>Satisfacción 100% <small>2 años de garantía</small></h5>
+      </ion-col>
+      <ion-col size="12">
+        <ion-icon name="bag-handle-outline"></ion-icon>
+        <h5>Envíos <b>24h</b> <small>Comprometidos</small></h5>
+      </ion-col>
+      
+    </ion-row>
+
+    <h3 class="related" style="font-size: 18px; text-align: center;">Productos Relacionados</h3>
 
     <ion-row>
       <ng-container>
@@ -45,7 +62,64 @@
       </ng-container>
     </ion-row>
 
-    <ion-card routerLink="/tabs/categories/29">
+    <h3 class="related" style="font-size: 18px; text-align: center;">Más Vendidas</h3>
+
+    <ion-row>
+      <ion-col size="6" routerLink="/tabs/categories/3617">
+        <ion-img src="../assets/banners/Deporte.png"></ion-img>
+      </ion-col>
+
+
+      <ion-col size="6" routerLink="/tabs/categories/14008">
+        <ion-img src="../assets/banners/todo_saldra_bien.png"></ion-img>
+      </ion-col>
+
+      <ion-col size="12" routerLink="/tabs/categories/208">
+        <ion-img src="../assets/banners/categoria_alimentacion_549x293.png"></ion-img>
+      </ion-col>
+
+      <ion-col size="12" routerLink="/tabs/categories/682">
+        <ion-img src="../assets/banners/fondo_549x218_decogohar.jpg"></ion-img>
+      </ion-col>
+
+      <ion-col size="6" routerLink="/tabs/categories/54">
+        <ion-img src="../assets/banners/Recurso-14-100.jpg"></ion-img>
+      </ion-col>
+
+      <ion-col size="6" routerLink="/tabs/categories/70">
+        <ion-img src="../assets/banners/sublimacion_02.png"></ion-img>
+      </ion-col>
+
+      <ion-col size="12" routerLink="/distribuidor">
+        <ion-img src="../assets/banners/1.png"></ion-img>
+      </ion-col>
+    </ion-row>
+
+    <div lines="none" class="carta">
+      <ion-row>
+        <ion-col size="4" style="display: flex;">
+          <ion-img src="assets/banners/newsletter.jpg"></ion-img>
+        </ion-col>
+      
+        <ion-col size="8" class="separador">
+
+          <div>
+            
+            <h3 class="newtitle">NewsLetter</h3>
+            <small>Suscribete a nuestro boletin de Novedades y se el primero en enterarte de todo.</small>
+
+            <input type="text" class="subscribe" placeholder="Tu correo electrónico">
+
+            <button class="button-subscribe">ENVIAR</button>
+
+          </div>
+        </ion-col>
+      </ion-row>
+    </div>
+
+
+
+    <!-- <ion-card routerLink="/tabs/categories/29">
       <ion-card-title style="text-align: center; padding: 10px 0 0 0;">Tenemos todo lo que necesitas</ion-card-title>
       <ion-card-content>
         <ion-img src="../assets/Deporte.png"></ion-img>
@@ -59,7 +133,7 @@
                style="background-size: cover; width: 100%; height: 150px;"></div>  
         </a>
       </ion-col>
-    </ion-row>
+    </ion-row> -->
  
   </ion-grid>
 

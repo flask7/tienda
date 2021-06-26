@@ -7,6 +7,8 @@ import { Observable } from 'rxjs/Rx';
 import { ComunicacionService } from '../comunicacion.service';
 import { AlertController } from '@ionic/angular';
 
+import { EventsService } from '../events.service';
+
 @Component({
   selector: 'app-geolocalizacion',
   templateUrl: './geolocalizacion.page.html',
@@ -43,6 +45,7 @@ export class GeolocalizacionPage implements OnInit {
     public alertController: AlertController, 
     public geolocalizacion: Geolocation, 
     public code: NativeGeocoder, 
+    public events: EventsService, 
     private comunicacion: ComunicacionService) { }
 
   ngOnInit() {
@@ -52,6 +55,18 @@ export class GeolocalizacionPage implements OnInit {
   	this.geolocation();
     this.obtener_direcciones();
 
+  }
+
+  seleccionar(d)
+  {
+    let a:any= {};
+
+    a.name =  d.direccion+','+d.postcode+', '+ d.city+', '+ d.estado+', España';
+    a.id = d.id;
+
+    localStorage.setItem('address',JSON.stringify(a));
+
+    this.events.publish('updateAddress');
   }
 
   async alerta(mensaje: string) {

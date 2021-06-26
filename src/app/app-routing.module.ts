@@ -77,6 +77,10 @@ const routes: Routes = [
   {
     path: 'cookies',
     loadChildren: () => import('./cookies/cookies.module').then( m => m.CookiesPageModule)
+  },
+  {
+    path: 'distribuidor',
+    loadChildren: () => import('./distribuidor/distribuidor.module').then( m => m.DistribuidorPageModule)
   }
 ];
 @NgModule({

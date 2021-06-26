@@ -4,10 +4,13 @@ import { Observable } from 'rxjs/Rx';
 import { AlertController, LoadingController } from '@ionic/angular';
 import { EventsService } from '../events.service';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 @Component({
   selector: 'app-tab3',
   templateUrl: 'tab3.page.html',
-  styleUrls: ['tab3.page.scss']
+  styleUrls: ['tab3.page.scss'],
+  providers: [InAppBrowser]
 })
 export class Tab3Page implements OnInit  {
 
@@ -30,6 +33,7 @@ export class Tab3Page implements OnInit  {
     private comunicacion: ComunicacionService,
     private cargando: LoadingController, 
     private alerta: AlertController,
+    private iab: InAppBrowser,
     public events: EventsService) { }
 
   ngOnInit() {
@@ -45,6 +49,54 @@ export class Tab3Page implements OnInit  {
 
     this.verificar_productos();
     // this.loading = false;
+
+  }
+
+  facturar(id)
+  {
+
+    // this.direccion = 0;
+
+    // this.fecha = this.fecha_1+'/'+this.fecha_2;
+
+    // const simple_form = [this.numero, this.cvv, this.fecha];
+
+    // for (let i = 0; i < simple_form.length; i++) {
+
+    //   if (simple_form[i] === '' || simple_form[i] === null || simple_form[i] === undefined) {
+
+    //     return this.mensaje('Todos los campos son obligatorios');
+
+    //   }
+
+    // }
+
+    const json = {
+        id: id
+    };
+
+    let address = JSON.parse(localStorage.getItem('address'));
+
+    if (!address) {
+      this.mensaje('Debe seleccionar una dirección de envío');
+    }
+
+    this.comunicacion.total_orden(json).subscribe((data:any) => {
+
+      let args = "id_cliente="+localStorage.getItem('cliente_id')+"&id_direccion="+address.id+"&id_carrito="+id+"&pago=Resdsys&monto="+data[0].toFixed(2)+"&delivery=4.84";
+
+      const browser = this.iab.create('https://tuwordpress.online/prestashop/public/api/pagar?'+args);
+      browser.on('exit').subscribe(event => {
+        this.events.publish('CargarCarrito');
+      });
+
+      
+    }, Error => {
+
+      console.log(Error)
+
+    })
+
 
   }
 

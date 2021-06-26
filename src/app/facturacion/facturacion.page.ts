@@ -23,11 +23,11 @@ export class FacturacionPage implements OnInit, OnDestroy {
   id_direccion: string;
   dirs: Observable<any>;
   total: string;
-  numero: number;
+  numero: number = 123;
   fecha: any;
-  fecha_1: any;
-  fecha_2: any;
-  cvv: number;
+  fecha_1: any = "05";
+  fecha_2: any = "2022";
+  cvv: number = 123;
 
   constructor(
     private router: Router, 
@@ -206,19 +206,21 @@ export class FacturacionPage implements OnInit, OnDestroy {
 
     }
 
-    this.comunicacion.pago(json).subscribe((data) => {
+    this.comunicacion.pago(json).subscribe((data:any) => {
 
-      this.mensaje(data[0]);
-      this.events.publish('CargarCarrito');
-      this.router.navigateByUrl('/info-personal/' + data[1]);
+      document.getElementById('boton-pagar').innerHTML = data[0];
 
-    }, Error => {
+      // this.mensaje(data[0]);
+      // this.events.publish('CargarCarrito');
+      // this.router.navigateByUrl('/info-personal/' + data[1]);
+
+    }/*, Error => {
 
       this.mensaje(Error.message);
 
       console.log(Error);
 
-    });
+    }*/);
 
   }
 

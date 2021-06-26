@@ -50,3 +50,74 @@ ion-slides {
 	text-overflow: initial;
 	overflow: visible;
 }
+
+.carta{
+	width: calc(100% + 10px);
+	position: relative;
+	left: -5px;
+	background: #a0bb31;
+	margin: auto;
+	// border-radius: 7.5px;
+	.separador{
+		display: flex;
+	}
+}
+
+.subscribe {
+	margin: 8px 0;
+	width: 100%;
+
+	background-color: #fff;
+	border-radius: 20px;
+	border: 1px solid gray;
+	padding: 8px;
+	color: silver;
+	&:placeholder {
+		color: silver;
+	}
+
+	outline: none !important;
+}
+
+.button-subscribe {
+	background-color: #111;
+	border-radius: 20px;
+	color: #fff;
+	padding: 8px;
+}
+
+.newtitle {
+	font-weight: bolder;
+	letter-spacing: 2px;
+}
+
+.servicios {
+	border-bottom: 1px solid #ccc;
+	ion-icon {
+		font-size: 24px;
+		margin-right: 4px;
+		border-radius: 18px;
+		background-color: #ddd;
+		padding: 6px;
+	}
+	ion-col {
+		text-align: center;
+	}
+	[name="bag-handle-outline"] {
+		background-color: #a0bb31;
+	}
+	h5 {
+		position: relative;
+		top: -6px;
+		font-size: 14px;
+		font-weight: bolder;
+		display: inline-block;
+		small {
+			font-weight: normal;
+			display: block;
+			b {
+				color: #a0bb31;
+			}
+		}
+	}
+}
