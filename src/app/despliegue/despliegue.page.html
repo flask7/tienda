@@ -8,7 +8,7 @@
         <ion-col>
           <ion-row>
             <ng-container *ngFor="let x of productos.id_producto; let y = index">
-              <ion-col size="4" [routerLink]="'/producto/'+id+'/'+x"> 
+              <ion-col size="4" [routerLink]="'/tabs/producto/'+id+'/'+x"> 
                 <ion-row>
                   <ion-col>
                     <div 
@@ -61,7 +61,11 @@
           <ion-icon 
             name="caret-forward-outline" 
             (click)="paginar(-1)" 
-            disabled="limite >= pagina" class="flechas"></ion-icon>
+            disabled="productos.length < 30" class="flechas"></ion-icon>
+          <!-- <ion-icon 
+            name="caret-forward-outline" 
+            (click)="paginar(-1)" 
+            disabled="limite >= pagina" class="flechas"></ion-icon> -->
         </ion-item>
       </ion-col>
     </ion-row>

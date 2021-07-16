@@ -143,11 +143,17 @@ export class Tab3Page implements OnInit  {
     
   }
 
+  onlyUnique(value, index, self) {
+    return self.indexOf(value) === index;
+  }
+
   get_products() {
 
     this.info = [];
     this.mostrar_boton = -1;
     this.productos = Observable.of(this.info);
+
+    let name;
 
     this.comunicacion.obtener_productos(localStorage.getItem('cliente_id')).subscribe((data: any) => {
 
@@ -165,12 +171,68 @@ export class Tab3Page implements OnInit  {
 
             this.id_carrito = carts[index].id.toString();
 
+            let options = [];
+            let pr_options = [];
+
             for (let i of carts[index].associations.cart_rows) {
+
+              name = [];
+
+              options = [];
+              pr_options = [];
 
               if (i.id_product != '0') {
 
+                let p = data[1].products.find(x => x.id == i.id_product);
+
+                if (p) {
+                  if (p.associations.product_option_values) {
+                    let v = p.associations.product_option_values;
+
+                    for (let h of v)
+                    {
+                      let d3 = data[3].product_option_values;
+                      let id = d3.find(x => x.id == h.id);
+
+                      if (id)
+                        options.push( id.id_attribute_group )
+                    }
+
+                    let po = data[2].product_options;
+
+                    options = options.filter(this.onlyUnique);
+
+                    let aux;
+                    let comb = data[4].combinations.find(x => x.id == i.id_product_attribute);
+
+                    let combinadas = [];
+
+                    for (let h of options)
+                    {
+                      aux = null;
+                      let to_push = po.find(x => x.id == h);
+                      
+                      for (let k of comb.associations.product_option_values)
+                      {
+                        // console.log(data[3].product_option_values.find(x=>x.id == k.id && x.id_attribute_group == h));
+                        aux = data[3].product_option_values.find(x=>x.id == k.id && x.id_attribute_group == h);
+                        if (typeof aux != 'undefined') {
+                          break;
+                        }
+                      }
+
+                      name = {attr:to_push.name,value:aux.name};
+                      combinadas.push(name);
+                    }
+
+                    pr_options.push(combinadas);
+
+                  }
+                }
+
                 this.info.push({
 
+                  pr_options:pr_options,
                   id_carrito: data[0].carts[index].id,
                   id: i.id_product,
                   precio: parseFloat(products.find(x => x.id == i.id_product).price).toFixed(2).toString(),
@@ -187,6 +249,8 @@ export class Tab3Page implements OnInit  {
               }
 
             }
+
+            console.log(this.info);
 
           } else {
 

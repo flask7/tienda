@@ -64,7 +64,9 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
   paginar(valor) {
 
-    if (this.pagina === (this.limite - 1) && valor === -1) {
+    // if (this.pagina === (this.limite - 1) && valor === -1) {
+      console.log(this.productos.id_producto.length)
+    if (this.productos.id_producto.length < 30 && valor === -1) {
 
       return false;
 
@@ -95,7 +97,7 @@ export class DesplieguePage implements OnInit, OnDestroy {
 
       this.limite = Math.round(parseFloat(data.paginas));
   		this.productos = data;
-      this.paginator = 'Página ' + (this.pagina + 1) + ' de ' + this.limite;
+      this.paginator = 'Página ' + (this.pagina + 1) /*+ ' de ' + this.limite*/;
 
   		for (let i = 0; i < this.productos.imagen.base64.length; i++) {
 

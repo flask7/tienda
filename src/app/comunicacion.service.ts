@@ -13,18 +13,18 @@ export class ComunicacionService {
   {'nombre': 'Alimentacion y Bebidas', 'id':'208'}, 
   {'nombre': 'Artes gráficas', 'id': '45'}, 
   {'nombre': 'Material escolar', 'id': '7415'}, 
-  {'nombre':'Industria', 'id': '28'},
-  {'nombre': 'Deporte', 'id': '29'},
+  {'nombre': 'Maquinaria y Material Industrial', 'id': '28'},
+  {'nombre': 'Deportes', 'id': '29'},
   {'nombre': 'Movilidad', 'id': '27'}, 
-  {'nombre': 'Hogar', 'id': '30'}, 
+  {'nombre': 'Artículos del Hogar', 'id': '30'}, 
   {'nombre': 'Jardín', 'id': '7364'}, 
   {'nombre': 'Bricolage y herramientas', 'id': '2048'}, 
   {'nombre': 'Electrónica', 'id': '155'}, 
   {'nombre':'Juguetes y Ocio', 'id': '677'},
-  {'nombre': 'Mascotas', 'id': '209'}, 
+  {'nombre': 'Artículos para animales', 'id': '209'}, 
   {'nombre': 'Salud y Belleza', 'id': '203'},
   {'nombre': 'Moda', 'id': '7797'}, 
-  {'nombre':'Disfraces', 'id': '11968'}];
+  {'nombre': 'Disfraces', 'id': '11968'}];
   productos_almacenados: any = [];
   direcciones_registradas: any = [];
   private back_button = new BehaviorSubject('0');
@@ -74,7 +74,7 @@ export class ComunicacionService {
 
   }
 
-  obtener_productos(id: string): Observable<any> {
+  obtener_productos(id: string, product = null): Observable<any> {
 
     const headers = {
 
@@ -84,7 +84,8 @@ export class ComunicacionService {
 
     let _json = {
 
-      id
+      id,
+      product
 
     };
 
@@ -167,12 +168,13 @@ export class ComunicacionService {
 
   }
 
-  add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones): Observable<any> {
+  add_producto(id_customer, id, variant, precio, nombre, cantidad, direccion, opciones): Observable<any> {
 
     const json = {
 
       id_customer,
       id,
+      variant,
       direccion,
       nombre,
       precio: ((parseFloat(precio) * parseInt(cantidad)).toFixed(2)).toString(),

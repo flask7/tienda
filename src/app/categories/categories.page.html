@@ -4,7 +4,68 @@
 
 <ion-content>
   <p class="category">{{ nombre }}</p>
-  <ion-item *ngFor="let cat of categorias[0].name; let i = index">
+  <div *ngFor="let cat of nuevas_categorias.nombre; let i = index">
+    <ion-item *ngIf="nuevas_categorias.productos[i].products.length">
+      <ion-grid fixed="true">
+
+          <ion-row>
+            <ion-col>
+              <p class="">  
+                {{ cat }}
+              </p>
+            </ion-col>
+          </ion-row>
+        
+          <ion-row>
+            <ion-col>
+              <ion-row>
+                <ng-container *ngFor="let x of nuevas_categorias.productos[i].products; let y = index">
+                  <!-- <ion-col size="4" class="" *ngIf="x.id_category_default == categorias[0].id[i]" [routerLink]="'/producto/'+id+'/'+x.id">  -->
+                  <ion-col *ngIf="y < 3" size="4" class="" [routerLink]="'/tabs/producto/'+id+'/'+x.id"> 
+                    <ion-row>
+                      <ion-col style="display: flex;">
+                        <!-- [style.background-image]="imagenes[y]" -->
+                       <div 
+                        [ngStyle]="{'background-image': 'url('+(x.id_default_image ? 'https://www.wonduu.com/'+x.id_default_image+'-home_default/imagen.jpg' : '../assets/nd.svg.png')+')'}"
+                        loading="lazy"
+                        style="
+                          margin: auto; 
+                          height: 80px; 
+                          width: 80px; 
+                          background-size: cover;"></div>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="12">
+                        <p class="nombre">{{ x.name }}</p>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col size="12" style="display: flex;">
+                        <b class="price">{{ x.price }}€</b>
+                      </ion-col>
+                    </ion-row>
+                    <ion-row>
+                      <ion-col style="display: flex;">
+                        <ion-button class="comprar" [routerLink]="'/producto/'+id+'/'+x.id">¡LO QUIERO!</ion-button>
+                      </ion-col>
+                    </ion-row>
+                  </ion-col>
+                </ng-container>
+              </ion-row>
+            </ion-col>
+          </ion-row>
+          <ion-row style="text-align: right;">
+            <ion-col size="12">
+              <a routerLink="/tabs/despliegue/{{ nuevas_categorias.id[i] }}" class="cambio">ver más</a>
+            </ion-col>
+          </ion-row>
+
+      </ion-grid>
+    </ion-item>
+  </div>
+
+  <!-- <ion-item *ngFor="let cat of categorias[0].name; let i = index">
     <ion-grid fixed="true">
       <ion-row>
         <ion-col>
@@ -21,7 +82,6 @@
               <ion-col size="4" class="" *ngIf="x.id_category_default == categorias[0].id[i]" [routerLink]="'/producto/'+id+'/'+x.id"> 
                 <ion-row>
                   <ion-col style="display: flex;">
-                    <!-- [style.background-image]="imagenes[y]" -->
                    <div 
                     [ngStyle]="{'background-image': 'url('+(x.id_default_image ? 'https://www.wonduu.com/'+x.id_default_image+'-home_default/imagen.jpg' : '../assets/nd.svg.png')+')'}"
                     loading="lazy"
@@ -58,5 +118,5 @@
         </ion-col>
       </ion-row>
     </ion-grid>
-  </ion-item>
+  </ion-item> -->
 </ion-content>

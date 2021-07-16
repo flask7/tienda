@@ -26,6 +26,9 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
   id: string;
   loading: any;
 
+
+  nuevas_categorias:any = [];
+
   constructor(
     private sanitizer: DomSanitizer, 
     private activate: ActivatedRoute,
@@ -96,42 +99,53 @@ export class CategoriesPage implements OnInit/*, OnDestroy*/ {
 
     this.comunicacion.productos_data(json).subscribe((data: any) => {
 
-      //console.log(data);
+      this.nuevas_categorias = data[0].sub_categorias;
 
-      for (let x = 0; x < data[0].sub_categorias.nombre.length; x++) {
-
-        this.categorias[0].name.push(data[0].sub_categorias.nombre[x]);
-        this.categorias[0].id.push(data[0].sub_categorias.id[x]);
-
-        for (let y = 0; y < data[0].sub_categorias.productos.length; y++) {
-         
-          for (let i = 0; i < data[0].sub_categorias.productos[y].products.length; i++) {      
-
-            if (data[0].sub_categorias.productos[y].products[i].id_category_default == this.categorias[0].id[x]) {
-          
-              this.categorias[0].products.push(data[0].sub_categorias.productos[y].products[i]);
-              this.categorias_llenas[0].id.push(data[0].sub_categorias.id[x]);
-              this.categorias_llenas[0].categoria.push(data[0].sub_categorias.nombre[x]);
-
-            }
-
-          }
-
+      for (let i = 0; i < this.nuevas_categorias.productos.length; i++)
+      {
+        for (let j = 0; j < this.nuevas_categorias.productos[i].products.length; j++)
+        {
+          this.nuevas_categorias.productos[i].products[j].price = parseFloat(this.nuevas_categorias.productos[i].products[j].price).toFixed(2);
         }
-
       }
+      // data[0].sub_categorias
+      // console.log(
+      //   );
 
-      this.categorias[0].name = [...new Set(this.categorias_llenas[0].categoria)];
-      this.categorias[0].id = [...new Set(this.categorias_llenas[0].id)];
+      // for (let x = 0; x < data[0].sub_categorias.nombre.length; x++) {
 
-      for (let i = 0; i < this.categorias[0].products.length; i++) {
+      //   this.categorias[0].name.push(data[0].sub_categorias.nombre[x]);
+      //   this.categorias[0].id.push(data[0].sub_categorias.id[x]);
 
-        let conversion = parseFloat(this.categorias[0].products[i].price),
-          monto = conversion.toFixed(2);
+      //   for (let y = 0; y < data[0].sub_categorias.productos.length; y++) {
+         
+      //     for (let i = 0; i < data[0].sub_categorias.productos[y].products.length; i++) {      
 
-        this.categorias[0].products[i].price = monto;
+      //       if (data[0].sub_categorias.productos[y].products[i].id_category_default == this.categorias[0].id[x]) {
+          
+      //         this.categorias[0].products.push(data[0].sub_categorias.productos[y].products[i]);
+      //         this.categorias_llenas[0].id.push(data[0].sub_categorias.id[x]);
+      //         this.categorias_llenas[0].categoria.push(data[0].sub_categorias.nombre[x]);
 
-      }
+      //       }
+
+      //     }
+
+      //   }
+
+      // }
+
+      // this.categorias[0].name = [...new Set(this.categorias_llenas[0].categoria)];
+      // this.categorias[0].id = [...new Set(this.categorias_llenas[0].id)];
+
+      // for (let i = 0; i < this.categorias[0].products.length; i++) {
+
+      //   let conversion = parseFloat(this.categorias[0].products[i].price),
+      //     monto = conversion.toFixed(2);
+
+      //   this.categorias[0].products[i].price = monto;
+
+      // }
 
       this.loading.dismiss();
       this.obtener_imagenes(this.categorias[0].products);

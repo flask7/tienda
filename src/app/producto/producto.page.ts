@@ -89,6 +89,8 @@ export class ProductoPage implements OnInit, OnDestroy {
     this.presentLoading();
   	this.comunicacion.productos_info(json).subscribe((data: any) => {
 
+      console.log(data);
+
       this.precio_base = parseFloat(data[0].products[0].price);
       this.precio = parseFloat(data[0].products[0].price).toFixed(2).toString();
       this.descripcion = data[0].products[0].description;
@@ -131,19 +133,22 @@ export class ProductoPage implements OnInit, OnDestroy {
 
           if (datos2.length > 0) {
 
-            for (let i = 0; i < datos2[0].product_options.length; i++) {
-            
-              ids.push(datos2[0].product_options[i].id);
-              nombres.push(datos2[0].product_options[i].name);
+            if (datos2[0].product_options) {
 
-            }
+              for (let i = 0; i < datos2[0].product_options.length; i++) {
+              
+                ids.push(datos2[0].product_options[i].id);
+                nombres.push(datos2[0].product_options[i].name);
 
-            for (let i = 0; i < datos[0].product_option_values.length; i++) {
+              }
 
-              let opcion = datos[0].product_option_values[i];
+              for (let i = 0; i < datos[0].product_option_values.length; i++) {
 
-              this.opciones.push(opcion); 
-      
+                let opcion = datos[0].product_option_values[i];
+
+                this.opciones.push(opcion); 
+        
+              }
             }
 
           }
@@ -177,6 +182,15 @@ export class ProductoPage implements OnInit, OnDestroy {
           
         }
 
+        for (let i in this.variantes)
+        {
+          this.opcion_seleccionada[i] = this.opciones.find(x=>x.id_attribute_group == this.variantes[i].id).id.toString();
+        }
+
+        this.obtener_valor_select(this.opcion_seleccionada);
+
+
+
       }
 
       if (this.existencia > 0) {
@@ -192,6 +206,14 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   	});
 
+    //this.get_mensajes();
+
+    this.relacionados(json);
+
+  }
+
+  relacionados(json)
+  {
     this.comunicacion.relacionados(json).subscribe((data: any) => {
 
       for (let i = 0; i < data.length; i++) {
@@ -219,9 +241,6 @@ export class ProductoPage implements OnInit, OnDestroy {
       this.loading.dismiss();
 
     });
-
-    //this.get_mensajes();
-
   }
 
   ngOnDestroy() {
@@ -343,17 +362,66 @@ export class ProductoPage implements OnInit, OnDestroy {
     this.boton = document.querySelector('.bcarrito');
 
     this.boton.setAttribute('disabled', '');
-    this.comunicacion.obtener_productos(id_customer).subscribe((data: any) => {
+    this.comunicacion.obtener_productos(id_customer,this.id).subscribe((data: any) => {
+
+      let copy = [];
+
+      let variant = 0;
+
+      for (let i of this.opcion_seleccionada) {
+        copy.push(i);
+      }
 
       if (data.length > 0) {
 
-        if (data[1] != undefined) {
+        if (this.opcion_seleccionada.length) {
 
-          if (data[1].products) {
+          if (data[4]) {
 
-            for (let i = 0; i < data[1].products.length; i++) {
+            for (let i of data[4].combinations)
+            {
+              let o = [];
+              for (let j of i.associations.product_option_values)
+              {
+                o.push(j.id);
+              }
 
-              if (data[1].products[i].id == id) {
+              if (JSON.stringify(o.sort()) == JSON.stringify(copy.sort())) {
+                variant = i.id;
+                break;
+              }
+            }            
+          }
+        }
+
+        console.log(variant);
+
+        // if (data[1] != undefined) {
+
+        //   if (data[1].products) {
+
+        //     for (let i = 0; i < data[1].products.length; i++) {
+
+        //       if (data[1].products[i].id == id) {
+
+        //         this.boton.removeAttribute('disabled');
+        //         return this.mensaje('El producto ya ha sido añadido, modifique sus valores en carrito');
+
+        //       }
+
+        //     }
+
+        //   }
+          
+        // }
+
+        if (data[0] != undefined) {
+
+          if (data[0].carts[0]) {
+
+            for (let i = 0; i < data[0].carts[0].associations.cart_rows.length; i++) {
+
+              if (data[0].carts[0].associations.cart_rows[i].id_product == id && data[0].carts[0].associations.cart_rows[i].id_product_attribute == variant) {
 
                 this.boton.removeAttribute('disabled');
                 return this.mensaje('El producto ya ha sido añadido, modifique sus valores en carrito');
@@ -383,6 +451,7 @@ export class ProductoPage implements OnInit, OnDestroy {
       this.add_carrito(
         id_customer, 
         id, 
+        variant,
         precio, 
         nombre, 
         cantidad, 
@@ -412,13 +481,13 @@ export class ProductoPage implements OnInit, OnDestroy {
 
   }
 
-  add_carrito(id_customer, id, precio, nombre, cantidad, direccion, opciones) {
+  add_carrito(id_customer, id, variant, precio, nombre, cantidad, direccion, opciones) {
 
     const json = {
-      id_customer, id, precio, nombre, cantidad, direccion, opciones
+      id_customer, id, variant, precio, nombre, cantidad, direccion, opciones
     }
 
-    this.comunicacion.add_producto(id_customer, id, precio, nombre, cantidad, direccion, opciones).subscribe((data: any) => {
+    this.comunicacion.add_producto(id_customer, id, variant, precio, nombre, cantidad, direccion, opciones).subscribe((data: any) => {
 
       if (data[0] == "Producto añadido satisfactoriamente") {
 

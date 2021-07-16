@@ -48,7 +48,7 @@ export class TabsPage implements OnInit {
 
     if (localStorage.getItem('cliente_id') && localStorage.getItem('cliente_id') != 'Iniciar sesión') {
 
-      this.get_products();
+      // this.get_products();
 
     }
 
